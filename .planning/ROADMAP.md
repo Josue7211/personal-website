@@ -31,8 +31,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Design token CSS variables (purple palette, typography scale, spacing) are visible and applied to a rendered test page
   3. MainLayout.astro shows the film grain overlay on a dark background; DocsLayout.astro shows a clean white/neutral layout — both render at mobile, tablet, and desktop widths without layout breakage
   4. Tailwind v4 utility classes work in `.astro` files (confirmed via browser)
-**Plans**: TBD
-**UI hint**: yes
+**Plans**: 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Astro 6 project scaffold, Tailwind v4 integration, all dependencies installed
+- [ ] 01-02-PLAN.md — Design tokens (colors, typography, border radius) in @theme block
+- [ ] 01-03-PLAN.md — Layout chain (BaseLayout, MainLayout, DocsLayout), FilmGrain, page stubs
 
 ### Phase 2: Scroll Infrastructure
 **Goal**: Lenis smooth scroll and GSAP ScrollTrigger are synchronized via the correct ticker pattern and verified with a pinned test section — every scroll-driven animation in subsequent phases builds on this proven foundation
@@ -117,7 +121,7 @@ Note: Phase 6 (Docs) depends only on Phase 1 — it is architecturally isolated 
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/? | Not started | - |
+| 1. Foundation | 0/3 | Not started | - |
 | 2. Scroll Infrastructure | 0/? | Not started | - |
 | 3. Hero Section | 0/? | Not started | - |
 | 4. Page Transitions | 0/? | Not started | - |
