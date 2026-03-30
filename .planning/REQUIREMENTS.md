@@ -154,38 +154,38 @@
 | HERO-05 | Phase 3 | Pending |
 | HERO-06 | Phase 3 | Pending |
 | HERO-07 | Phase 3 | Pending |
-| ABOUT-01 | Phase 4 | Pending |
-| ABOUT-02 | Phase 4 | Pending |
-| ABOUT-03 | Phase 4 | Pending |
-| ABOUT-04 | Phase 4 | Pending |
-| PROJ-01 | Phase 4 | Pending |
-| PROJ-02 | Phase 4 | Pending |
-| PROJ-03 | Phase 4 | Pending |
-| PROJ-04 | Phase 4 | Pending |
-| PROJ-05 | Phase 4 | Pending |
-| PROJ-06 | Phase 4 | Pending |
-| LIFE-01 | Phase 4 | Pending |
-| LIFE-02 | Phase 4 | Pending |
-| LIFE-03 | Phase 4 | Pending |
-| LIFE-04 | Phase 4 | Pending |
-| CONT-01 | Phase 4 | Pending |
-| CONT-02 | Phase 4 | Pending |
-| CONT-03 | Phase 4 | Pending |
-| NAV-01 | Phase 4 | Pending |
-| NAV-02 | Phase 4 | Pending |
-| NAV-03 | Phase 4 | Pending |
-| DOCS-01 | Phase 5 | Pending |
-| DOCS-02 | Phase 5 | Pending |
-| DOCS-03 | Phase 5 | Pending |
-| DOCS-04 | Phase 5 | Pending |
-| DOCS-05 | Phase 5 | Pending |
-| DOCS-06 | Phase 5 | Pending |
-| DOCS-07 | Phase 5 | Pending |
-| DOCS-08 | Phase 5 | Pending |
-| TRANS-01 | Phase 6 | Pending |
-| TRANS-02 | Phase 6 | Pending |
-| TRANS-03 | Phase 6 | Pending |
-| TRANS-04 | Phase 6 | Pending |
+| TRANS-01 | Phase 4 | Pending |
+| TRANS-02 | Phase 4 | Pending |
+| TRANS-03 | Phase 4 | Pending |
+| TRANS-04 | Phase 4 | Pending |
+| ABOUT-01 | Phase 5 | Pending |
+| ABOUT-02 | Phase 5 | Pending |
+| ABOUT-03 | Phase 5 | Pending |
+| ABOUT-04 | Phase 5 | Pending |
+| PROJ-01 | Phase 5 | Pending |
+| PROJ-02 | Phase 5 | Pending |
+| PROJ-03 | Phase 5 | Pending |
+| PROJ-04 | Phase 5 | Pending |
+| PROJ-05 | Phase 5 | Pending |
+| PROJ-06 | Phase 5 | Pending |
+| LIFE-01 | Phase 5 | Pending |
+| LIFE-02 | Phase 5 | Pending |
+| LIFE-03 | Phase 5 | Pending |
+| LIFE-04 | Phase 5 | Pending |
+| CONT-01 | Phase 5 | Pending |
+| CONT-02 | Phase 5 | Pending |
+| CONT-03 | Phase 5 | Pending |
+| NAV-01 | Phase 5 | Pending |
+| NAV-02 | Phase 5 | Pending |
+| NAV-03 | Phase 5 | Pending |
+| DOCS-01 | Phase 6 | Pending |
+| DOCS-02 | Phase 6 | Pending |
+| DOCS-03 | Phase 6 | Pending |
+| DOCS-04 | Phase 6 | Pending |
+| DOCS-05 | Phase 6 | Pending |
+| DOCS-06 | Phase 6 | Pending |
+| DOCS-07 | Phase 6 | Pending |
+| DOCS-08 | Phase 6 | Pending |
 | PERF-01 | Phase 7 | Pending |
 | PERF-02 | Phase 7 | Pending |
 | PERF-03 | Phase 7 | Pending |
@@ -202,4 +202,4 @@
 
 ---
 *Requirements defined: 2026-03-30*
-*Last updated: 2026-03-30 after initial definition*
+*Last updated: 2026-03-30 — phase assignments updated (TRANS moved to Phase 4, content to Phase 5, docs to Phase 6)*
