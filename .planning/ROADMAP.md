@@ -36,7 +36,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 - [x] 01-01-PLAN.md — Astro 6 project scaffold, Tailwind v4 integration, all dependencies installed
 - [x] 01-02-PLAN.md — Design tokens (colors, typography, border radius) in @theme block
-- [ ] 01-03-PLAN.md — Layout chain (BaseLayout, MainLayout, DocsLayout), FilmGrain, page stubs
+- [x] 01-03-PLAN.md — Layout chain (BaseLayout, MainLayout, DocsLayout), FilmGrain, page stubs
 
 ### Phase 2: Scroll Infrastructure
 **Goal**: Lenis smooth scroll and GSAP ScrollTrigger are synchronized via the correct ticker pattern and verified with a pinned test section — every scroll-driven animation in subsequent phases builds on this proven foundation

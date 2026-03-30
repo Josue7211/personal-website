@@ -10,8 +10,8 @@
 - [x] **FOUND-01**: Astro 6 project scaffolded with TypeScript strict mode
 - [x] **FOUND-02**: Tailwind CSS v4 integrated via @tailwindcss/vite plugin
 - [x] **FOUND-03**: Design tokens defined (colors, typography, spacing) matching spec palette
-- [ ] **FOUND-04**: Two layouts: MainLayout.astro (immersive) and DocsLayout.astro (clean)
-- [ ] **FOUND-05**: Film grain noise texture overlay on all dark backgrounds
+- [x] **FOUND-04**: Two layouts: MainLayout.astro (immersive) and DocsLayout.astro (clean)
+- [x] **FOUND-05**: Film grain noise texture overlay on all dark backgrounds
 - [x] **FOUND-06**: Base responsive breakpoints established (mobile/tablet/desktop)
 
 ### Scroll Infrastructure
@@ -140,8 +140,8 @@
 | FOUND-01 | Phase 1 | Complete |
 | FOUND-02 | Phase 1 | Complete |
 | FOUND-03 | Phase 1 | Complete |
-| FOUND-04 | Phase 1 | Pending |
-| FOUND-05 | Phase 1 | Pending |
+| FOUND-04 | Phase 1 | Complete |
+| FOUND-05 | Phase 1 | Complete |
 | FOUND-06 | Phase 1 | Complete |
 | SCRL-01 | Phase 2 | Pending |
 | SCRL-02 | Phase 2 | Pending |

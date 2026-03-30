@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 01-02-PLAN.md
-last_updated: "2026-03-30T17:09:16.958Z"
+status: verifying
+stopped_at: Completed 01-03-PLAN.md
+last_updated: "2026-03-30T17:16:27.471Z"
 last_activity: 2026-03-30
 progress:
   total_phases: 7
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-03-30)
 
 Phase: 01 (foundation) — EXECUTING
 Plan: 3 of 3
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-03-30
 
 Progress: [░░░░░░░░░░] 0%
@@ -54,6 +54,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01 P01 | 4 | 2 tasks | 5 files |
 | Phase 01-foundation P02 | 2 | 2 tasks | 2 files |
+| Phase 01-foundation P03 | 5 | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,8 @@ Recent decisions affecting current work:
 - [Phase 01]: Pre-installed three, gsap, lenis in Plan 01 to prevent package.json churn across phases
 - [Phase 01-foundation]: Pitfall 5 mitigation: body has no background-color in global.css — each layout (MainLayout, DocsLayout) owns its own background on its wrapper div
 - [Phase 01-foundation]: Tailwind v4 @theme block is single source of truth for design tokens — generates both utility classes and CSS custom properties simultaneously
+- [Phase 01-foundation]: FilmGrain uses SVG feTurbulence opacity 0.04 mix-blend-mode overlay — scoped to MainLayout, never DocsLayout
+- [Phase 01-foundation]: BaseLayout imports global.css via frontmatter import (Vite-bundled), not static link tag
 
 ### Pending Todos
 
@@ -83,6 +86,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-30T17:09:16.955Z
-Stopped at: Completed 01-02-PLAN.md
+Last session: 2026-03-30T17:16:27.469Z
+Stopped at: Completed 01-03-PLAN.md
 Resume file: None
