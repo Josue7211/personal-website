@@ -1,17 +1,58 @@
 ---
-
+import MainLayout from '../layouts/MainLayout.astro'
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout title="Home">
+  <div class="hero-stub">
+    <span class="label">Phase 1 — Foundation</span>
+    <h1 class="name">Josue Aparcedo</h1>
+    <p class="tagline">Software Engineer</p>
+    <code class="token-demo">Design tokens active · Tailwind v4 · Astro 6</code>
+  </div>
+</MainLayout>
+
+<style>
+  .hero-stub {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.75rem;
+  }
+
+  .name {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 10vw, 8rem);
+    font-weight: 900;
+    color: var(--color-primary);
+    margin: 0;
+    line-height: 1;
+  }
+
+  .tagline {
+    font-family: var(--font-body);
+    color: var(--color-text-muted);
+    font-size: 1.25rem;
+    margin: 0;
+  }
+
+  .token-demo {
+    font-family: var(--font-mono);
+    color: var(--color-text-accent);
+    background-color: var(--color-surface-2);
+    border-radius: var(--radius);
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+</style>
