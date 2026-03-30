@@ -7,8 +7,8 @@
 
 ### Foundation
 
-- [ ] **FOUND-01**: Astro 6 project scaffolded with TypeScript strict mode
-- [ ] **FOUND-02**: Tailwind CSS v4 integrated via @tailwindcss/vite plugin
+- [x] **FOUND-01**: Astro 6 project scaffolded with TypeScript strict mode
+- [x] **FOUND-02**: Tailwind CSS v4 integrated via @tailwindcss/vite plugin
 - [ ] **FOUND-03**: Design tokens defined (colors, typography, spacing) matching spec palette
 - [ ] **FOUND-04**: Two layouts: MainLayout.astro (immersive) and DocsLayout.astro (clean)
 - [ ] **FOUND-05**: Film grain noise texture overlay on all dark backgrounds
@@ -137,8 +137,8 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1 | Pending |
-| FOUND-02 | Phase 1 | Pending |
+| FOUND-01 | Phase 1 | Complete |
+| FOUND-02 | Phase 1 | Complete |
 | FOUND-03 | Phase 1 | Pending |
 | FOUND-04 | Phase 1 | Pending |
 | FOUND-05 | Phase 1 | Pending |

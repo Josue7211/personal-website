@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Astro 6 project scaffold, Tailwind v4 integration, all dependencies installed
+- [x] 01-01-PLAN.md — Astro 6 project scaffold, Tailwind v4 integration, all dependencies installed
 - [ ] 01-02-PLAN.md — Design tokens (colors, typography, border radius) in @theme block
 - [ ] 01-03-PLAN.md — Layout chain (BaseLayout, MainLayout, DocsLayout), FilmGrain, page stubs
 
