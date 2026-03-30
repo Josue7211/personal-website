@@ -35,7 +35,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [x] 01-01-PLAN.md — Astro 6 project scaffold, Tailwind v4 integration, all dependencies installed
-- [ ] 01-02-PLAN.md — Design tokens (colors, typography, border radius) in @theme block
+- [x] 01-02-PLAN.md — Design tokens (colors, typography, border radius) in @theme block
 - [ ] 01-03-PLAN.md — Layout chain (BaseLayout, MainLayout, DocsLayout), FilmGrain, page stubs
 
 ### Phase 2: Scroll Infrastructure
@@ -121,7 +121,7 @@ Note: Phase 6 (Docs) depends only on Phase 1 — it is architecturally isolated 
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/3 | Not started | - |
+| 1. Foundation | 2/3 | In Progress|  |
 | 2. Scroll Infrastructure | 0/? | Not started | - |
 | 3. Hero Section | 0/? | Not started | - |
 | 4. Page Transitions | 0/? | Not started | - |
