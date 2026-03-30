@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@import "./tokens.css";
+/* global.css — Tailwind v4 import + tokens + body defaults */
+
+/* Box model reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Scroll behavior — Lenis overrides this to 'smooth' in Phase 2 */
+html {
+  scroll-behavior: auto;
+}
+
+/* Body defaults — background NOT set here; each layout sets its own */
+body {
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+}
