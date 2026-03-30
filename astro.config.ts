@@ -7,6 +7,7 @@ export default defineConfig({
   site: 'https://josue.aparcedo.org',
   integrations: [sitemap()],
   vite: {
-    plugins: [tailwindcss()],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    plugins: [tailwindcss() as any],
   },
 })
