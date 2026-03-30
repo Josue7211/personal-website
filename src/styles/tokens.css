@@ -1,0 +1,34 @@
+/* src/styles/tokens.css */
+/* Design tokens — locked per CONTEXT.md D-09 through D-14 */
+/* All tokens inside @theme generate both utility classes AND CSS custom properties */
+
+@theme {
+  /* ===== Color Tokens ===== */
+
+  /* Accent / Primary (D-09) */
+  --color-primary: #a855f7;
+  --color-primary-deep: #7c3aed;
+  --color-primary-soft: #c4b5fd;
+  --color-primary-glow: rgba(168, 85, 247, 0.15);
+
+  /* Surfaces (D-10) */
+  --color-bg: #0a0a0a;
+  --color-surface-1: #111111;
+  --color-surface-2: #1a1a1a;
+  --color-surface-3: #222222;
+
+  /* Text (D-11) */
+  --color-text: #e4e4e7;
+  --color-text-muted: #a1a1aa;
+  --color-text-accent: #c4b5fd;
+
+  /* ===== Typography (D-01, D-02, D-03) ===== */
+  /* Generates font-display, font-body, font-mono utility classes */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  /* ===== Border Radius (D-14: 2-4px max — sharp, architectural) ===== */
+  --radius-sm: 2px;
+  --radius: 4px;
+}
