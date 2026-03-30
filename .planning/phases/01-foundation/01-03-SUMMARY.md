@@ -87,7 +87,7 @@ completed: 2026-03-30
 1. **Task 1: Build layout chain and FilmGrain component** - `70f0710` (feat)
 2. **Task 2: Create page stubs for all routes** - `fd8195b` (feat)
 
-**Plan metadata:** `[pending final commit]` (docs: complete plan)
+**Plan metadata:** `[see final commit below]` (docs: complete plan)
 
 ## Files Created/Modified
 
@@ -104,7 +104,7 @@ completed: 2026-03-30
 
 ## Checkpoint Verification Results
 
-Verified visually via Playwright screenshots at 1280px (desktop) and 375px (mobile):
+**Human-verify checkpoint APPROVED** — browser testing confirmed by human on 2026-03-30.
 
 **/ (homepage):**
 - Dark near-black (#0a0a0a) background confirmed
@@ -113,7 +113,7 @@ Verified visually via Playwright screenshots at 1280px (desktop) and 375px (mobi
 - "Software Engineer" tagline in Space Grotesk, muted color
 - Token demo code block with dark surface (#1a1a1a) background and lavender text
 - Film grain texture visible over dark background (very subtle, opacity 0.04)
-- Mobile (375px): layout wraps naturally, text remains readable, no breakage
+- Mobile (375px): layout holds, text readable, no breakage
 
 **/docs:**
 - White/neutral (#fafafa) background — NOT dark
@@ -123,7 +123,9 @@ Verified visually via Playwright screenshots at 1280px (desktop) and 375px (mobi
 
 **All stub routes (/about, /projects, /interests, /contact):**
 - All render with dark MainLayout, Playfair Display heading in purple
-- Pages load without HTTP errors
+- Pages load without errors
+
+**Console:** Zero JS errors on all pages confirmed.
 
 ## Decisions Made
 

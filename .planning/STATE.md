@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 01-03-PLAN.md
-last_updated: "2026-03-30T17:16:27.471Z"
+stopped_at: Completed 01-foundation Phase 1 — all 3 plans done, ready for Phase 2
+last_updated: "2026-03-30T17:21:21.678Z"
 last_activity: 2026-03-30
 progress:
   total_phases: 7
@@ -55,6 +55,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01 P01 | 4 | 2 tasks | 5 files |
 | Phase 01-foundation P02 | 2 | 2 tasks | 2 files |
 | Phase 01-foundation P03 | 5 | 2 tasks | 10 files |
+| Phase 01-foundation P03 | 12min | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,8 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: Tailwind v4 @theme block is single source of truth for design tokens — generates both utility classes and CSS custom properties simultaneously
 - [Phase 01-foundation]: FilmGrain uses SVG feTurbulence opacity 0.04 mix-blend-mode overlay — scoped to MainLayout, never DocsLayout
 - [Phase 01-foundation]: BaseLayout imports global.css via frontmatter import (Vite-bundled), not static link tag
+- [Phase 01-foundation]: FilmGrain scoped to MainLayout only (opacity 0.04 SVG feTurbulence) — DocsLayout confirmed clean at human-verify checkpoint
+- [Phase 01-foundation]: BaseLayout imports global.css via frontmatter import (Vite-bundled), not a static link tag — /src/ paths not served at runtime
 
 ### Pending Todos
 
@@ -86,6 +89,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-30T17:16:27.469Z
-Stopped at: Completed 01-03-PLAN.md
+Last session: 2026-03-30T17:21:21.675Z
+Stopped at: Completed 01-foundation Phase 1 — all 3 plans done, ready for Phase 2
 Resume file: None

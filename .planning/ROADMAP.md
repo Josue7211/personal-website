@@ -12,7 +12,7 @@ Seven phases deliver a cinematic, immersive personal portfolio with a unified kn
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Astro 6 scaffold, Tailwind v4, design tokens, layouts, film grain, responsive base
+- [x] **Phase 1: Foundation** - Astro 6 scaffold, Tailwind v4, design tokens, layouts, film grain, responsive base (completed 2026-03-30)
 - [ ] **Phase 2: Scroll Infrastructure** - Lenis + GSAP ScrollTrigger sync verified before any section builds on top
 - [ ] **Phase 3: Hero Section** - Three.js particle field, mouse repulsion, device quality tiers, GPU disposal
 - [ ] **Phase 4: Page Transitions** - GSAP Context cleanup patterns established before content sections add timelines
@@ -121,7 +121,7 @@ Note: Phase 6 (Docs) depends only on Phase 1 — it is architecturally isolated 
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 2/3 | In Progress|  |
+| 1. Foundation | 3/3 | Complete   | 2026-03-30 |
 | 2. Scroll Infrastructure | 0/? | Not started | - |
 | 3. Hero Section | 0/? | Not started | - |
 | 4. Page Transitions | 0/? | Not started | - |
