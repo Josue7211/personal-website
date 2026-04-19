@@ -1,58 +1,254 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro'
+import BaseLayout from '../layouts/BaseLayout.astro'
+import FilmGrain from '../components/ui/FilmGrain.astro'
+import '../styles/index-scene.css'
 ---
 
-<MainLayout title="Home">
-  <div class="hero-stub">
-    <span class="label">Phase 1 — Foundation</span>
-    <h1 class="name">Josue Aparcedo</h1>
-    <p class="tagline">Software Engineer</p>
-    <code class="token-demo">Design tokens active · Tailwind v4 · Astro 6</code>
+<BaseLayout
+  title="Computer Engineer"
+  description="Computer engineering student building at the edge of hardware and software."
+  bodyClass="index-scene intro-active"
+>
+  <FilmGrain />
+
+  <!-- ============ INTRO LOADER ============ -->
+  <div class="intro" id="intro">
+    <div class="intro-inner">
+      <div class="intro-stage">
+        <div class="intro-code">
+          <span class="cl">$</span>
+          <span class="ct" id="intro-typer"></span><span class="cb">▮</span>
+        </div>
+        <div class="intro-progress">
+          <div class="intro-bar"><span id="intro-bar-fill"></span></div>
+          <div class="intro-counts">
+            <span id="intro-count">00</span>
+            <span class="sep">/</span>
+            <span>99</span>
+          </div>
+        </div>
+        <div class="intro-mono">
+          <span>LOADING PORTFOLIO</span>
+          <span id="intro-status">booting threejs runtime…</span>
+        </div>
+      </div>
+      <div class="intro-curtain"></div>
+    </div>
   </div>
-</MainLayout>
 
-<style>
-  .hero-stub {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 2rem;
-    text-align: center;
-    gap: 1rem;
-  }
+  <!-- ============ SHARED 3D CANVAS ============ -->
+  <canvas class="scene-canvas" id="scene-canvas"></canvas>
 
-  .label {
-    font-family: var(--font-mono);
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    font-size: 0.75rem;
-  }
+  <!-- ============ NAV ============ -->
+  <header class="nav">
+    <a href="#top" class="nav-brand">
+      <span class="dot"></span>
+      JOSUE.APARCEDO
+    </a>
+    <nav class="nav-links">
+      <a href="#work"><span class="num">01</span>WORK</a>
+      <a href="#about"><span class="num">02</span>ABOUT</a>
+      <a href="/docs"><span class="num">03</span>DOCS</a>
+      <a href="#contact"><span class="num">04</span>CONTACT</a>
+    </nav>
+    <span class="nav-mono nav-avail">AVAIL. FALL '26 →</span>
+    <span class="nav-mono nav-now-playing">
+      <span class="np-label">▶ NOW PLAYING</span>
+      <span class="np-track">Seatbelts — Tank!</span>
+    </span>
+  </header>
 
-  .name {
-    font-family: var(--font-display);
-    font-size: clamp(3rem, 10vw, 8rem);
-    font-weight: 900;
-    color: var(--color-primary);
-    margin: 0;
-    line-height: 1;
-  }
+  <!-- ============ HERO ============ -->
+  <section class="hero hero-v2" id="top">
+    <div class="hero-corner tl">
+      <div class="corner-row">
+        <span class="corner-label">PORTFOLIO</span>
+        <span class="corner-val">V.05 · 2026</span>
+      </div>
+      <div class="corner-row">
+        <span class="corner-label">IDX</span>
+        <span class="corner-val">0001 / JA</span>
+      </div>
+    </div>
 
-  .tagline {
-    font-family: var(--font-body);
-    color: var(--color-text-muted);
-    font-size: 1.25rem;
-    margin: 0;
-  }
+    <div class="hero-corner tr">
+      <div class="corner-row">
+        <span class="corner-label">LAT</span>
+        <span class="corner-val">26.6406° N</span>
+      </div>
+      <div class="corner-row">
+        <span class="corner-label">LON</span>
+        <span class="corner-val">81.8723° W</span>
+      </div>
+      <div class="corner-row">
+        <span class="corner-label">EST</span>
+        <span class="corner-val" id="hero-clock">—:—:—</span>
+      </div>
+    </div>
 
-  .token-demo {
-    font-family: var(--font-mono);
-    color: var(--color-text-accent);
-    background-color: var(--color-surface-2);
-    border-radius: var(--radius);
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-  }
-</style>
+    <div class="nameplate">
+      <div class="nameplate-row top">
+        <h1 class="name-big" data-text="JOSUE">JOSUE</h1>
+      </div>
+      <div class="nameplate-row bottom">
+        <h1 class="name-big outline" data-text="APARCEDO">APARCEDO</h1>
+      </div>
+    </div>
+
+    <div class="hero-tagline">
+      <span class="tag-rule"></span>
+      <p>
+        <span class="serif-italic">Computer engineering</span> student<br />
+        building tools for <span class="serif-italic">autonomous agents</span><br />
+        &amp; the <span class="serif-italic">systems</span> they run on.
+      </p>
+    </div>
+
+    <div class="hero-corner bl">
+      <div class="corner-row">
+        <span class="corner-label"><span class="status-dot"></span>STATUS</span>
+        <span class="corner-val">Open to SWE/HW '26</span>
+      </div>
+      <div class="corner-row">
+        <span class="corner-label">▶ PLAYING</span>
+        <span class="corner-val marquee"
+          ><span
+            >Seatbelts — Tank! · Seatbelts — Space Lion · Seatbelts — Green Bird · Seatbelts — The Real Folk Blues ·
+          </span></span
+        >
+      </div>
+      <div class="corner-row">
+        <span class="corner-label">READING</span>
+        <span class="corner-val">Tufte, <em>Envisioning Information</em></span>
+      </div>
+    </div>
+
+    <div class="hero-corner br">
+      <div class="corner-row drag-hint">
+        <span class="corner-label">DRAG</span>
+        <span class="corner-val">⇠ spin the form ⇢</span>
+      </div>
+      <div class="scroll-hint-v2">
+        <span>SCROLL TO ENTER</span>
+        <span class="line"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WORK (octahedron) ============ -->
+  <section class="section work-3d" id="work">
+    <div class="work-head reveal">
+      <span class="section-num">[ 01 ] SELECTED WORK</span>
+      <h2 class="section-title">Things I've <em>built</em>.</h2>
+      <p class="work-sub">
+        Eight faces. Eight flagships. <em>Double-click a face</em> — or drag to spin.
+      </p>
+    </div>
+
+    <div class="face-labels" id="face-labels"></div>
+    <div class="quick-links" id="quick-links"></div>
+
+    <div class="project-drawer" id="project-drawer" aria-hidden="true">
+      <button class="drawer-close" id="drawer-close" aria-label="Close">
+        <span>CLOSE</span><span class="drawer-x">×</span>
+      </button>
+      <div class="drawer-inner">
+        <span class="drawer-index" id="drawer-index">001 / 2026</span>
+        <h3 class="drawer-title" id="drawer-title"></h3>
+        <div class="drawer-tags" id="drawer-tags"></div>
+        <p class="drawer-desc" id="drawer-desc"></p>
+        <div class="drawer-meta" id="drawer-meta"></div>
+        <a class="drawer-cta" id="drawer-cta" href="#">READ CASE STUDY →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="section" id="about">
+    <div class="section-head reveal">
+      <span class="section-num">[ 02 ] ABOUT</span>
+      <h2 class="section-title">Notes on <em>me</em>.</h2>
+    </div>
+
+    <div class="about reveal">
+      <div class="about-body">
+        <p>
+          I'm <em>Josue Aparcedo</em>, a Computer Engineering student at Florida
+          SouthWestern, aiming to transfer to UCF in Fall '26.
+        </p>
+        <p>
+          I build tools for autonomous agents and the homelab systems they live
+          on — memory, orchestration, secrets, red-team scanning — plus the
+          occasional soldering iron (see: <em>Bjorn</em>).
+        </p>
+        <p>
+          Right now I'm looking for SWE / hardware internships for summer and
+          fall '26. If you're hiring, say hi.
+        </p>
+
+        <div class="cv-block">
+          <a href="#" class="cv-btn">
+            <span class="cv-label">RESUME / CV</span>
+            <span class="cv-action">Download PDF ↓</span>
+          </a>
+        </div>
+      </div>
+
+      <aside class="about-aside">
+        <div>
+          <dl>
+            <dt>— Now</dt>
+            <dd><span>FSW · AA Computer Eng.</span><span class="dim">sophomore · Fall '26</span></dd>
+            <dd><span>Transfer → UCF (aiming)</span><span class="dim">also FGCU / FIU</span></dd>
+            <dd><span>Based in Fort Myers, FL</span><span class="dim">eastern time</span></dd>
+          </dl>
+        </div>
+        <div>
+          <dl>
+            <dt>— Looking for</dt>
+            <dd><span>SWE internship</span><span class="dim">summer '26</span></dd>
+            <dd><span>Hardware / firmware</span><span class="dim">fall '26</span></dd>
+            <dd><span>Cool people to build with</span><span class="dim">always</span></dd>
+          </dl>
+        </div>
+        <div>
+          <dl>
+            <dt>— Reach me</dt>
+            <dd><span>bobbyparzero@gmail.com</span><span class="dim">email</span></dd>
+            <dd><span>@Josue7211</span><span class="dim">github</span></dd>
+            <dd><span>/in/aparcedo</span><span class="dim">linkedin</span></dd>
+          </dl>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="contact" id="contact">
+    <div class="contact-kicker reveal">[ 03 ] SAY HELLO</div>
+    <h2 class="contact-title reveal">
+      Let's make <em>something</em> strange together.
+    </h2>
+    <a href="mailto:bobbyparzero@gmail.com" class="contact-email reveal"
+      >bobbyparzero@gmail.com</a
+    >
+    <div class="contact-socials reveal">
+      <a href="https://github.com/Josue7211" target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
+      <a href="https://www.linkedin.com/in/aparcedo" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a>
+      <a href="https://github.com/Josue7211/memd" target="_blank" rel="noopener noreferrer">MEMD ↗</a>
+      <a href="/docs">DOCS →</a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <span>© JOSUE APARCEDO · 2026</span>
+    <span class="footer-clock" id="clock">—:—:—</span>
+    <span>BUILT WITH ASTRO + THREE.JS</span>
+  </footer>
+
+  <!-- scripts — kept as global <script> so prototype's window.* contract holds -->
+  <script is:inline src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script is:inline src="/scene/scene3d.js"></script>
+  <script is:inline src="/scene/app.js"></script>
+</BaseLayout>
