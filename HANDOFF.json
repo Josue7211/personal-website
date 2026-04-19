@@ -1,0 +1,168 @@
+{
+  "version": "1.1",
+  "timestamp": "2026-04-19T00:00:00-04:00",
+  "branch": "main",
+  "status": "v1_planning_pass_complete_awaiting_greenlight",
+  "workstream": "cinematic v1 detailed planning across docs/plans/v1 + docs/phases/v1",
+  "current_position": {
+    "last_handoff_marker": "v1_cinematic_reframe_2026-04-19",
+    "current_session_scope": [
+      "reframed ROADMAP.md around 5-shot cinematic treatment (B1..G1)",
+      "rewrote docs/phases/v1/phase-{b1..g1}.md as short goal/deliver/pass-gate contracts",
+      "authored 14 plan docs under docs/plans/v1/: 5 cross-cutting specs + 6 per-phase deep plans + nav-and-layout + about-page + mobile-and-a11y + README",
+      "updated docs/plans/INDEX.md to link all new plan files",
+      "saved durable lesson memory: resume-from-compaction never auto-implements"
+    ],
+    "next_loop": "await user decisions; then B1 Scroll Infrastructure + Tokens",
+    "next_entrypoint": "ROADMAP.md then docs/plans/v1/README.md"
+  },
+  "planning_artifacts": {
+    "roadmap": "ROADMAP.md",
+    "phase_contracts": [
+      "docs/phases/v1/phase-b1.md",
+      "docs/phases/v1/phase-c1.md",
+      "docs/phases/v1/phase-d1.md",
+      "docs/phases/v1/phase-e1.md",
+      "docs/phases/v1/phase-f1.md",
+      "docs/phases/v1/phase-g1.md"
+    ],
+    "cross_cutting_specs": [
+      "docs/plans/v1/design-tokens.md",
+      "docs/plans/v1/sound-spec.md",
+      "docs/plans/v1/data-pipeline.md",
+      "docs/plans/v1/scene-controller.md",
+      "docs/plans/v1/hud-and-session-card.md",
+      "docs/plans/v1/nav-and-layout.md",
+      "docs/plans/v1/about-page.md",
+      "docs/plans/v1/mobile-and-a11y.md"
+    ],
+    "per_phase_deep_plans": [
+      "docs/plans/v1/b1-scroll.md",
+      "docs/plans/v1/c1-boot-and-hero.md",
+      "docs/plans/v1/d1-dive.md",
+      "docs/plans/v1/e1-work-and-experiences.md",
+      "docs/plans/v1/f1-transmit-and-docs.md",
+      "docs/plans/v1/g1-endcard-audio-polish.md"
+    ],
+    "design_contracts_authoritative": [
+      "docs/plans/cinematic-treatment.md",
+      "docs/plans/project-manifest.md"
+    ],
+    "plan_read_order": "docs/plans/v1/README.md",
+    "index": "docs/plans/INDEX.md"
+  },
+  "open_decisions_blocking_b1": [
+    {
+      "id": "audio-tier",
+      "question": "audio strategy: self-host Bebop OST (risk), Spotify Embed tier (safe), CC original composed loop (safest), or hybrid (Spotify default + local stings)?",
+      "default_if_unanswered": "hybrid — Spotify tier-2 for full-track bed, local CC0 stings for boot/shatter/transmit/vinyl",
+      "spec_ref": "docs/plans/v1/sound-spec.md"
+    },
+    {
+      "id": "amber-accent",
+      "question": "confirm --color-warm-signal #fbbf24 as rare accent (REC dot, CTAs, hazard cues)",
+      "default_if_unanswered": "yes",
+      "spec_ref": "docs/plans/v1/design-tokens.md"
+    },
+    {
+      "id": "public-email",
+      "question": "public-facing email: bobbyparzero@gmail.com or josue@aparcedo.org?",
+      "default_if_unanswered": "bobbyparzero@gmail.com (matches memory)",
+      "spec_ref": "docs/plans/v1/about-page.md"
+    },
+    {
+      "id": "sphere-categories",
+      "question": "8 base faces for sphere — confirm categories: Agents, Security, Homelab, Hardware, Tools, Research, Art, Writing (or revise)?",
+      "default_if_unanswered": "8 as listed; subdivides into 512 sub-triangles via SUBDIV=3",
+      "spec_ref": "docs/plans/cinematic-treatment.md"
+    },
+    {
+      "id": "docs-aesthetic",
+      "question": "docs look: cinematic shell (same grain/vignette, nav) or reading-mode light theme?",
+      "default_if_unanswered": "cinematic shell, no 3D canvas, --color-void bg with --color-ink prose",
+      "spec_ref": "docs/plans/v1/f1-transmit-and-docs.md"
+    }
+  ],
+  "loose_ends": [
+    {
+      "kind": "uncommitted-code-edits",
+      "files": ["public/scene/app.js", "src/pages/index.astro", "src/layouts/BaseLayout.astro", "src/styles/index-scene.css"],
+      "origin": "mistakenly started coding after compaction before user said plan-only; user has not yet said revert or keep",
+      "next_action": "ask user explicitly before B1 starts"
+    },
+    {
+      "kind": "micro-experience-stubs",
+      "files": ["docs/plans/v1/e1-work-and-experiences.md", "docs/plans/v1/g1-endcard-audio-polish.md"],
+      "note": "3 flagships (memd, security-sweep, claude-autoresearch) have detailed interaction specs; 5 remaining (Bjorn, homelab-cli, AgentSecrets, claude-dream, mac-bridge) only have schematic polish targets in G1 §3. optional: author per-repo interaction docs."
+    },
+    {
+      "kind": "vite-version-drift",
+      "note": "Astro 6 expects Vite 7; current resolves Vite 8. B1 plan pins Vite 7 per docs/plans/v1/b1-scroll.md"
+    }
+  ],
+  "completed_work": [
+    { "id": 1, "name": "A1 Foundation scaffold", "status": "done" },
+    { "id": 2, "name": "memd-first repo migration", "status": "done" },
+    { "id": 3, "name": "ROADMAP + HANDOFF bootstrap (memd style)", "status": "done" },
+    { "id": 4, "name": "V1 cinematic-aligned roadmap reframe", "status": "done" },
+    { "id": 5, "name": "V1 phase contracts B1..G1 rewritten", "status": "done" },
+    { "id": 6, "name": "V1 detailed plan docs (14 files) authored", "status": "done" }
+  ],
+  "remaining_work": [
+    { "id": 1, "name": "User resolves 5 open decisions", "status": "pending" },
+    { "id": 2, "name": "Decide fate of uncommitted code edits (revert / keep)", "status": "pending" },
+    { "id": 3, "name": "Execute B1 Scroll Infrastructure + Tokens", "status": "pending" },
+    { "id": 4, "name": "Execute C1 Boot + Hero", "status": "pending" },
+    { "id": 5, "name": "Execute D1 The Dive (money shot)", "status": "pending" },
+    { "id": 6, "name": "Execute E1 Work + Micro-Experiences", "status": "pending" },
+    { "id": 7, "name": "Execute F1 Transmit + Docs", "status": "pending" },
+    { "id": 8, "name": "Execute G1 End Card + Audio + Polish + Deploy", "status": "pending" }
+  ],
+  "resume_guardrails": [
+    "DO NOT start implementation until user greenlights B1 explicitly.",
+    "Memory lesson active: resume-from-compaction never auto-implements (see .claude/.../memory/feedback_resume_no_implement.md).",
+    "ROADMAP.md is single roadmap source of truth.",
+    "docs/plans/cinematic-treatment.md and docs/plans/project-manifest.md are authoritative design contracts.",
+    "docs/plans/v1/* owns pixels, timings, tokens, copy. docs/phases/v1/* owns short contracts only.",
+    "Keep caveman voice (memd voice_mode)."
+  ],
+  "blockers": [
+    "5 open decisions (see open_decisions_blocking_b1)",
+    "Unreverted code edits in working tree (see loose_ends)",
+    "Astro 6 / Vite 8 drift — solution pinned in b1-scroll.md but not yet applied"
+  ],
+  "human_actions_pending": [
+    "Answer 5 open decisions",
+    "Say revert-or-keep on uncommitted code edits",
+    "Greenlight B1 start (or request deeper planning on any spec)"
+  ],
+  "background_processes": [
+    "none — dev server was killed earlier in session"
+  ],
+  "uncommitted_files": [
+    "CLAUDE.md",
+    "src/layouts/BaseLayout.astro",
+    "src/pages/index.astro",
+    "ROADMAP.md",
+    "HANDOFF.json",
+    "AGENTS.md",
+    ".memd/",
+    "docs/",
+    "public/fonts/",
+    "public/scene/",
+    "src/styles/index-scene.css"
+  ],
+  "next_action": "Read ROADMAP.md → read docs/plans/v1/README.md → answer 5 open_decisions_blocking_b1 → decide fate of uncommitted code edits → greenlight B1.",
+  "context_notes": "Planning pass is substantially complete: 17 new/modified planning files covering every shot, token, pixel layout, audio, data pipeline, a11y, mobile, nav, about page, docs IA. Per-project micro-experience detail for 5 stubs is the only obvious unfilled area. User has low tolerance for scope drift — confirm target before writing more.",
+  "verification_ran": [
+    "ls docs/plans/v1/",
+    "git status --short"
+  ],
+  "resume_commands": [
+    "git status --short --branch",
+    "sed -n '1,200p' ROADMAP.md",
+    "sed -n '1,200p' HANDOFF.json",
+    "sed -n '1,200p' docs/plans/v1/README.md",
+    "sed -n '1,220p' docs/plans/cinematic-treatment.md"
+  ]
+}

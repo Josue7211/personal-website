@@ -1,0 +1,387 @@
+{
+  "turn_key": "dbebe5e4c2b21e5c71db54096439a03e4643784f1a154d5b3ee8e724fbd45087",
+  "snapshot": {
+    "project": "personal-website",
+    "namespace": "main",
+    "agent": "codex@session-5b36b772",
+    "workspace": null,
+    "visibility": null,
+    "route": "auto",
+    "intent": "current_task",
+    "context": {
+      "route": "project_first",
+      "intent": "current_task",
+      "retrieval_order": [
+        "project",
+        "synced",
+        "local",
+        "global"
+      ],
+      "records": [
+        {
+          "id": "1cc3f28f-2103-4a2f-b865-6465847938d7",
+          "record": "id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh,wake | cf=0.72 | upd=1776603046 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=..."
+        },
+        {
+          "id": "07930cfb-a2a7-467d-87d4-3927dd39220e",
+          "record": "id=07930cfb-a2a7-467d-87d4-3927dd39220e | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh | cf=0.72 | upd=1776603111 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=..."
+        },
+        {
+          "id": "1629641b-8a91-4a62-9ce8-0f3f75aa659f",
+          "record": "id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | lane=decisions | tags=checkpoint,current-task | cf=0.80 | upd=1776603110 | c=V1 planning pass complete: 17 files (ROADMAP + 6 phase contracts + 14 plan docs). Awaiting user on 5 open decisions (audio tier, amber accent, public email, 8 sphere categories, docs aesthetic) + revert-or-keep call o..."
+        },
+        {
+          "id": "b07dd9ac-e530-4b41-8b45-e6353781b0df",
+          "record": "id=b07dd9ac-e530-4b41-8b45-e6353781b0df | stage=canonical | scope=synced | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=resume_state,session_state | cf=0.62 | upd=1776603045 | c=focus: id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=status / status=active / project=personal-website / ns=main / vis=private / agent=codex@session-... pressure: medium next_recover..."
+        }
+      ]
+    },
+    "working": {
+      "route": "project_first",
+      "intent": "current_task",
+      "retrieval_order": [
+        "project",
+        "synced",
+        "local",
+        "global"
+      ],
+      "budget_chars": 1600,
+      "used_chars": 440,
+      "remaining_chars": 1160,
+      "truncated": false,
+      "policy": {
+        "admission_limit": 8,
+        "max_chars_per_item": 220,
+        "budget_chars": 1600,
+        "rehydration_limit": 4
+      },
+      "records": [
+        {
+          "id": "1629641b-8a91-4a62-9ce8-0f3f75aa659f",
+          "record": "id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | lane=decisions | tags=checkpo..."
+        },
+        {
+          "id": "b07dd9ac-e530-4b41-8b45-e6353781b0df",
+          "record": "id=b07dd9ac-e530-4b41-8b45-e6353781b0df | stage=canonical | scope=synced | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=resume_state,session_stat..."
+        }
+      ],
+      "evicted": [
+        {
+          "id": "1cc3f28f-2103-4a2f-b865-6465847938d7",
+          "record": "id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh,wake | cf=0.72 | upd=1776603046 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=...",
+          "reason": "evicted_by_status_cap;kind=Status;status=active;source=derived;source_trust=0.73;freshness_days=0;verified_days=45;recent_use_days=0;rehearsals=464;trust_rank=2"
+        },
+        {
+          "id": "07930cfb-a2a7-467d-87d4-3927dd39220e",
+          "record": "id=07930cfb-a2a7-467d-87d4-3927dd39220e | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh | cf=0.72 | upd=1776603111 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=...",
+          "reason": "evicted_by_status_cap;kind=Status;status=active;source=derived;source_trust=0.73;freshness_days=0;verified_days=45;recent_use_days=0;rehearsals=96;trust_rank=2"
+        }
+      ],
+      "rehydration_queue": [
+        {
+          "id": "1cc3f28f-2103-4a2f-b865-6465847938d7",
+          "kind": "working_memory_record",
+          "label": "evicted working-set item",
+          "summary": "id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh,wake | cf=0.72 | upd=1776603046 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=...",
+          "reason": "evicted_by_status_cap;kind=Status;status=active;source=derived;source_trust=0.73;freshness_days=0;verified_days=45;recent_use_days=0;rehearsals=464;trust_rank=2",
+          "source_agent": null,
+          "source_system": null,
+          "source_path": null,
+          "source_quality": null,
+          "recorded_at": null
+        },
+        {
+          "id": "07930cfb-a2a7-467d-87d4-3927dd39220e",
+          "kind": "working_memory_record",
+          "label": "evicted working-set item",
+          "summary": "id=07930cfb-a2a7-467d-87d4-3927dd39220e | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh | cf=0.72 | upd=1776603111 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=...",
+          "reason": "evicted_by_status_cap;kind=Status;status=active;source=derived;source_trust=0.73;freshness_days=0;verified_days=45;recent_use_days=0;rehearsals=96;trust_rank=2",
+          "source_agent": null,
+          "source_system": null,
+          "source_path": null,
+          "source_quality": null,
+          "recorded_at": null
+        }
+      ],
+      "traces": [
+        {
+          "item_id": "1629641b-8a91-4a62-9ce8-0f3f75aa659f",
+          "entity_id": "dc898b0f-9959-4b25-92b1-dc210842f31f",
+          "memory_kind": "status",
+          "memory_stage": "canonical",
+          "typed_memory": "session_continuity+canonical",
+          "event_type": "retrieved_working",
+          "summary": "retrieved_working route=project_first intent=current_task",
+          "occurred_at": "2026-04-19T12:57:45.504242798Z",
+          "salience_score": 0.87
+        },
+        {
+          "item_id": "b07dd9ac-e530-4b41-8b45-e6353781b0df",
+          "entity_id": "db160291-4810-475f-b958-e0e86dd673dc",
+          "memory_kind": "status",
+          "memory_stage": "canonical",
+          "typed_memory": "session_continuity+canonical",
+          "event_type": "restored",
+          "summary": "duplicate memory item restored to active canonical state",
+          "occurred_at": "2026-04-19T12:57:44.230098384Z",
+          "salience_score": 1.0
+        }
+      ],
+      "semantic_consolidation": null,
+      "procedures": [],
+      "compaction_quality": null
+    },
+    "inbox": {
+      "route": "project_first",
+      "intent": "current_task",
+      "items": []
+    },
+    "workspaces": {
+      "workspaces": [
+        {
+          "project": "personal-website",
+          "namespace": "main",
+          "workspace": null,
+          "visibility": "private",
+          "item_count": 10,
+          "active_count": 10,
+          "candidate_count": 0,
+          "contested_count": 0,
+          "source_lane_count": 3,
+          "avg_confidence": 0.742,
+          "trust_score": 0.73036003,
+          "last_seen_at": "2026-04-19T12:57:44.387112829Z",
+          "tags": [
+            "checkpoint",
+            "current-task",
+            "auto-short-term",
+            "bundle-refresh",
+            "wake",
+            "resume_state"
+          ]
+        }
+      ]
+    },
+    "sources": {
+      "sources": [
+        {
+          "source_agent": "memd",
+          "source_system": "memd-live-truth",
+          "project": "personal-website",
+          "namespace": "main",
+          "workspace": null,
+          "visibility": "private",
+          "item_count": 1,
+          "active_count": 1,
+          "candidate_count": 0,
+          "derived_count": 1,
+          "synthetic_count": 0,
+          "contested_count": 0,
+          "avg_confidence": 0.98,
+          "trust_score": 0.8684,
+          "last_seen_at": "2026-04-19T12:57:44.387112829Z",
+          "tags": [
+            "live_truth",
+            "repo_changes"
+          ]
+        },
+        {
+          "source_agent": "codex@session-5b36b772",
+          "source_system": "memd-short-term",
+          "project": "personal-website",
+          "namespace": "main",
+          "workspace": null,
+          "visibility": "private",
+          "item_count": 7,
+          "active_count": 7,
+          "candidate_count": 0,
+          "derived_count": 7,
+          "synthetic_count": 0,
+          "contested_count": 0,
+          "avg_confidence": 0.7428571,
+          "trust_score": 0.73085713,
+          "last_seen_at": "2026-04-19T12:51:51.161869708Z",
+          "tags": [
+            "checkpoint",
+            "current-task",
+            "auto-short-term",
+            "bundle-refresh",
+            "wake",
+            "auto"
+          ]
+        },
+        {
+          "source_agent": "codex@session-5b36b772",
+          "source_system": "memd-resume-state",
+          "project": "personal-website",
+          "namespace": "main",
+          "workspace": null,
+          "visibility": "private",
+          "item_count": 2,
+          "active_count": 2,
+          "candidate_count": 0,
+          "derived_count": 2,
+          "synthetic_count": 0,
+          "contested_count": 0,
+          "avg_confidence": 0.62,
+          "trust_score": 0.6596,
+          "last_seen_at": "2026-04-19T12:50:45.354483794Z",
+          "tags": [
+            "resume_state",
+            "session_state"
+          ]
+        }
+      ]
+    },
+    "semantic": null,
+    "claims": {
+      "claims": []
+    },
+    "recent_repo_changes": [
+      "status D .planning/PROJECT.md",
+      "status D .planning/REQUIREMENTS.md",
+      "status D .planning/ROADMAP.md",
+      "status D .planning/STATE.md",
+      "status D .planning/config.json",
+      "status D .planning/phases/01-foundation/01-01-PLAN.md",
+      "status D .planning/phases/01-foundation/01-01-SUMMARY.md",
+      "status D .planning/phases/01-foundation/01-02-PLAN.md",
+      "diff .planning/PROJECT.md (gone)              | 120 ----",
+      "diff .planning/REQUIREMENTS.md (gone)         | 205 -------",
+      "diff .planning/ROADMAP.md (gone)              | 130 -----",
+      "diff .planning/STATE.md (gone)                |  94 ----"
+    ],
+    "change_summary": [
+      "focus -> id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=per...",
+      "next_recovery -> evicted working-set item: id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | s...",
+      "rehydration 1 -> 2"
+    ],
+    "resume_state_age_minutes": 5,
+    "refresh_recommended": false,
+    "atlas_region_hints": [],
+    "handoff_quality": null,
+    "files_touched": [
+      "/home/josue/.claude/projects/-home-josue-Documents-projects-personal-website/memory/MEMORY.md",
+      "/home/josue/.claude/projects/-home-josue-Documents-projects-personal-website/memory/feedback_resume_no_implement.md",
+      "/home/josue/Documents/projects/personal-website/HANDOFF.json",
+      "/home/josue/Documents/projects/personal-website/ROADMAP.md",
+      "/home/josue/Documents/projects/personal-website/docs/handoff/2026-04-19-v1-planning-pass-complete.md",
+      "/home/josue/Documents/projects/personal-website/docs/handoff/INDEX.md",
+      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-b1-scroll-infrastructure.md",
+      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-c1-hero-section.md",
+      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-d1-page-transitions.md",
+      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-e1-content-sections.md",
+      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-f1-docs-section.md",
+      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-g1-performance-deployment.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/INDEX.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/cinematic-treatment.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/project-manifest.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/about-page.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/b1-scroll.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/c1-boot-and-hero.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/d1-dive.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/data-pipeline.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/design-tokens.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/e1-work-and-experiences.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/f1-transmit-and-docs.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/g1-endcard-audio-polish.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/hud-and-session-card.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/mobile-and-a11y.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/nav-and-layout.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/scene-controller.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/sound-spec.md",
+      "/home/josue/Documents/projects/personal-website/public/scene/app.js",
+      "/home/josue/Documents/projects/personal-website/public/scene/scene3d.js",
+      "/home/josue/Documents/projects/personal-website/src/pages/index.astro",
+      "/home/josue/Documents/projects/personal-website/src/styles/index-scene.css",
+      "/home/josue/Documents/projects/personal-website/src/styles/tokens.css",
+      "/tmp/claude-1000/-home-josue-Documents-projects-personal-website/7c385b5d-26b4-4eb4-8a60-111a48985be2/tasks/bv1osdr0x.output",
+      "/tmp/pw-scroll/final_1050.png",
+      "/tmp/pw-scroll/final_1350.png",
+      "/tmp/pw-scroll/final_500.png",
+      "/tmp/pw-scroll/final_780.png",
+      "/tmp/pw-scroll/fix_0.png",
+      "/tmp/pw-scroll/fix_1000.png",
+      "/tmp/pw-scroll/fix_1100.png",
+      "/tmp/pw-scroll/fix_1250.png",
+      "/tmp/pw-scroll/fix_400.png",
+      "/tmp/pw-scroll/fix_600.png",
+      "/tmp/pw-scroll/fix_700.png",
+      "/tmp/pw-scroll/fix_800.png",
+      "/tmp/pw-scroll/fix_850.png",
+      "/tmp/pw-scroll/fix_900.png",
+      "/tmp/pw-scroll/s0.png",
+      "/tmp/pw-scroll/s2.png",
+      "/tmp/pw-scroll/s3.png",
+      "/tmp/pw-scroll/s4.png",
+      "/tmp/pw-scroll/s5.png",
+      "/tmp/pw-scroll/t1100.png",
+      "/tmp/pw-scroll/t1300.png",
+      "/tmp/pw-scroll/t1500.png",
+      "/tmp/pw-scroll/t1700.png"
+    ],
+    "un_read_paths": [
+      "/home/josue/.claude/projects/-home-josue-Documents-projects-personal-website/memory/MEMORY.md",
+      "/home/josue/.claude/projects/-home-josue-Documents-projects-personal-website/memory/feedback_resume_no_implement.md",
+      "/home/josue/Documents/projects/personal-website/ROADMAP.md",
+      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-b1-scroll-infrastructure.md",
+      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-c1-hero-section.md",
+      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-d1-page-transitions.md",
+      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-e1-content-sections.md",
+      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-f1-docs-section.md",
+      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-g1-performance-deployment.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/INDEX.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/cinematic-treatment.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/project-manifest.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/about-page.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/b1-scroll.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/c1-boot-and-hero.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/d1-dive.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/data-pipeline.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/design-tokens.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/e1-work-and-experiences.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/f1-transmit-and-docs.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/g1-endcard-audio-polish.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/hud-and-session-card.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/mobile-and-a11y.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/nav-and-layout.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/scene-controller.md",
+      "/home/josue/Documents/projects/personal-website/docs/plans/v1/sound-spec.md",
+      "/home/josue/Documents/projects/personal-website/public/scene/app.js",
+      "/home/josue/Documents/projects/personal-website/public/scene/scene3d.js",
+      "/home/josue/Documents/projects/personal-website/src/pages/index.astro",
+      "/home/josue/Documents/projects/personal-website/src/styles/index-scene.css",
+      "/home/josue/Documents/projects/personal-website/src/styles/tokens.css",
+      "/tmp/claude-1000/-home-josue-Documents-projects-personal-website/7c385b5d-26b4-4eb4-8a60-111a48985be2/tasks/bv1osdr0x.output",
+      "/tmp/pw-scroll/final_1050.png",
+      "/tmp/pw-scroll/final_1350.png",
+      "/tmp/pw-scroll/final_500.png",
+      "/tmp/pw-scroll/final_780.png",
+      "/tmp/pw-scroll/fix_0.png",
+      "/tmp/pw-scroll/fix_1000.png",
+      "/tmp/pw-scroll/fix_1100.png",
+      "/tmp/pw-scroll/fix_1250.png",
+      "/tmp/pw-scroll/fix_400.png",
+      "/tmp/pw-scroll/fix_600.png",
+      "/tmp/pw-scroll/fix_700.png",
+      "/tmp/pw-scroll/fix_800.png",
+      "/tmp/pw-scroll/fix_850.png",
+      "/tmp/pw-scroll/fix_900.png",
+      "/tmp/pw-scroll/s0.png",
+      "/tmp/pw-scroll/s2.png",
+      "/tmp/pw-scroll/s3.png",
+      "/tmp/pw-scroll/s4.png",
+      "/tmp/pw-scroll/s5.png",
+      "/tmp/pw-scroll/t1100.png",
+      "/tmp/pw-scroll/t1300.png",
+      "/tmp/pw-scroll/t1500.png",
+      "/tmp/pw-scroll/t1700.png"
+    ],
+    "preferences": [
+      "id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh,wake | cf=0.72 | upd=1776603046 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=...",
+      "id=07930cfb-a2a7-467d-87d4-3927dd39220e | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh | cf=0.72 | upd=1776603111 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=...",
+      "id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | lane=decisions | tags=checkpoint,current-task | cf=0.80 | upd=1776603110 | c=V1 planning pass complete: 17 files (ROADMAP + 6 phase contracts + 14 plan docs). Awaiting user on 5 open decisions (audio tier, amber accent, public email, 8 sphere categories, docs aesthetic) + revert-or-keep call o..."
+    ]
+  },
+  "refreshed_at": "2026-04-19T12:57:47.473948629Z"
+}

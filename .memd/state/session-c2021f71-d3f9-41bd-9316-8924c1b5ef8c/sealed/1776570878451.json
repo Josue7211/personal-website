@@ -1,0 +1,53 @@
+{
+  "session_id": "c2021f71-d3f9-41bd-9316-8924c1b5ef8c",
+  "entries": [
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/pages/index.astro",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776569848310
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/public/scene/scene3d.js",
+      "op": "read",
+      "count": 4,
+      "last_ts_ms": 1776570412113
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/public/scene/scene3d.js",
+      "op": "edit",
+      "count": 6,
+      "last_ts_ms": 1776570461225
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/styles/index-scene.css",
+      "op": "read",
+      "count": 7,
+      "last_ts_ms": 1776570681349
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/styles/index-scene.css",
+      "op": "edit",
+      "count": 4,
+      "last_ts_ms": 1776570670400
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/pages/index.astro",
+      "op": "edit",
+      "count": 1,
+      "last_ts_ms": 1776569957879
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/public/scene/app.js",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776570044470
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/public/scene/app.js",
+      "op": "edit",
+      "count": 2,
+      "last_ts_ms": 1776570276854
+    }
+  ]
+}

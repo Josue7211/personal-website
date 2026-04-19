@@ -1,0 +1,227 @@
+{
+  "session_id": "7eca926f-f0bd-48a3-a181-e930e29e1b81",
+  "entries": [
+    {
+      "path": "/tmp/pw-handoff/personal-website/project/index.html",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776542501238
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/pages/index.astro",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776542507027
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/layouts/MainLayout.astro",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776542508966
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/styles/tokens.css",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776542511072
+    },
+    {
+      "path": "/tmp/pw-handoff/personal-website/project/styles.css",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776542516467
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/layouts/BaseLayout.astro",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776542534706
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/styles/global.css",
+      "op": "read",
+      "count": 2,
+      "last_ts_ms": 1776545707550
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/components/ui/FilmGrain.astro",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776542576580
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/astro.config.ts",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776542619163
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/styles/index-scene.css",
+      "op": "read",
+      "count": 4,
+      "last_ts_ms": 1776546006475
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/styles/index-scene.css",
+      "op": "edit",
+      "count": 18,
+      "last_ts_ms": 1776546125463
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/layouts/BaseLayout.astro",
+      "op": "edit",
+      "count": 3,
+      "last_ts_ms": 1776542743011
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/pages/index.astro",
+      "op": "write",
+      "count": 1,
+      "last_ts_ms": 1776542794821
+    },
+    {
+      "path": "/tmp/index-shot.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776542897535
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/pages/index.astro",
+      "op": "edit",
+      "count": 1,
+      "last_ts_ms": 1776542906853
+    },
+    {
+      "path": "/tmp/pw-handoff/personal-website/project/screenshots/hero-state.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776543488527
+    },
+    {
+      "path": "/tmp/pw-handoff/personal-website/project/screenshots/hero-state2.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776543534367
+    },
+    {
+      "path": "/tmp/s0-hero.png",
+      "op": "read",
+      "count": 2,
+      "last_ts_ms": 1776543711190
+    },
+    {
+      "path": "/tmp/s1-work.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776543585571
+    },
+    {
+      "path": "/tmp/s2-about-transition.png",
+      "op": "read",
+      "count": 2,
+      "last_ts_ms": 1776543713762
+    },
+    {
+      "path": "/tmp/s3-bottom.png",
+      "op": "read",
+      "count": 2,
+      "last_ts_ms": 1776543716609
+    },
+    {
+      "path": "/tmp/index-smoke.py",
+      "op": "write",
+      "count": 1,
+      "last_ts_ms": 1776544069258
+    },
+    {
+      "path": "/tmp/hero-1080.png",
+      "op": "read",
+      "count": 2,
+      "last_ts_ms": 1776545756128
+    },
+    {
+      "path": "/tmp/probe.py",
+      "op": "write",
+      "count": 1,
+      "last_ts_ms": 1776545658944
+    },
+    {
+      "path": "/tmp/probe2.py",
+      "op": "write",
+      "count": 1,
+      "last_ts_ms": 1776545695668
+    },
+    {
+      "path": "/tmp/proto-probe.py",
+      "op": "write",
+      "count": 1,
+      "last_ts_ms": 1776545852164
+    },
+    {
+      "path": "/tmp/proto-work.png",
+      "op": "read",
+      "count": 2,
+      "last_ts_ms": 1776545903018
+    },
+    {
+      "path": "/tmp/proto-probe.py",
+      "op": "edit",
+      "count": 1,
+      "last_ts_ms": 1776545890719
+    },
+    {
+      "path": "/tmp/proto-probe2.py",
+      "op": "write",
+      "count": 1,
+      "last_ts_ms": 1776545913878
+    },
+    {
+      "path": "/tmp/proto/personal-website/project/styles.css",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776545940034
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/public/scene/app.js",
+      "op": "read",
+      "count": 2,
+      "last_ts_ms": 1776546456406
+    },
+    {
+      "path": "/tmp/work-smoke.py",
+      "op": "write",
+      "count": 1,
+      "last_ts_ms": 1776546063538
+    },
+    {
+      "path": "/tmp/work-1080.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776546077037
+    },
+    {
+      "path": "/tmp/work-smoke.py",
+      "op": "edit",
+      "count": 1,
+      "last_ts_ms": 1776546084229
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/public/scene/scene3d.js",
+      "op": "read",
+      "count": 6,
+      "last_ts_ms": 1776546682138
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/public/scene/app.js",
+      "op": "edit",
+      "count": 1,
+      "last_ts_ms": 1776546319549
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/public/scene/scene3d.js",
+      "op": "edit",
+      "count": 5,
+      "last_ts_ms": 1776546718992
+    }
+  ]
+}

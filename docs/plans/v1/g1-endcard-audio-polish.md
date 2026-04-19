@@ -1,0 +1,244 @@
+---
+name: G1 — End Card + Audio + Polish + Deploy
+phase: G1
+status: ready
+last_revised: 2026-04-19
+---
+
+# G1 — End Card + Audio + Polish + Deploy
+
+Target: ~2.5 weeks.
+
+## 1. END CARD — `SEE YOU SPACE COWBOY`
+
+### Layout (full viewport)
+
+```
+               (centered vertically, slight up of center)
+
+               SEE YOU SPACE COWBOY...          <- serif, clamp(3rem,9vw,9rem)
+                                                   tracking -0.03em, weight 400
+
+                                                <- 80px gap
+                                   © JOSUE · 2026 <- mono, amber dot before
+```
+
+`color: --color-ink`. Ellipsis is three serif dots, not U+2026, for visual weight.
+
+### Animation
+
+- enter: letters stagger in (20ms per) from y=+20px, 600ms total
+- amber dot before `© JOSUE · 2026` pulses 3× slowly (1s each)
+- after 6s idle, back-to-top hint fades in
+
+### Sound
+
+- first 8 bars of `The Real Folk Blues` (Spotify tier 2) on enter
+- if mute on: vinyl-crackle sting only
+
+## 2. Audio engine — full implementation
+
+Per [[docs/plans/v1/sound-spec.md]]. G1 delivers:
+
+- AudioEngine singleton
+- Spotify Embed adapter + Web API ticker
+- 4 tier-3 local stings authored (`boot-sting.mp3`, `shatter.mp3`, `vinyl-crackle.mp3`, `transmit-stab.mp3`)
+- 40Hz sub drone generator
+- mute button UI (amber dot, top-left HUD adjacent)
+- `M` keyboard shortcut
+- localStorage persistence
+- ducking hook consumed by Dive beat 3
+- Scene-to-track mapping wired per sound-spec.md §4
+
+## 3. Remaining micro-experiences (stubs → finished)
+
+| repo | polish to |
+|------|-----------|
+| Bjorn | SVG G-code tracer actually animates along a real loaded gcode; test-print preview gallery (3 photos) |
+| homelab-cli | faux terminal with 16 working commands (fake but accurate output) |
+| AgentSecrets | animated flow: agent → broker → vault → audit, fake secret request cycle |
+| claude-dream | dream sequence visualization: raw log → compression waveform → recalled chunks |
+| mac-bridge | iMessage bubbles animate across screen with realistic timing, labeled 'sent from mac-bridge' |
+
+## 4. Command palette (`⌘K`)
+
+- opens centered modal, 480×560px, `--color-void-soft` bg, `--color-border` border
+- fuzzy search across: shots, projects, docs pages, keyboard shortcuts
+- arrow-key nav
+- enter to execute
+- escape to close
+
+Implementation: kbar or custom minimal (prefer custom, ~200 LOC, zero deps)
+
+## 5. Keyboard shortcut overlay (`?`)
+
+- opens a full-viewport dim backdrop
+- 2-column grid of shortcuts
+- `J`/`K`, `space`, `/`, `⌘K`, `?`, `M`, `ESC`
+- press any key closes
+
+## 6. Cursor states
+
+Custom cursor (lagged ring + dot):
+
+| state | trigger | appearance |
+|-------|---------|------------|
+| default | body | violet 6px dot + 24px ring |
+| pointer | interactive elements | ring grows to 36px, dot amber |
+| crosshair | hover sphere | ring → crosshair shape |
+| text | prose | thin vertical bar |
+| rec | contact submit | amber REC dot pulses |
+| grab | dragging sphere | closed-hand cursor |
+| hidden | command palette open | none |
+
+Physics: spring follow (stiffness 340, damping 28). Disabled on touch devices.
+
+## 7. Mobile polish
+
+Per-shot adaptations applied in D1/E1 — G1 verifies at real-device scale.
+
+- iPhone 12 / Pixel 6 / iPad Mini baseline
+- touch gestures: drag to spin sphere, double-tap to unfold
+- bottom sheet drawer for project details (instead of side drawer)
+- reduced shader complexity automatically below 768px
+
+## 8. Accessibility pass
+
+- semantic landmarks (`main`, `nav`, `aside`, `footer`)
+- aria-labels on 3D canvas (describe what's happening)
+- aria-live region for scene transitions ("entered about section")
+- skip-to-content link
+- focus-visible rings using `--color-warm-signal`
+- color contrast: check all text against backgrounds, target AA (4.5:1)
+- keyboard-only path through entire site recorded
+
+## 9. Performance
+
+### Budgets
+
+| metric | target |
+|--------|--------|
+| FCP | < 1.5s @ 4G throttle |
+| LCP | < 2.5s |
+| TBT | < 200ms |
+| CLS | < 0.05 |
+| Dive FPS | ≥ 60 on Intel UHD 620 |
+| Home HTML | ≤ 40kb |
+| Home CSS | ≤ 40kb |
+| Home JS | ≤ 180kb (excluding three.js vendor chunk) |
+| Three.js chunk | ≤ 220kb gz |
+| Docs HTML | ≤ 25kb |
+| Docs CSS | ≤ 20kb |
+| Docs JS | ≤ 60kb (Pagefind included, lazy loaded) |
+
+### Optimizations
+
+- Three.js module build, not the monolith
+- code-split micro-experiences behind dynamic imports
+- WOFF2 preload for display + body; mono deferred
+- critical CSS inlined in BaseLayout
+- images: AVIF first, WebP fallback, `<picture>` element
+- OG image generation via satori at build
+
+## 10. SEO + meta
+
+- `<title>` per page, opinionated: `JOSUE APARCEDO — building for autonomous agents`
+- `<meta name="description">` per page
+- OG image: stylized nameplate + sphere composition (1200×630 AVIF)
+- Twitter card: `summary_large_image`
+- JSON-LD `Person` schema on `/`, `CreativeWork` on case studies
+- sitemap.xml generated by Astro
+- robots.txt allows all; disallow `/dev/*`
+- canonical URLs
+
+## 11. 404 page
+
+- full viewport, `--color-void`
+- serif `SIGNAL LOST` headline
+- mono body: `the facet you were looking for is off-axis`
+- amber `← TRANSMIT HOME` button
+- sphere silhouette faded in background
+
+## 12. Deploy
+
+### Target
+
+Cloudflare Pages (or Netlify fallback). DNS already on josue.aparcedo.org (verify).
+
+### Config
+
+- `_headers`: CSP tight (`script-src 'self'`, spotify iframe whitelist), COEP/COOP for WebGL isolation if needed
+- `_redirects`: `/blog/* → /docs/essays/:splat`
+- `wrangler.toml` if using Workers for transmit endpoint
+
+### Branch strategy
+
+- `main` → production (josue.aparcedo.org)
+- feature branches → preview URLs
+
+### Pipeline
+
+1. `npm run fetch:github`
+2. `npm run build`
+3. `npx pagefind --site dist`
+4. Cloudflare upload
+
+## 13. Files
+
+```
+src/components/end/
+  EndCard.astro           NEW
+src/components/ui/
+  CommandPalette.astro    NEW
+  ShortcutOverlay.astro   NEW
+  CustomCursor.astro      NEW
+  MuteButton.astro        NEW
+src/audio/                NEW  see sound-spec.md
+public/audio/             NEW  see sound-spec.md §9
+src/pages/
+  404.astro               NEW
+public/
+  robots.txt              NEW
+  sitemap generated       (Astro)
+wrangler.toml             NEW
+_headers                  NEW
+_redirects                NEW
+```
+
+## 14. Build order
+
+1. END CARD scene + styling (1d)
+2. Audio engine + Spotify adapter (3d)
+3. local stings authored (1d)
+4. mute button + `M` shortcut (0.5d)
+5. 5 micro-experiences polished (4d, parallel two devs or serialized)
+6. Command palette (1d)
+7. Shortcut overlay (0.5d)
+8. Cursor states (1d)
+9. Mobile device pass (1d)
+10. A11y pass (1d)
+11. Performance pass + budgets (1.5d)
+12. SEO meta + OG image generator (1d)
+13. 404 page (0.5d)
+14. Deploy config + first prod deploy (1d)
+15. Awwwards / godly submission (0.5d)
+
+## 15. Verification
+
+- [ ] lighthouse perf ≥ 90 home, ≥ 95 docs
+- [ ] lighthouse a11y ≥ 95 all pages
+- [ ] 4G-throttled FCP < 1.5s
+- [ ] full keyboard pass recorded
+- [ ] audio engine muted by default; unmute works; persisted
+- [ ] all 8 micro-experiences finished and QA'd
+- [ ] mobile Safari + Chrome + iOS Safari + Android Chrome tested
+- [ ] reduced-motion + noJS + noWebGL all work in prod
+- [ ] 404 page themed
+- [ ] sitemap present; OG image renders in Slack / Twitter / iMessage
+- [ ] CSP strict; no inline script errors; turnstile works on transmit
+
+## 16. Risks
+
+- Spotify Web API OAuth flow is non-trivial — fallback to hard-coded playlist metadata if needed
+- Asset authoring for stings may need an actual audio studio pass; budget time or accept CC0 library sounds
+- Awwwards submission guidelines change — verify before submit

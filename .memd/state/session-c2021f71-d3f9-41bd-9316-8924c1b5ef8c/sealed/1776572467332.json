@@ -1,0 +1,209 @@
+{
+  "session_id": "c2021f71-d3f9-41bd-9316-8924c1b5ef8c",
+  "entries": [
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/pages/index.astro",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776569848310
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/public/scene/scene3d.js",
+      "op": "read",
+      "count": 5,
+      "last_ts_ms": 1776571113120
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/public/scene/scene3d.js",
+      "op": "edit",
+      "count": 6,
+      "last_ts_ms": 1776570461225
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/styles/index-scene.css",
+      "op": "read",
+      "count": 11,
+      "last_ts_ms": 1776571662977
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/styles/index-scene.css",
+      "op": "edit",
+      "count": 7,
+      "last_ts_ms": 1776571657537
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/src/pages/index.astro",
+      "op": "edit",
+      "count": 1,
+      "last_ts_ms": 1776569957879
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/public/scene/app.js",
+      "op": "read",
+      "count": 2,
+      "last_ts_ms": 1776571214762
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/public/scene/app.js",
+      "op": "edit",
+      "count": 2,
+      "last_ts_ms": 1776570276854
+    },
+    {
+      "path": "/tmp/pw-scroll/s0.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571042696
+    },
+    {
+      "path": "/tmp/pw-scroll/s2.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571064429
+    },
+    {
+      "path": "/tmp/pw-scroll/s3.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571089797
+    },
+    {
+      "path": "/tmp/pw-scroll/s4.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571093421
+    },
+    {
+      "path": "/tmp/pw-scroll/s5.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571095585
+    },
+    {
+      "path": "/tmp/pw-scroll/t1100.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571172103
+    },
+    {
+      "path": "/tmp/pw-scroll/t1300.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571174710
+    },
+    {
+      "path": "/tmp/pw-scroll/t1500.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571177616
+    },
+    {
+      "path": "/tmp/pw-scroll/t1700.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571180115
+    },
+    {
+      "path": "/tmp/pw-scroll/fix_900.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571353486
+    },
+    {
+      "path": "/tmp/pw-scroll/fix_1100.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571356249
+    },
+    {
+      "path": "/tmp/pw-scroll/fix_400.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571382974
+    },
+    {
+      "path": "/tmp/pw-scroll/fix_600.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571385581
+    },
+    {
+      "path": "/tmp/pw-scroll/fix_800.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571388548
+    },
+    {
+      "path": "/tmp/pw-scroll/fix_1000.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571391722
+    },
+    {
+      "path": "/tmp/pw-scroll/fix_1250.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571420655
+    },
+    {
+      "path": "/tmp/pw-scroll/fix_700.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571437267
+    },
+    {
+      "path": "/tmp/pw-scroll/fix_850.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571440013
+    },
+    {
+      "path": "/tmp/pw-scroll/fix_0.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571443654
+    },
+    {
+      "path": "/tmp/pw-scroll/final_500.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571478846
+    },
+    {
+      "path": "/tmp/pw-scroll/final_780.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571481834
+    },
+    {
+      "path": "/tmp/pw-scroll/final_1050.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571486210
+    },
+    {
+      "path": "/tmp/pw-scroll/final_1350.png",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1776571495326
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/docs/plans/cinematic-treatment.md",
+      "op": "write",
+      "count": 1,
+      "last_ts_ms": 1776572381842
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/docs/plans/cinematic-treatment.md",
+      "op": "edit",
+      "count": 1,
+      "last_ts_ms": 1776572412693
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/docs/plans/project-manifest.md",
+      "op": "write",
+      "count": 1,
+      "last_ts_ms": 1776572467210
+    }
+  ]
+}
