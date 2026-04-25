@@ -1080,12 +1080,11 @@ body.is-guiding-contact:not(.in-contact) .nav-now-playing {
 
 /* ====== Contact ====== */
 .contact {
-  --contact-footer-space: 56px;
   --contact-overlap: clamp(180px, 30vh, 360px);
-  min-height: calc(100vh - var(--contact-footer-space));
-  min-height: calc(100svh - var(--contact-footer-space));
-  min-height: calc(100dvh - var(--contact-footer-space));
-  padding: calc(clamp(72px, 10vh, 112px) + var(--contact-overlap)) var(--pad-x) clamp(44px, 6vh, 72px);
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  padding: calc(clamp(72px, 10vh, 112px) + var(--contact-overlap)) var(--pad-x) clamp(96px, 10vh, 128px);
   width: 100%;
   max-width: none;
   margin: calc(var(--contact-overlap) * -1) auto 0;
@@ -1267,8 +1266,13 @@ body.in-contact .contact-title {
 
 /* ====== Footer ====== */
 .footer {
-  padding: 18px var(--pad-x) 22px;
-  border-top: 1px solid rgba(255,255,255,0.035);
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  padding: 18px var(--pad-x) max(18px, env(safe-area-inset-bottom));
+  border-top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1278,6 +1282,7 @@ body.in-contact .contact-title {
   text-transform: uppercase;
   color: var(--ink-low);
   background: transparent;
+  pointer-events: none;
 }
 .footer-clock { color: var(--ink-dim); }
 
@@ -2130,8 +2135,8 @@ body[data-scene-mode="work"] .face-label {
   content: none;
 }
 .footer {
-  position: relative;
-  z-index: 5;
+  position: fixed;
+  z-index: 90;
   background: transparent;
 }
 .contact {
