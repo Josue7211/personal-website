@@ -89,10 +89,10 @@ body.index-scene .site-atmosphere {
   contain: paint;
   background:
     radial-gradient(
-      ellipse at 52% 36%,
-      rgba(168, 85, 247, calc(0.08 + var(--work-in, 0) * 0.06 + var(--about-zoom, 0) * 0.1)),
-      rgba(28, 10, 64, calc(0.04 + var(--about-zoom, 0) * 0.1)) 34%,
-      transparent 72%
+      ellipse at 52% 42%,
+      rgba(168, 85, 247, calc(0.08 + var(--work-in, 0) * 0.06 + var(--about-zoom, 0) * 0.16)),
+      rgba(28, 10, 64, calc(0.04 + var(--about-zoom, 0) * 0.14)) 42%,
+      transparent 78%
     ),
     radial-gradient(
       ellipse at 50% 118%,
@@ -2146,61 +2146,11 @@ body[data-scene-mode="work"] .face-label {
   isolation: isolate;
   overflow: visible;
 }
-/* Full-bleed backdrop: starts as a radial bloom from screen center (where
-   the zoomed sphere lives), matching the purple nebula tint, then
-   tightens into the flat page bg as zoom completes. Gives continuous
-   motion from sphere → surface rather than two darks cross-fading. */
 .section#about::before {
-  content: '';
-  position: absolute;
-  top: -92vh;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
-  height: calc(100% + 142vh);
-  contain: paint;
-  background:
-    radial-gradient(
-      ellipse at 50% 28%,
-      rgba(52, 20, 108, calc(var(--about-zoom, 0) * 0.46)) 0%,
-      rgba(28, 10, 64, calc(var(--about-zoom, 0) * 0.32)) 40%,
-      rgba(10, 10, 10, 0) 78%
-    ),
-    radial-gradient(
-      ellipse at 48% 74%,
-      rgba(14, 10, 22, calc(var(--about-zoom, 0) * 0.72)) 0%,
-      rgba(10, 10, 10, calc(var(--about-zoom, 0) * 0.34)) 54%,
-      rgba(10, 10, 10, 0) 82%
-    );
-  opacity: clamp(0, calc(var(--about-zoom, 0) * 1.08), 1);
-  z-index: -1;
-  pointer-events: none;
+  content: none;
 }
 .section#about::after {
-  content: '';
-  position: absolute;
-  top: -70vh;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
-  height: calc(100% + 124vh);
-  contain: paint;
-  background:
-    radial-gradient(
-      ellipse at 50% 72%,
-      rgba(168, 85, 247, calc(var(--contact-in, 0) * 0.16)),
-      rgba(10, 10, 10, 0) 58%
-    );
-  opacity: clamp(0, calc((var(--about-zoom, 0) - 0.05) * 2.1), 1);
-  filter: blur(46px);
-  z-index: -1;
-  pointer-events: none;
-}
-body.in-about .section#about::before {
-  opacity: 1;
-}
-body.in-about .section#about::after {
-  opacity: clamp(0, var(--contact-in, 0), 1);
+  content: none;
 }
 .footer {
   position: relative;
