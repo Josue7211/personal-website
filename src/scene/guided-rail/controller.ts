@@ -78,7 +78,7 @@ export function createGuidedRailController(args: ControllerArgs) {
     nextState: GuidedRailState,
     targetTop: number
   ) {
-    if (!args.lenis || !ACTIVE_GUIDED_STATES.has(nextState)) {
+    if (activeSection !== 'work' || !args.lenis || !ACTIVE_GUIDED_STATES.has(nextState)) {
       lastCommandedSection = null
       lastCommandedState = 'free'
       return
