@@ -10,6 +10,7 @@ import '../styles/index-scene.css'
   bodyClass="index-scene intro-active"
 >
   <FilmGrain />
+  <div class="site-atmosphere" aria-hidden="true"></div>
 
   <!-- ============ INTRO LOADER ============ -->
   <div class="intro" id="intro">
@@ -35,6 +36,17 @@ import '../styles/index-scene.css'
       <div class="intro-curtain"></div>
     </div>
   </div>
+  <script is:inline>
+    (() => {
+      const skipIntro =
+        window.location.hash.length > 1 ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      if (!skipIntro) return
+      document.documentElement.dataset.skipIntro = 'true'
+      document.body.classList.remove('intro-active')
+      document.getElementById('intro')?.classList.add('done', 'gone')
+    })()
+  </script>
 
   <!-- ============ SHARED 3D CANVAS ============ -->
   <canvas class="scene-canvas" id="scene-canvas"></canvas>
@@ -45,12 +57,6 @@ import '../styles/index-scene.css'
       <span class="dot"></span>
       JOSUE.APARCEDO
     </a>
-    <nav class="nav-links">
-      <a href="#work"><span class="num">01</span>WORK</a>
-      <a href="#about"><span class="num">02</span>ABOUT</a>
-      <a href="/docs"><span class="num">03</span>DOCS</a>
-      <a href="#contact"><span class="num">04</span>CONTACT</a>
-    </nav>
     <span class="nav-mono nav-avail">AVAIL. FALL '26 →</span>
     <span class="nav-mono nav-now-playing">
       <span class="np-label">▶ NOW PLAYING</span>
@@ -214,7 +220,7 @@ import '../styles/index-scene.css'
         <div>
           <dl>
             <dt>— Reach me</dt>
-            <dd><span>bobbyparzero@gmail.com</span><span class="dim">email</span></dd>
+            <dd><span>josue@aparcedo.org</span><span class="dim">email</span></dd>
             <dd><span>@Josue7211</span><span class="dim">github</span></dd>
             <dd><span>/in/aparcedo</span><span class="dim">linkedin</span></dd>
           </dl>
@@ -227,10 +233,10 @@ import '../styles/index-scene.css'
   <section class="contact" id="contact">
     <div class="contact-kicker reveal">[ 03 ] SAY HELLO</div>
     <h2 class="contact-title reveal">
-      Let's make <em>something</em> strange together.
+      Let's <em>build</em> together.
     </h2>
-    <a href="mailto:bobbyparzero@gmail.com" class="contact-email reveal"
-      >bobbyparzero@gmail.com</a
+    <a href="mailto:josue@aparcedo.org" class="contact-email reveal"
+      >josue@aparcedo.org</a
     >
     <div class="contact-socials reveal">
       <a href="https://github.com/Josue7211" target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
@@ -244,11 +250,14 @@ import '../styles/index-scene.css'
   <footer class="footer">
     <span>© JOSUE APARCEDO · 2026</span>
     <span class="footer-clock" id="clock">—:—:—</span>
-    <span>BUILT WITH ASTRO + THREE.JS</span>
   </footer>
 
   <!-- scripts — kept as global <script> so prototype's window.* contract holds -->
   <script is:inline src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
   <script is:inline src="/scene/scene3d.js"></script>
-  <script is:inline src="/scene/app.js"></script>
+  <script>
+    import initIndexScene from '../scripts/index-scene'
+
+    initIndexScene()
+  </script>
 </BaseLayout>

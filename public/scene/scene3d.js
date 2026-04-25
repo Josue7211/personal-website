@@ -11,11 +11,15 @@ window.initScene3D = function (canvas, opts = {}) {
 
   // ---- Renderer / scene ----
   const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x07050a, 0.035);
   const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
   camera.position.set(0, 0, 5);
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  if (THREE.ACESFilmicToneMapping) renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  if (THREE.SRGBColorSpace) renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMappingExposure = 1.08;
 
   function resize() {
     const w = window.innerWidth;
@@ -28,13 +32,13 @@ window.initScene3D = function (canvas, opts = {}) {
   window.addEventListener('resize', resize);
 
   // ---- Lighting ----
-  scene.add(new THREE.AmbientLight(0x2a0e5e, 0.5));
-  const key = new THREE.PointLight(0x7c3aed, 60, 20);
-  key.position.set(3, 3, 3); scene.add(key);
-  const fill = new THREE.PointLight(0xec4899, 25, 20);
-  fill.position.set(-3, -2, 2); scene.add(fill);
-  const rim = new THREE.PointLight(0xa78bfa, 40, 20);
-  rim.position.set(-2, 3, -3); scene.add(rim);
+  scene.add(new THREE.AmbientLight(0x160c22, 0.72));
+  const key = new THREE.PointLight(0xf2d38a, 86, 24);
+  key.position.set(3.4, 3.2, 3); scene.add(key);
+  const fill = new THREE.PointLight(0x8fd7ff, 28, 24);
+  fill.position.set(-3.6, -2.2, 2.4); scene.add(fill);
+  const rim = new THREE.PointLight(0xa78bfa, 72, 26);
+  rim.position.set(-2.4, 3.4, -3.2); scene.add(rim);
 
   // ---- Subdivided octahedron approximating a sphere (geodesic-style) ----
   // 8 base faces, each subdivided into smaller triangles for the geodesic look.
@@ -104,13 +108,15 @@ window.initScene3D = function (canvas, opts = {}) {
     ));
     g.computeVertexNormals();
     const mat = new THREE.MeshPhysicalMaterial({
-      color: 0x14091f,
-      metalness: 0.3,
-      roughness: 0.4,
+      color: 0x100b16,
+      metalness: 0.42,
+      roughness: 0.28,
+      clearcoat: 0.7,
+      clearcoatRoughness: 0.34,
       emissive: 0x2a0e5e,
-      emissiveIntensity: 0.3,
+      emissiveIntensity: 0.24,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.88,
       side: THREE.DoubleSide,
     });
     const m = new THREE.Mesh(g, mat);
@@ -135,7 +141,7 @@ window.initScene3D = function (canvas, opts = {}) {
   wireGeo.computeVertexNormals();
   const wire = new THREE.LineSegments(
     new THREE.WireframeGeometry(wireGeo),
-    new THREE.LineBasicMaterial({ color: 0xa78bfa, transparent: true, opacity: 0.65 })
+    new THREE.LineBasicMaterial({ color: 0xc4b5fd, transparent: true, opacity: 0.72 })
   );
   faceGroup.add(wire);
 
@@ -152,8 +158,8 @@ window.initScene3D = function (canvas, opts = {}) {
   const dotsGeo = new THREE.BufferGeometry();
   dotsGeo.setAttribute('position', new THREE.Float32BufferAttribute(dotPositions, 3));
   const dotsMat = new THREE.PointsMaterial({
-    color: 0xc9b8fb, size: 0.06, sizeAttenuation: true,
-    transparent: true, opacity: 0.95,
+    color: 0xf2d38a, size: 0.052, sizeAttenuation: true,
+    transparent: true, opacity: 0.9,
   });
   const dots = new THREE.Points(dotsGeo, dotsMat);
   faceGroup.add(dots);
@@ -173,10 +179,13 @@ window.initScene3D = function (canvas, opts = {}) {
         vec2 uv = vUv - 0.5;
         float d = length(uv);
         float n = noise(uv * 8.0 + uTime * 0.05) * 0.3;
-        vec3 c1 = vec3(0.16, 0.05, 0.36);
-        vec3 c2 = vec3(0.04, 0.02, 0.07);
-        float glow = smoothstep(0.7, 0.0, d) * 0.8 + n * 0.1;
-        gl_FragColor = vec4(mix(c2, c1, glow), 1.0);
+        vec3 c1 = vec3(0.20, 0.07, 0.34);
+        vec3 c2 = vec3(0.02, 0.02, 0.025);
+        vec3 c3 = vec3(0.50, 0.28, 0.08);
+        float glow = smoothstep(0.74, 0.0, d) * 0.72 + n * 0.08;
+        float flare = smoothstep(0.62, 0.0, abs(uv.y + sin(uTime * 0.08) * 0.03)) * smoothstep(0.62, 0.02, abs(uv.x));
+        vec3 base = mix(c2, c1, glow);
+        gl_FragColor = vec4(mix(base, c3, flare * 0.08), 1.0);
       }`,
     depthWrite: false,
   });
@@ -216,21 +225,74 @@ window.initScene3D = function (canvas, opts = {}) {
 
   // ---- Drag to spin ----
   let dragging = false;
-  let lastDrag = { x: 0, y: 0 };
-  let dragVel = { x: 0, y: 0 };
-  let manualRot = { x: 0, y: 0 };
+  let manualQuat = new THREE.Quaternion();
+  const dragState = {
+    pointerId: null,
+    startVec: new THREE.Vector3(),
+    lastVec: new THREE.Vector3(),
+    startQuat: new THREE.Quaternion(),
+    inertiaAxis: new THREE.Vector3(0, 1, 0),
+    inertiaSpeed: 0,
+  };
+  const _arcballVec = new THREE.Vector3();
+  const _dragQuat = new THREE.Quaternion();
+  const _stepQuat = new THREE.Quaternion();
+  const _autoQuat = new THREE.Quaternion();
+  let zoomAnchorQuat = null;
+
+  function projectToArcball(clientX, clientY) {
+    const rect = canvas.getBoundingClientRect();
+    const size = Math.max(1, Math.min(rect.width, rect.height));
+    const x = ((clientX - rect.left) - rect.width * 0.5) / (size * 0.5);
+    const y = (rect.height * 0.5 - (clientY - rect.top)) / (size * 0.5);
+    const lenSq = x * x + y * y;
+    if (lenSq <= 1) {
+      _arcballVec.set(x, y, Math.sqrt(1 - lenSq));
+    } else {
+      const invLen = 1 / Math.sqrt(lenSq);
+      _arcballVec.set(x * invLen, y * invLen, 0);
+    }
+    return _arcballVec.clone().normalize();
+  }
+
+  function captureInertia(fromVec, toVec) {
+    _stepQuat.setFromUnitVectors(fromVec, toVec);
+    const w = THREE.MathUtils.clamp(_stepQuat.w, -1, 1);
+    const angle = 2 * Math.acos(w);
+    const sinHalf = Math.sqrt(Math.max(0, 1 - w * w));
+    if (sinHalf < 1e-4 || angle < 1e-4) {
+      dragState.inertiaSpeed = 0;
+      return;
+    }
+    dragState.inertiaAxis.set(
+      _stepQuat.x / sinHalf,
+      _stepQuat.y / sinHalf,
+      _stepQuat.z / sinHalf
+    ).normalize();
+    dragState.inertiaSpeed = angle;
+  }
 
   canvas.addEventListener('pointerdown', (e) => {
     dragging = true;
-    lastDrag.x = e.clientX; lastDrag.y = e.clientY;
+    dragState.pointerId = e.pointerId;
+    dragState.startVec.copy(projectToArcball(e.clientX, e.clientY));
+    dragState.lastVec.copy(dragState.startVec);
+    dragState.startQuat.copy(manualQuat);
+    dragState.inertiaSpeed = 0;
+    if (canvas.setPointerCapture) canvas.setPointerCapture(e.pointerId);
   });
-  window.addEventListener('pointerup', () => { dragging = false; });
+  window.addEventListener('pointerup', (e) => {
+    if (dragState.pointerId != null && e.pointerId !== dragState.pointerId) return;
+    dragging = false;
+    dragState.pointerId = null;
+  });
   window.addEventListener('pointermove', (e) => {
-    if (dragging) {
-      dragVel.x = (e.clientY - lastDrag.y) * 0.005;
-      dragVel.y = (e.clientX - lastDrag.x) * 0.005;
-      lastDrag.x = e.clientX; lastDrag.y = e.clientY;
-    }
+    if (!dragging) return;
+    const currentVec = projectToArcball(e.clientX, e.clientY);
+    _dragQuat.setFromUnitVectors(dragState.startVec, currentVec);
+    manualQuat.copy(_dragQuat).multiply(dragState.startQuat).normalize();
+    captureInertia(dragState.lastVec, currentVec);
+    dragState.lastVec.copy(currentVec);
   });
 
   // ---- Public API ----
@@ -352,9 +414,6 @@ window.initScene3D = function (canvas, opts = {}) {
   let t = 0;
   // Snapshot of sphere rotation when the about-zoom begins, so the zoom
   // smoothly lerps from the user's current view rather than snapping.
-  let zoomAnchorRX = null;
-  let zoomAnchorRY = null;
-
   // Target Euler (XYZ order) that aims the About sub-facet corner at the
   // camera. Face 2 vertex a is the same anchor the About quick-link uses
   // (see QUICK_LINKS in app.js). Computed once from geometry so it stays
@@ -363,6 +422,7 @@ window.initScene3D = function (canvas, opts = {}) {
   const zoomTgtY = Math.atan2(-aboutAnchor.x, aboutAnchor.z);
   const rotatedZ = -aboutAnchor.x * Math.sin(zoomTgtY) + aboutAnchor.z * Math.cos(zoomTgtY);
   const zoomTgtX = Math.atan2(aboutAnchor.y, rotatedZ);
+  const _zoomTargetQuat = new THREE.Quaternion().setFromEuler(new THREE.Euler(zoomTgtX, zoomTgtY, 0, 'XYZ'));
 
   function animate() {
     t += 0.016;
@@ -372,14 +432,12 @@ window.initScene3D = function (canvas, opts = {}) {
     mouse.tx += (mouse.nx - mouse.tx) * 0.08;
     mouse.ty += (mouse.ny - mouse.ty) * 0.08;
 
-    // Drag inertia
-    if (dragging) {
-      manualRot.x += dragVel.x;
-      manualRot.y += dragVel.y;
-      dragVel.x *= 0.9; dragVel.y *= 0.9;
-    } else {
-      manualRot.x += dragVel.x; manualRot.y += dragVel.y;
-      dragVel.x *= 0.94; dragVel.y *= 0.94;
+    // Drag inertia, keep applying the last arcball step after release.
+    if (!dragging && dragState.inertiaSpeed > 1e-4) {
+      _stepQuat.setFromAxisAngle(dragState.inertiaAxis, dragState.inertiaSpeed);
+      manualQuat.premultiply(_stepQuat).normalize();
+      dragState.inertiaSpeed *= 0.94;
+      if (dragState.inertiaSpeed < 1e-4) dragState.inertiaSpeed = 0;
     }
 
     // Scroll-driven transforms
@@ -391,12 +449,16 @@ window.initScene3D = function (canvas, opts = {}) {
     const zoomT = aboutProg;
     const eased = zoomT * zoomT * (3 - 2 * zoomT); // smoothstep
 
-    // Camera pulls in on entering work, then dives into the target face
-    const targetZ = 5 - workProg * 1.2 - eased * 5.4;
-    camera.position.z += (targetZ - camera.position.z) * 0.08;
+    // Camera pulls in on entering work, then dives into the target face.
+    const targetZ = 5 - workProg * 1.28 - eased * 5.55;
+    camera.position.z += (targetZ - camera.position.z) * 0.07;
+    if (scene.fog) {
+      const targetDensity = 0.035 + workProg * 0.012 + eased * 0.05;
+      scene.fog.density += (targetDensity - scene.fog.density) * 0.06;
+    }
 
     // Group scale: small pull in hero/work, major blow-up on zoom
-    const targetScale = 1 + workProg * 0.15 + eased * 1.4;
+    const targetScale = 1 + workProg * 0.18 + eased * 1.48;
     faceGroup.scale.setScalar(
       faceGroup.scale.x + (targetScale - faceGroup.scale.x) * 0.08
     );
@@ -404,41 +466,36 @@ window.initScene3D = function (canvas, opts = {}) {
     // Rotation: in hero, auto-tumble + parallax; in work, steady spin + drag;
     // during aboutProg, blend to a fixed orientation that points a target face
     // straight at the camera so we zoom cleanly INTO that face.
-    let targetRX, targetRY;
+    let targetQuat = null;
     if (zoomT <= 0.01) {
-      zoomAnchorRX = null;
-      zoomAnchorRY = null;
+      zoomAnchorQuat = null;
     }
     if (zoomT > 0.01) {
-      // Snapshot the sphere's rotation the first frame zoom begins, then
-      // smoothly blend from there to the locked target. Any user drag before
-      // the zoom starts is preserved as the zoom's starting pose.
-      if (zoomAnchorRX === null) {
-        zoomAnchorRX = faceGroup.rotation.x;
-        zoomAnchorRY = faceGroup.rotation.y;
+      // Snapshot the current displayed pose and slerp to the zoom target.
+      if (zoomAnchorQuat === null) {
+        zoomAnchorQuat = faceGroup.quaternion.clone();
       }
-      // Shortest-path angle delta so we don't spin the long way around.
-      const wrapDelta = (a) => {
-        let d = a % (Math.PI * 2);
-        if (d > Math.PI) d -= Math.PI * 2;
-        if (d < -Math.PI) d += Math.PI * 2;
-        return d;
-      };
-      const dx = wrapDelta(zoomTgtX - zoomAnchorRX);
-      const dy = wrapDelta(zoomTgtY - zoomAnchorRY);
-      targetRX = zoomAnchorRX + dx * eased;
-      targetRY = zoomAnchorRY + dy * eased;
+      targetQuat = zoomAnchorQuat.clone().slerp(_zoomTargetQuat, eased);
     } else if (sceneMode === 'work') {
-      targetRX = manualRot.x + t * 0.06 + Math.sin(t * 0.2) * 0.12;
-      targetRY = manualRot.y + t * 0.12;
+      _autoQuat.setFromEuler(new THREE.Euler(
+        t * 0.06 + Math.sin(t * 0.2) * 0.12,
+        t * 0.12,
+        0,
+        'XYZ'
+      ));
+      targetQuat = manualQuat.clone().multiply(_autoQuat);
     } else {
-      targetRX = manualRot.x + mouse.ty * 0.25 + t * 0.05;
-      targetRY = manualRot.y + mouse.tx * 0.5 + t * 0.12;
+      _autoQuat.setFromEuler(new THREE.Euler(
+        mouse.ty * 0.25 + t * 0.05,
+        mouse.tx * 0.5 + t * 0.12,
+        0,
+        'XYZ'
+      ));
+      targetQuat = manualQuat.clone().multiply(_autoQuat);
     }
 
-    const rotLerp = zoomT > 0.01 ? 0.08 + eased * 0.1 : 0.06;
-    faceGroup.rotation.x += (targetRX - faceGroup.rotation.x) * rotLerp;
-    faceGroup.rotation.y += (targetRY - faceGroup.rotation.y) * rotLerp;
+    const rotLerp = zoomT > 0.01 ? 0.07 + eased * 0.11 : 0.052;
+    faceGroup.quaternion.slerp(targetQuat, rotLerp);
 
     // Subtle float / parallax (disabled during zoom)
     const parallaxX = mouse.tx * 0.25 * (1 - workProg) * (1 - eased);
@@ -478,15 +535,19 @@ window.initScene3D = function (canvas, opts = {}) {
 
     // Sub-triangle hover tint — emissive bumps only on the hovered sub-diamond
     subMeshes.forEach((m) => {
-      const target = (m === hoveredSub) ? 1.4 : 0.3;
+      const target = (m === hoveredSub) ? 1.65 : 0.24;
       m.material.emissiveIntensity += (target - m.material.emissiveIntensity) * 0.15;
+      const opacityTarget = 0.88 - eased * 0.18 + workProg * 0.04;
+      m.material.opacity += (opacityTarget - m.material.opacity) * 0.08;
     });
 
     // Light orbit
-    key.position.x = Math.cos(t * 0.5) * 3;
-    key.position.z = Math.sin(t * 0.5) * 3;
-    fill.position.x = Math.cos(t * 0.3 + 2) * 3;
-    fill.position.y = Math.sin(t * 0.3 + 2) * 2.5;
+    key.position.x = Math.cos(t * 0.44) * 3.4;
+    key.position.y = 2.8 + Math.sin(t * 0.22) * 0.5;
+    key.position.z = Math.sin(t * 0.44) * 3.2;
+    fill.position.x = Math.cos(t * 0.28 + 2) * 3.6;
+    fill.position.y = Math.sin(t * 0.28 + 2) * 2.4;
+    rim.position.x = Math.sin(t * 0.18 + 1.4) * 2.8;
 
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
