@@ -143,6 +143,26 @@ function getScrollRect(element: HTMLElement | null, scrollY: number) {
   }
 }
 
+function getDocumentMaxScroll() {
+  return Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
+}
+
+function clampScrollTarget(value: number) {
+  return Math.max(0, Math.min(getDocumentMaxScroll(), value))
+}
+
+function getSectionTop(element: HTMLElement, offsetVh = 0) {
+  return clampScrollTarget(window.scrollY + element.getBoundingClientRect().top - window.innerHeight * offsetVh)
+}
+
+function nearestIndex(values: number[], current: number) {
+  return values.reduce((bestIndex, value, index) => {
+    const bestDistance = Math.abs(values[bestIndex] - current)
+    const distance = Math.abs(value - current)
+    return distance < bestDistance ? index : bestIndex
+  }, 0)
+}
+
 export default function initIndexScene() {
   if (typeof window === 'undefined' || typeof document === 'undefined') return
   if (!document.body.classList.contains('index-scene')) return
@@ -376,6 +396,64 @@ export default function initIndexScene() {
     }).mount()
   }
 
+  if (lenis && hero instanceof HTMLElement && work instanceof HTMLElement && about instanceof HTMLElement && contact instanceof HTMLElement) {
+    const sections = [
+      { el: hero, offsetVh: 0 },
+      { el: work, offsetVh: 0.08 },
+      { el: about, offsetVh: 0.16 },
+      { el: contact, offsetVh: 0.1 },
+    ]
+    let snapLockedUntil = 0
+    let wheelAccumulator = 0
+    let lastWheelAt = 0
+
+    const getTargets = () => sections.map((section) => getSectionTop(section.el, section.offsetVh))
+
+    window.addEventListener(
+      'wheel',
+      (event) => {
+        if (event.ctrlKey || event.metaKey) return
+        if (document.getElementById('project-drawer')?.classList.contains('open')) return
+
+        const now = performance.now()
+        event.preventDefault()
+
+        if (now < snapLockedUntil) return
+
+        if (now - lastWheelAt > 220) wheelAccumulator = 0
+        lastWheelAt = now
+        wheelAccumulator += event.deltaY
+
+        if (Math.abs(wheelAccumulator) < 42) return
+
+        const direction = wheelAccumulator > 0 ? 1 : -1
+        wheelAccumulator = 0
+
+        const targets = getTargets()
+        const current = lenis.targetScroll ?? lenis.animatedScroll ?? window.scrollY
+        const currentIndex = nearestIndex(targets, current)
+        const nextIndex = Math.max(0, Math.min(targets.length - 1, currentIndex + direction))
+        if (nextIndex === currentIndex) return
+
+        snapLockedUntil = now + 980
+        document.body.dataset.snapState = 'snapping'
+
+        lenis.scrollTo(targets[nextIndex], {
+          immediate: false,
+          duration: 0.9,
+          easing: (t: number) => 1 - Math.pow(1 - t, 4),
+          lock: true,
+          force: true,
+        })
+
+        window.setTimeout(() => {
+          if (performance.now() >= snapLockedUntil) document.body.dataset.snapState = 'free'
+        }, 1040)
+      },
+      { passive: false, capture: true }
+    )
+  }
+
   const faceLabels: HTMLButtonElement[] = []
   if (labelsContainer) {
     PROJECTS.forEach((project, index) => {
@@ -442,8 +520,8 @@ export default function initIndexScene() {
 
     let contactProgress = 0
     if (contactRect) {
-      const contactEnter = viewportHeight * 1.22
-      const contactSettle = viewportHeight * 0.28
+      const contactEnter = viewportHeight * 0.86
+      const contactSettle = viewportHeight * 0.18
       contactProgress = smoothProgress((contactEnter - contactRect.top) / (contactEnter - contactSettle))
     }
     document.documentElement.style.setProperty('--contact-in', String(contactProgress))

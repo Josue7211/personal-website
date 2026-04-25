@@ -1718,8 +1718,8 @@ body.in-about .face-labels { opacity: 0; }
    content is already legible by the time canvas begins to fade. */
 .section#about .about,
 .section#about .section-head {
-  opacity: clamp(0, calc((var(--about-zoom, 0) - 0.16) * 2.6 - max(0, (var(--contact-in, 0) - 0.32) * 1.9)), 1);
-  transform: translateY(calc((1 - var(--about-zoom, 0)) * 32px - max(0px, (var(--contact-in, 0) - 0.4) * 72px)))
+  opacity: clamp(0, calc((var(--about-zoom, 0) - 0.16) * 2.6 - max(0, (var(--contact-in, 0) - 0.58) * 2.1)), 1);
+  transform: translateY(calc((1 - var(--about-zoom, 0)) * 32px - max(0px, (var(--contact-in, 0) - 0.58) * 72px)))
              scale(calc(0.985 + var(--about-zoom, 0) * 0.015));
   transform-origin: center top;
   transition: none;
@@ -1733,12 +1733,12 @@ body.is-guiding-about .section#about .about {
 }
 body.in-about .section#about .about,
 body.in-about .section#about .section-head {
-  opacity: clamp(0, calc(1 - max(0, (var(--contact-in, 0) - 0.32) * 1.9)), 1);
-  transform: translateY(calc(max(0px, (var(--contact-in, 0) - 0.4) * -72px)));
+  opacity: clamp(0, calc(1 - max(0, (var(--contact-in, 0) - 0.58) * 2.1)), 1);
+  transform: translateY(calc(max(0px, (var(--contact-in, 0) - 0.58) * -72px)));
 }
 body.in-about:not(.in-contact) .section#about .about,
 body.in-about:not(.in-contact) .section#about .section-head {
-  opacity: clamp(0, calc(1 - max(0, (var(--contact-in, 0) - 0.32) * 1.9)), 1);
+  opacity: clamp(0, calc(1 - max(0, (var(--contact-in, 0) - 0.58) * 2.1)), 1);
 }
 body.in-contact .section#about .about,
 body.in-contact .section#about .section-head {

@@ -78,28 +78,11 @@ export function createGuidedRailController(args: ControllerArgs) {
     nextState: GuidedRailState,
     targetTop: number
   ) {
-    if (activeSection !== 'work' || !args.lenis || !ACTIVE_GUIDED_STATES.has(nextState)) {
-      lastCommandedSection = null
-      lastCommandedState = 'free'
-      return
-    }
-
-    const shouldIssueScroll =
-      activeSection !== lastCommandedSection ||
-      nextState !== lastCommandedState ||
-      Math.abs(targetTop - args.lenis.targetScroll) > 6
-
-    if (!shouldIssueScroll) return
-
-    args.lenis.scrollTo(targetTop, {
-      immediate: false,
-      duration: activeSection === 'work' ? 1.24 : 1.05,
-      lock: false,
-      force: true,
-    })
-
-    lastCommandedSection = activeSection
-    lastCommandedState = nextState
+    void activeSection
+    void nextState
+    void targetTop
+    lastCommandedSection = null
+    lastCommandedState = 'free'
   }
 
   function frame(time: number) {
