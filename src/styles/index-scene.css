@@ -1784,19 +1784,7 @@ body.in-contact .section#about .section-head {
   isolation: isolate;
 }
 .section.work-3d::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -32vh;
-  width: 100vw;
-  height: 54vh;
-  transform: translateX(-50%);
-  background:
-    linear-gradient(to bottom, transparent 0%, rgba(16, 8, 34, 0.22) 42%, rgba(10, 10, 10, 0.68) 100%),
-    radial-gradient(ellipse at 50% 100%, rgba(168, 85, 247, 0.14), transparent 62%);
-  opacity: var(--work-in, 0);
-  z-index: -1;
-  pointer-events: none;
+  content: none;
 }
 .work-head {
   max-width: 320px;
@@ -2144,7 +2132,7 @@ body[data-scene-mode="work"] .face-label {
 .footer {
   position: relative;
   z-index: 5;
-  background: var(--bg);
+  background: transparent;
 }
 .contact {
   transform: translateY(calc((1 - var(--contact-in, 0)) * 26px));
