@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-04-19T12:58:05.148329224Z",
-  "project_root": "",
+  "generated_at": "2026-04-25T21:40:49.765778058Z",
+  "project_root": "/home/josue/Documents/projects/personal-website",
   "capabilities": [
     {
       "harness": "claude",
@@ -8166,7 +8166,7 @@
       "portability_class": "harness-native",
       "source_path": "/home/josue/.config/opencode/command/system--openai-docs.md",
       "bridge_hint": null,
-      "hash": "eaaf5414c4481adb5f3d7953357d0e054f5b1dddde266a67e1933b7876aa2027",
+      "hash": "3a74b678257609e680fe725a0c31e6a67e195d3d28793f2c249f87d924c28555",
       "notes": [
         "discovered from command surface"
       ]

@@ -1,0 +1,17 @@
+{
+  "session_id": "72390512-ce59-437c-b8e4-89a5fead097d",
+  "entries": [
+    {
+      "path": "/home/josue/Documents/projects/personal-website/.gitignore",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1777153291349
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/.gitignore",
+      "op": "edit",
+      "count": 1,
+      "last_ts_ms": 1777153293707
+    }
+  ]
+}

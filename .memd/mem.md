@@ -12,30 +12,29 @@
 - visibility: `all`
 - route: `auto`
 - intent: `current_task`
-- bundle: `.memd`
+- bundle: `/home/josue/Documents/projects/personal-website/.memd`
 
 
 ## Budget
 
-- tok=1278 | ch=5112 | p=medium | dup=2 | use=440/1600 | refresh=false | action="watch prompt growth"
-- drivers=duplicates,tokens
+- tok=969 | ch=3874 | p=low | dup=0 | use=1320/1600 | refresh=false | action="none"
+- drivers=none
 
 ## Durable Truth
 
-- id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | ...
-- id=07930cfb-a2a7-467d-87d4-3927dd39220e | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | ...
-- id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | ...
+- id=6153901f-3a69-4185-9943-4a15eec3fa3c | stage=canonical | scope=local | kind=live_truth | status=active | project=personal-website | ns=main | vis=private ...
+- id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | ag...
+- id=0bd4b700-5678-489a-a5e4-51495f31e6fd | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | ag...
 - (+1 more)
 
 ## Read First
 
-- doing=id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-...
-- left_off=id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-...
-- changed=focus -> id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=per...
-- next=id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-...
-- t=rolling_brief: focus id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | lane=decisions | tags=checkpo... | rolling_brief: next id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh,wake | cf=0.72 | upd=1776603046 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus="id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=... | rolling_brief: event resume_delta: focus -> id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=per... | entity_sheet: personal-website / main / none | visibility private | trust 0.73 | claims 0
-- focus=id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=per...
-- next=evicted working-set item: id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=per...
+- doing=id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b...
+- left_off=personal-website / main / none
+- changed=working 4 -> 6
+- next=id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b...
+- t=rolling_brief: focus id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087061 | c=Cl... | rolling_brief: event resume_delta: working 4 -> 6 | entity_sheet: personal-website / main / none | visibility private | trust 0.67 | claims 0 | blocker: rehydration queue empty
+- focus=id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=perso...
 
 ## Voice
 
@@ -47,38 +46,33 @@
 
 ## Memory Objects
 
-- context id=1cc3f28f record="id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=per..."
-- [open](items/context/context-01-51af98ae)
-- working id=1629641b record="id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=per..."
-- [open](items/working/working-01-cc3feeda)
+- context id=6153901f record="id=6153901f-3a69-4185-9943-4a15eec3fa3c | stage=canonical | scope=local | kind=live_truth | status=active | project=p..."
+- [open](items/context/context-01-abb7e593)
+- working id=e59c2616 record="id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=perso..."
+- [open](items/working/working-01-366bffd8)
 - inbox none
-- recovery id=1cc3f28f kind=working_memory_record label="evicted working-set item" source=none reason="evicted_by_status_cap;kind=Status;status=active;source=derived;source_trust=0.73;freshness_days=0;verified_days=45;re..."
-- [open](items/recovery/recovery-01-8f256c9a)
+- recovery none
 - semantic none
-- workspace project=personal-website namespace=main workspace=none visibility=private items=10 active=10 contested=0 trust=0.73 cf=0.74
-- [open](items/workspace/workspace-01-f1d0cde1)
+- workspace project=personal-website namespace=main workspace=none visibility=private items=6 active=6 contested=0 trust=0.67 cf=0.74
+- [open](items/workspace/workspace-01-77a12d88)
 
 ## E+LT
 
-- - E=resume_delta: focus -> id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=per... | resume_delta: next_recovery -> evicted working-set item: id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | s... | - LT=status D .planning/PROJECT.md | status D .planning/REQUIREMENTS.md
+- - E=resume_delta: working 4 -> 6 | file_edited: .memd/.last-wake | - LT=status M .memd/.last-wake | status M .memd/agents/CLAUDE_IMPORTS.md
 
 ## W
 
-- w=id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | lane=decisions | tags=checkpo... | id=b07dd9ac-e530-4b41-8b45-e6353781b0df | stage=canonical | scope=synced | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=resume_state,session_stat...
-
-## RI
-
-- r=evicted working-set item:id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh,wake | cf=0.72 | upd=1776603046 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus="id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=... | r=evicted working-set item:id=07930cfb-a2a7-467d-87d4-3927dd39220e | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh | cf=0.72 | upd=1776603111 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus="id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=...
+- w=id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087061 | c=Cl... | id=0bd4b700-5678-489a-a5e4-51495f31e6fd | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087440 | c=Ho... (+4 more)
 
 ## L
 
-- l=personal-website/main/none | v=private | it=10 | tr=0.73 
+- l=personal-website/main/none | v=private | it=6 | tr=0.67 
 
 ## Hive
 
 - queen=none roster=1 active=1 review=0 overlap=0 stale=0
 - active_bees=Personal Website Codex 5b36b772(session-5b36b772)/none
-- focus=Personal Website Codex 5b36b772 work="lane=decisions" touches=project next="lane=decisions" action=coordinate_now
+- focus=Personal Website Codex 5b36b772 work="c=Cl..." touches=project next="c=Cl..." action=coordinate_now
 
 ## Event Compiler
 

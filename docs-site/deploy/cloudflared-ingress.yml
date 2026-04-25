@@ -1,0 +1,16 @@
+# Add this hostname block to existing cloudflared config on media VM.
+# Usually at /etc/cloudflared/config.yml — append under `ingress:` BEFORE the catch-all 404 rule.
+#
+# Replace SERVICES_VM_INTERNAL_ADDR with the internal IP/hostname of services VM.
+# Port 8080 matches the nginx vhost in deploy/nginx.conf.
+
+ingress:
+  - hostname: docs.aparcedo.org
+    service: http://SERVICES_VM_INTERNAL_ADDR:8080
+    originRequest:
+      httpHostHeader: docs.aparcedo.org
+      noTLSVerify: false
+      connectTimeout: 10s
+
+  # ... existing rules below ...
+  # - service: http_status:404   # catch-all stays last

@@ -9,7 +9,12 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test:scroll": "node --test tests/scroll-guided-rail/core.test.mjs",
+    "dev:docs": "npm --prefix docs-site run dev -- --port 4322",
+    "build:docs": "npm --prefix docs-site run build",
+    "build:all": "npm run build && npm run build:docs",
+    "install:docs": "npm --prefix docs-site install"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",

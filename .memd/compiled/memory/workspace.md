@@ -12,12 +12,12 @@
 - visibility: `all`
 - route: `auto`
 - intent: `current_task`
-- bundle: `.memd`
+- bundle: `/home/josue/Documents/projects/personal-website/.memd`
 
 
 ## Workspace
 
-- project=personal-website namespace=main workspace=none visibility=private items=10 active=10 contested=0 trust=0.73 cf=0.74
+- project=personal-website namespace=main workspace=none visibility=private items=6 active=6 contested=0 trust=0.67 cf=0.74
 
 ## Hive
 
@@ -26,4 +26,4 @@
 
 ## Items
 
-- [Workspace](items/workspace/workspace-01-f1d0cde1)
+- [Workspace](items/workspace/workspace-01-77a12d88)

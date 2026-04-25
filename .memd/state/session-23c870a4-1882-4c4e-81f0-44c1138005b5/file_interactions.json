@@ -1,0 +1,17 @@
+{
+  "session_id": "23c870a4-1882-4c4e-81f0-44c1138005b5",
+  "entries": [
+    {
+      "path": "/home/josue/Documents/projects/personal-website/ROADMAP.md",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1777056586366
+    },
+    {
+      "path": "/home/josue/Documents/projects/personal-website/HANDOFF.json",
+      "op": "read",
+      "count": 1,
+      "last_ts_ms": 1777056586824
+    }
+  ]
+}

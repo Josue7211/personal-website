@@ -32,17 +32,17 @@
   "base_url": "http://100.104.154.24:8787",
   "base_url_healthy": null,
   "host": null,
-  "pid": 15188,
-  "topic_claim": "lane=decisions",
+  "pid": 593947,
+  "topic_claim": "c=Cl...",
   "scope_claims": [
     "project"
   ],
   "task_id": null,
-  "focus": "id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | lane=decisions | tags=checkpo...",
+  "focus": "id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087061 | c=Cl...",
   "pressure": null,
-  "next_recovery": "evicted working-set item: id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh,wake | cf=0.72 | upd=1776603046 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=...",
-  "next_action": "lane=decisions",
-  "working": "lane=decisions",
+  "next_recovery": null,
+  "next_action": "c=Cl...",
+  "working": "c=Cl...",
   "touches": [
     "project"
   ],
@@ -56,5 +56,5 @@
   "confidence": null,
   "risk": null,
   "status": "live",
-  "last_seen": "2026-04-19T12:58:05.213361632Z"
+  "last_seen": "2026-04-25T21:40:49.802041934Z"
 }

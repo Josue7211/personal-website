@@ -12,7 +12,7 @@
 - visibility: `all`
 - route: `auto`
 - intent: `current_task`
-- bundle: `.memd`
+- bundle: `/home/josue/Documents/projects/personal-website/.memd`
 
 
 ## Inbox

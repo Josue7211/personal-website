@@ -1,16 +1,20 @@
 {
   "operation": "wake",
   "budget_chars": 1800,
-  "used_chars": 1786,
-  "utilization_pct": 99.22222222222223,
+  "used_chars": 1714,
+  "utilization_pct": 95.22222222222221,
   "per_kind": {
     "chars_per_kind": {
-      "status": 2398
+      "fact": 1942,
+      "live_truth": 672,
+      "status": 440
     },
     "items_per_kind": {
-      "status": 6
+      "fact": 6,
+      "live_truth": 2,
+      "status": 2
     },
-    "total_chars": 2398,
-    "total_items": 6
+    "total_chars": 3054,
+    "total_items": 10
   }
 }

@@ -19,20 +19,20 @@
       ],
       "records": [
         {
-          "id": "1cc3f28f-2103-4a2f-b865-6465847938d7",
-          "record": "id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh,wake | cf=0.72 | upd=1776603046 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=..."
+          "id": "6153901f-3a69-4185-9943-4a15eec3fa3c",
+          "record": "id=6153901f-3a69-4185-9943-4a15eec3fa3c | stage=canonical | scope=local | kind=live_truth | status=active | project=personal-website | ns=main | vis=private | agent=memd | tags=live_truth,repo_changes | cf=0.98 | upd=1777153245 | c=file_edited: .memd/.last-wake file_edited: .memd/agents/CLAUDE_IMPORTS.md file_edited: .memd/agents/HARNESS_BRIDGES.md file_edited: .memd/agents/agent-zero.ps1 file_edited: .memd/agents/agent-zero.sh file_edited: .mem..."
         },
         {
-          "id": "07930cfb-a2a7-467d-87d4-3927dd39220e",
-          "record": "id=07930cfb-a2a7-467d-87d4-3927dd39220e | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh | cf=0.72 | upd=1776603111 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=..."
+          "id": "e59c2616-8d5d-44d2-ba99-5ea9ef253943",
+          "record": "id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087061 | c=Cloudflare tunnel systemd token lives on media VM. New service hosting (e.g. docs.aparcedo.org) goes on services VM. Tunnel ingress on media VM routes public hostnames to services VM internal addr."
         },
         {
-          "id": "1629641b-8a91-4a62-9ce8-0f3f75aa659f",
-          "record": "id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | lane=decisions | tags=checkpoint,current-task | cf=0.80 | upd=1776603110 | c=V1 planning pass complete: 17 files (ROADMAP + 6 phase contracts + 14 plan docs). Awaiting user on 5 open decisions (audio tier, amber accent, public email, 8 sphere categories, docs aesthetic) + revert-or-keep call o..."
+          "id": "0bd4b700-5678-489a-a5e4-51495f31e6fd",
+          "record": "id=0bd4b700-5678-489a-a5e4-51495f31e6fd | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087440 | c=Homelab SSH access (codex@josuesdesktop): use BW item 'Homelab' (id ffe13244-116d-4595-a459-0055cad8a07c, type=5 sshKey) for private key. Hosts reach via Tailscale magic IPs: services=100.124.53.97 (port 22), media VM..."
         },
         {
-          "id": "b07dd9ac-e530-4b41-8b45-e6353781b0df",
-          "record": "id=b07dd9ac-e530-4b41-8b45-e6353781b0df | stage=canonical | scope=synced | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=resume_state,session_state | cf=0.62 | upd=1776603045 | c=focus: id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=status / status=active / project=personal-website / ns=main / vis=private / agent=codex@session-... pressure: medium next_recover..."
+          "id": "b68adfea-49be-4ff9-a879-55b725a225ab",
+          "record": "id=b68adfea-49be-4ff9-a879-55b725a225ab | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087325 | c=Homelab SSH key in Bitwarden: item name 'Homelab' (id ffe13244-116d-4595-a459-0055cad8a07c), type=5 (sshKey). Use 'bw get item Homelab' and read .sshKey.privateKey. Single key for all homelab VMs. User: aparcedodev. S..."
         }
       ]
     },
@@ -46,8 +46,8 @@
         "global"
       ],
       "budget_chars": 1600,
-      "used_chars": 440,
-      "remaining_chars": 1160,
+      "used_chars": 1320,
+      "remaining_chars": 280,
       "truncated": false,
       "policy": {
         "admission_limit": 8,
@@ -57,74 +57,65 @@
       },
       "records": [
         {
-          "id": "1629641b-8a91-4a62-9ce8-0f3f75aa659f",
-          "record": "id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | lane=decisions | tags=checkpo..."
+          "id": "e59c2616-8d5d-44d2-ba99-5ea9ef253943",
+          "record": "id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087061 | c=Cl..."
         },
         {
-          "id": "b07dd9ac-e530-4b41-8b45-e6353781b0df",
-          "record": "id=b07dd9ac-e530-4b41-8b45-e6353781b0df | stage=canonical | scope=synced | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=resume_state,session_stat..."
-        }
-      ],
-      "evicted": [
-        {
-          "id": "1cc3f28f-2103-4a2f-b865-6465847938d7",
-          "record": "id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh,wake | cf=0.72 | upd=1776603046 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=...",
-          "reason": "evicted_by_status_cap;kind=Status;status=active;source=derived;source_trust=0.73;freshness_days=0;verified_days=45;recent_use_days=0;rehearsals=464;trust_rank=2"
+          "id": "0bd4b700-5678-489a-a5e4-51495f31e6fd",
+          "record": "id=0bd4b700-5678-489a-a5e4-51495f31e6fd | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087440 | c=Ho..."
         },
         {
-          "id": "07930cfb-a2a7-467d-87d4-3927dd39220e",
-          "record": "id=07930cfb-a2a7-467d-87d4-3927dd39220e | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh | cf=0.72 | upd=1776603111 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=...",
-          "reason": "evicted_by_status_cap;kind=Status;status=active;source=derived;source_trust=0.73;freshness_days=0;verified_days=45;recent_use_days=0;rehearsals=96;trust_rank=2"
-        }
-      ],
-      "rehydration_queue": [
-        {
-          "id": "1cc3f28f-2103-4a2f-b865-6465847938d7",
-          "kind": "working_memory_record",
-          "label": "evicted working-set item",
-          "summary": "id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh,wake | cf=0.72 | upd=1776603046 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=...",
-          "reason": "evicted_by_status_cap;kind=Status;status=active;source=derived;source_trust=0.73;freshness_days=0;verified_days=45;recent_use_days=0;rehearsals=464;trust_rank=2",
-          "source_agent": null,
-          "source_system": null,
-          "source_path": null,
-          "source_quality": null,
-          "recorded_at": null
+          "id": "b68adfea-49be-4ff9-a879-55b725a225ab",
+          "record": "id=b68adfea-49be-4ff9-a879-55b725a225ab | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087325 | c=Ho..."
         },
         {
-          "id": "07930cfb-a2a7-467d-87d4-3927dd39220e",
-          "kind": "working_memory_record",
-          "label": "evicted working-set item",
-          "summary": "id=07930cfb-a2a7-467d-87d4-3927dd39220e | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh | cf=0.72 | upd=1776603111 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=...",
-          "reason": "evicted_by_status_cap;kind=Status;status=active;source=derived;source_trust=0.73;freshness_days=0;verified_days=45;recent_use_days=0;rehearsals=96;trust_rank=2",
-          "source_agent": null,
-          "source_system": null,
-          "source_path": null,
-          "source_quality": null,
-          "recorded_at": null
+          "id": "6153901f-3a69-4185-9943-4a15eec3fa3c",
+          "record": "id=6153901f-3a69-4185-9943-4a15eec3fa3c | stage=canonical | scope=local | kind=live_truth | status=active | project=personal-website | ns=main | vis=private | agent=memd | tags=live_truth,repo_changes | cf=0.98 | upd=..."
+        },
+        {
+          "id": "9bd9e145-bfaa-4747-aa4c-c1b5d9d99e12",
+          "record": "id=9bd9e145-bfaa-4747-aa4c-c1b5d9d99e12 | stage=canonical | scope=synced | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=resume_state,session_stat..."
+        },
+        {
+          "id": "ab3699a5-ea4b-4ba7-ba1a-ccdad2b1bac3",
+          "record": "id=ab3699a5-ea4b-4ba7-ba1a-ccdad2b1bac3 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,..."
         }
       ],
+      "evicted": [],
+      "rehydration_queue": [],
       "traces": [
         {
-          "item_id": "1629641b-8a91-4a62-9ce8-0f3f75aa659f",
-          "entity_id": "dc898b0f-9959-4b25-92b1-dc210842f31f",
-          "memory_kind": "status",
+          "item_id": "e59c2616-8d5d-44d2-ba99-5ea9ef253943",
+          "entity_id": "d1c8d715-f4b5-48b9-96a3-7693c5f0456e",
+          "memory_kind": "fact",
           "memory_stage": "canonical",
-          "typed_memory": "session_continuity+canonical",
+          "typed_memory": "semantic+canonical",
           "event_type": "retrieved_working",
           "summary": "retrieved_working route=project_first intent=current_task",
-          "occurred_at": "2026-04-19T12:57:45.504242798Z",
-          "salience_score": 0.87
+          "occurred_at": "2026-04-25T21:40:46.561225518Z",
+          "salience_score": 1.0
         },
         {
-          "item_id": "b07dd9ac-e530-4b41-8b45-e6353781b0df",
-          "entity_id": "db160291-4810-475f-b958-e0e86dd673dc",
-          "memory_kind": "status",
+          "item_id": "0bd4b700-5678-489a-a5e4-51495f31e6fd",
+          "entity_id": "06bb3c82-20fe-41d8-ae4e-f2bdab2a2dd8",
+          "memory_kind": "fact",
           "memory_stage": "canonical",
-          "typed_memory": "session_continuity+canonical",
-          "event_type": "restored",
-          "summary": "duplicate memory item restored to active canonical state",
-          "occurred_at": "2026-04-19T12:57:44.230098384Z",
-          "salience_score": 1.0
+          "typed_memory": "semantic+canonical",
+          "event_type": "retrieved_compact_context",
+          "summary": "retrieved_compact_context route=global_first intent=preference",
+          "occurred_at": "2026-04-25T21:40:36.482228568Z",
+          "salience_score": 0.77
+        },
+        {
+          "item_id": "b68adfea-49be-4ff9-a879-55b725a225ab",
+          "entity_id": "5bacc649-fbc4-40d5-9a1c-9462192f77bd",
+          "memory_kind": "fact",
+          "memory_stage": "canonical",
+          "typed_memory": "semantic+canonical",
+          "event_type": "retrieved_working",
+          "summary": "retrieved_working route=project_first intent=current_task",
+          "occurred_at": "2026-04-25T21:40:35.197433285Z",
+          "salience_score": 0.7
         }
       ],
       "semantic_consolidation": null,
@@ -143,21 +134,21 @@
           "namespace": "main",
           "workspace": null,
           "visibility": "private",
-          "item_count": 10,
-          "active_count": 10,
+          "item_count": 6,
+          "active_count": 6,
           "candidate_count": 0,
           "contested_count": 0,
-          "source_lane_count": 3,
-          "avg_confidence": 0.742,
-          "trust_score": 0.73036003,
-          "last_seen_at": "2026-04-19T12:57:44.387112829Z",
+          "source_lane_count": 4,
+          "avg_confidence": 0.7366667,
+          "trust_score": 0.66726667,
+          "last_seen_at": "2026-04-25T21:40:45.125933859Z",
           "tags": [
-            "checkpoint",
-            "current-task",
             "auto-short-term",
             "bundle-refresh",
-            "wake",
-            "resume_state"
+            "checkpoint",
+            "current-task",
+            "live_truth",
+            "repo_changes"
           ]
         }
       ]
@@ -179,7 +170,7 @@
           "contested_count": 0,
           "avg_confidence": 0.98,
           "trust_score": 0.8684,
-          "last_seen_at": "2026-04-19T12:57:44.387112829Z",
+          "last_seen_at": "2026-04-25T21:40:45.125933859Z",
           "tags": [
             "live_truth",
             "repo_changes"
@@ -192,22 +183,21 @@
           "namespace": "main",
           "workspace": null,
           "visibility": "private",
-          "item_count": 7,
-          "active_count": 7,
+          "item_count": 1,
+          "active_count": 1,
           "candidate_count": 0,
-          "derived_count": 7,
+          "derived_count": 1,
           "synthetic_count": 0,
           "contested_count": 0,
-          "avg_confidence": 0.7428571,
-          "trust_score": 0.73085713,
-          "last_seen_at": "2026-04-19T12:51:51.161869708Z",
+          "avg_confidence": 0.72,
+          "trust_score": 0.7176,
+          "last_seen_at": "2026-04-25T21:40:37.721070948Z",
           "tags": [
-            "checkpoint",
-            "current-task",
             "auto-short-term",
             "bundle-refresh",
-            "wake",
-            "auto"
+            "checkpoint",
+            "current-task",
+            "wake"
           ]
         },
         {
@@ -217,19 +207,37 @@
           "namespace": "main",
           "workspace": null,
           "visibility": "private",
-          "item_count": 2,
-          "active_count": 2,
+          "item_count": 1,
+          "active_count": 1,
           "candidate_count": 0,
-          "derived_count": 2,
+          "derived_count": 1,
           "synthetic_count": 0,
           "contested_count": 0,
           "avg_confidence": 0.62,
           "trust_score": 0.6596,
-          "last_seen_at": "2026-04-19T12:50:45.354483794Z",
+          "last_seen_at": "2026-04-25T21:40:37.090254043Z",
           "tags": [
             "resume_state",
             "session_state"
           ]
+        },
+        {
+          "source_agent": "codex@session-5b36b772",
+          "source_system": "memd",
+          "project": "personal-website",
+          "namespace": "main",
+          "workspace": null,
+          "visibility": "private",
+          "item_count": 3,
+          "active_count": 3,
+          "candidate_count": 0,
+          "derived_count": 0,
+          "synthetic_count": 0,
+          "contested_count": 0,
+          "avg_confidence": 0.7,
+          "trust_score": 0.58599997,
+          "last_seen_at": "2026-04-25T03:24:00.674916038Z",
+          "tags": []
         }
       ]
     },
@@ -238,150 +246,78 @@
       "claims": []
     },
     "recent_repo_changes": [
-      "status D .planning/PROJECT.md",
-      "status D .planning/REQUIREMENTS.md",
-      "status D .planning/ROADMAP.md",
-      "status D .planning/STATE.md",
-      "status D .planning/config.json",
-      "status D .planning/phases/01-foundation/01-01-PLAN.md",
-      "status D .planning/phases/01-foundation/01-01-SUMMARY.md",
-      "status D .planning/phases/01-foundation/01-02-PLAN.md",
-      "diff .planning/PROJECT.md (gone)              | 120 ----",
-      "diff .planning/REQUIREMENTS.md (gone)         | 205 -------",
-      "diff .planning/ROADMAP.md (gone)              | 130 -----",
-      "diff .planning/STATE.md (gone)                |  94 ----"
+      "status M .memd/.last-wake",
+      "status M .memd/agents/CLAUDE_IMPORTS.md",
+      "status M .memd/agents/HARNESS_BRIDGES.md",
+      "status M .memd/agents/agent-zero.ps1",
+      "status M .memd/agents/agent-zero.sh",
+      "status M .memd/agents/agent.ps1",
+      "status M .memd/agents/agent.sh",
+      "status M .memd/agents/capture-live.ps1",
+      "diff .memd/.last-wake                         |   2 +-",
+      "diff .memd/agents/CLAUDE_IMPORTS.md           |   2 +-",
+      "diff .memd/agents/HARNESS_BRIDGES.md          |   2 +-",
+      "diff .memd/agents/agent-zero.ps1              |   2 +-"
     ],
     "change_summary": [
-      "focus -> id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=per...",
-      "next_recovery -> evicted working-set item: id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | s...",
-      "rehydration 1 -> 2"
+      "working 4 -> 6"
     ],
-    "resume_state_age_minutes": 5,
+    "resume_state_age_minutes": 0,
     "refresh_recommended": false,
     "atlas_region_hints": [],
     "handoff_quality": null,
     "files_touched": [
       "/home/josue/.claude/projects/-home-josue-Documents-projects-personal-website/memory/MEMORY.md",
-      "/home/josue/.claude/projects/-home-josue-Documents-projects-personal-website/memory/feedback_resume_no_implement.md",
-      "/home/josue/Documents/projects/personal-website/HANDOFF.json",
-      "/home/josue/Documents/projects/personal-website/ROADMAP.md",
-      "/home/josue/Documents/projects/personal-website/docs/handoff/2026-04-19-v1-planning-pass-complete.md",
-      "/home/josue/Documents/projects/personal-website/docs/handoff/INDEX.md",
-      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-b1-scroll-infrastructure.md",
-      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-c1-hero-section.md",
-      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-d1-page-transitions.md",
-      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-e1-content-sections.md",
-      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-f1-docs-section.md",
-      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-g1-performance-deployment.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/INDEX.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/cinematic-treatment.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/project-manifest.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/about-page.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/b1-scroll.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/c1-boot-and-hero.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/d1-dive.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/data-pipeline.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/design-tokens.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/e1-work-and-experiences.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/f1-transmit-and-docs.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/g1-endcard-audio-polish.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/hud-and-session-card.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/mobile-and-a11y.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/nav-and-layout.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/scene-controller.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/sound-spec.md",
-      "/home/josue/Documents/projects/personal-website/public/scene/app.js",
-      "/home/josue/Documents/projects/personal-website/public/scene/scene3d.js",
-      "/home/josue/Documents/projects/personal-website/src/pages/index.astro",
-      "/home/josue/Documents/projects/personal-website/src/styles/index-scene.css",
+      "/home/josue/.claude/projects/-home-josue-Documents-projects-personal-website/memory/reference_cloudflare_tunnel.md",
+      "/home/josue/Documents/projects/personal-website/astro.config.ts",
+      "/home/josue/Documents/projects/personal-website/docs-site/astro.config.ts",
+      "/home/josue/Documents/projects/personal-website/docs-site/deploy/README.md",
+      "/home/josue/Documents/projects/personal-website/docs-site/deploy/cloudflared-ingress.yml",
+      "/home/josue/Documents/projects/personal-website/docs-site/deploy/nginx.conf",
+      "/home/josue/Documents/projects/personal-website/docs-site/package.json",
+      "/home/josue/Documents/projects/personal-website/docs-site/src/content/docs/index.mdx",
+      "/home/josue/Documents/projects/personal-website/docs-site/tsconfig.json",
+      "/home/josue/Documents/projects/personal-website/package.json",
+      "/home/josue/Documents/projects/personal-website/src/assets/docs-logo.svg",
+      "/home/josue/Documents/projects/personal-website/src/content.config.ts",
+      "/home/josue/Documents/projects/personal-website/src/content/docs/index.mdx",
+      "/home/josue/Documents/projects/personal-website/src/layouts/BaseLayout.astro",
+      "/home/josue/Documents/projects/personal-website/src/layouts/DocsLayout.astro",
+      "/home/josue/Documents/projects/personal-website/src/pages/docs/index.astro",
+      "/home/josue/Documents/projects/personal-website/src/styles/starlight-theme.css",
       "/home/josue/Documents/projects/personal-website/src/styles/tokens.css",
-      "/tmp/claude-1000/-home-josue-Documents-projects-personal-website/7c385b5d-26b4-4eb4-8a60-111a48985be2/tasks/bv1osdr0x.output",
-      "/tmp/pw-scroll/final_1050.png",
-      "/tmp/pw-scroll/final_1350.png",
-      "/tmp/pw-scroll/final_500.png",
-      "/tmp/pw-scroll/final_780.png",
-      "/tmp/pw-scroll/fix_0.png",
-      "/tmp/pw-scroll/fix_1000.png",
-      "/tmp/pw-scroll/fix_1100.png",
-      "/tmp/pw-scroll/fix_1250.png",
-      "/tmp/pw-scroll/fix_400.png",
-      "/tmp/pw-scroll/fix_600.png",
-      "/tmp/pw-scroll/fix_700.png",
-      "/tmp/pw-scroll/fix_800.png",
-      "/tmp/pw-scroll/fix_850.png",
-      "/tmp/pw-scroll/fix_900.png",
-      "/tmp/pw-scroll/s0.png",
-      "/tmp/pw-scroll/s2.png",
-      "/tmp/pw-scroll/s3.png",
-      "/tmp/pw-scroll/s4.png",
-      "/tmp/pw-scroll/s5.png",
-      "/tmp/pw-scroll/t1100.png",
-      "/tmp/pw-scroll/t1300.png",
-      "/tmp/pw-scroll/t1500.png",
-      "/tmp/pw-scroll/t1700.png"
+      "/tmp/docs-shots/fft.png",
+      "/tmp/docs-shots/index.png",
+      "/tmp/docs-shots/mobile.png",
+      "/tmp/pw-design/docs.css",
+      "/tmp/pw-design/docs.html"
     ],
     "un_read_paths": [
-      "/home/josue/.claude/projects/-home-josue-Documents-projects-personal-website/memory/MEMORY.md",
-      "/home/josue/.claude/projects/-home-josue-Documents-projects-personal-website/memory/feedback_resume_no_implement.md",
-      "/home/josue/Documents/projects/personal-website/ROADMAP.md",
-      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-b1-scroll-infrastructure.md",
-      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-c1-hero-section.md",
-      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-d1-page-transitions.md",
-      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-e1-content-sections.md",
-      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-f1-docs-section.md",
-      "/home/josue/Documents/projects/personal-website/docs/phases/v1/phase-g1-performance-deployment.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/INDEX.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/cinematic-treatment.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/project-manifest.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/about-page.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/b1-scroll.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/c1-boot-and-hero.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/d1-dive.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/data-pipeline.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/design-tokens.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/e1-work-and-experiences.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/f1-transmit-and-docs.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/g1-endcard-audio-polish.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/hud-and-session-card.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/mobile-and-a11y.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/nav-and-layout.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/scene-controller.md",
-      "/home/josue/Documents/projects/personal-website/docs/plans/v1/sound-spec.md",
-      "/home/josue/Documents/projects/personal-website/public/scene/app.js",
-      "/home/josue/Documents/projects/personal-website/public/scene/scene3d.js",
-      "/home/josue/Documents/projects/personal-website/src/pages/index.astro",
-      "/home/josue/Documents/projects/personal-website/src/styles/index-scene.css",
+      "/home/josue/Documents/projects/personal-website/astro.config.ts",
+      "/home/josue/Documents/projects/personal-website/docs-site/astro.config.ts",
+      "/home/josue/Documents/projects/personal-website/docs-site/package.json",
+      "/home/josue/Documents/projects/personal-website/docs-site/src/content/docs/index.mdx",
+      "/home/josue/Documents/projects/personal-website/docs-site/tsconfig.json",
+      "/home/josue/Documents/projects/personal-website/package.json",
+      "/home/josue/Documents/projects/personal-website/src/assets/docs-logo.svg",
+      "/home/josue/Documents/projects/personal-website/src/content.config.ts",
+      "/home/josue/Documents/projects/personal-website/src/content/docs/index.mdx",
+      "/home/josue/Documents/projects/personal-website/src/layouts/BaseLayout.astro",
+      "/home/josue/Documents/projects/personal-website/src/layouts/DocsLayout.astro",
+      "/home/josue/Documents/projects/personal-website/src/pages/docs/index.astro",
+      "/home/josue/Documents/projects/personal-website/src/styles/starlight-theme.css",
       "/home/josue/Documents/projects/personal-website/src/styles/tokens.css",
-      "/tmp/claude-1000/-home-josue-Documents-projects-personal-website/7c385b5d-26b4-4eb4-8a60-111a48985be2/tasks/bv1osdr0x.output",
-      "/tmp/pw-scroll/final_1050.png",
-      "/tmp/pw-scroll/final_1350.png",
-      "/tmp/pw-scroll/final_500.png",
-      "/tmp/pw-scroll/final_780.png",
-      "/tmp/pw-scroll/fix_0.png",
-      "/tmp/pw-scroll/fix_1000.png",
-      "/tmp/pw-scroll/fix_1100.png",
-      "/tmp/pw-scroll/fix_1250.png",
-      "/tmp/pw-scroll/fix_400.png",
-      "/tmp/pw-scroll/fix_600.png",
-      "/tmp/pw-scroll/fix_700.png",
-      "/tmp/pw-scroll/fix_800.png",
-      "/tmp/pw-scroll/fix_850.png",
-      "/tmp/pw-scroll/fix_900.png",
-      "/tmp/pw-scroll/s0.png",
-      "/tmp/pw-scroll/s2.png",
-      "/tmp/pw-scroll/s3.png",
-      "/tmp/pw-scroll/s4.png",
-      "/tmp/pw-scroll/s5.png",
-      "/tmp/pw-scroll/t1100.png",
-      "/tmp/pw-scroll/t1300.png",
-      "/tmp/pw-scroll/t1500.png",
-      "/tmp/pw-scroll/t1700.png"
+      "/tmp/docs-shots/fft.png",
+      "/tmp/docs-shots/index.png",
+      "/tmp/docs-shots/mobile.png",
+      "/tmp/pw-design/docs.css",
+      "/tmp/pw-design/docs.html"
     ],
     "preferences": [
-      "id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh,wake | cf=0.72 | upd=1776603046 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=...",
-      "id=07930cfb-a2a7-467d-87d4-3927dd39220e | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh | cf=0.72 | upd=1776603111 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=2 inbox=0 spine=8 tokens=1009 core=621 focus=\"id=759e6ba9-d984-4b94-880e-006542e7f2c0 / stage=canonical / scope=project / kind=...",
-      "id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | lane=decisions | tags=checkpoint,current-task | cf=0.80 | upd=1776603110 | c=V1 planning pass complete: 17 files (ROADMAP + 6 phase contracts + 14 plan docs). Awaiting user on 5 open decisions (audio tier, amber accent, public email, 8 sphere categories, docs aesthetic) + revert-or-keep call o..."
+      "id=6153901f-3a69-4185-9943-4a15eec3fa3c | stage=canonical | scope=local | kind=live_truth | status=active | project=personal-website | ns=main | vis=private | agent=memd | tags=live_truth,repo_changes | cf=0.98 | upd=1777153245 | c=file_edited: .memd/.last-wake file_edited: .memd/agents/CLAUDE_IMPORTS.md file_edited: .memd/agents/HARNESS_BRIDGES.md file_edited: .memd/agents/agent-zero.ps1 file_edited: .memd/agents/agent-zero.sh file_edited: .mem...",
+      "id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087061 | c=Cloudflare tunnel systemd token lives on media VM. New service hosting (e.g. docs.aparcedo.org) goes on services VM. Tunnel ingress on media VM routes public hostnames to services VM internal addr.",
+      "id=ab3699a5-ea4b-4ba7-ba1a-ccdad2b1bac3 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh,wake | cf=0.72 | upd=1777153237 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=4 inbox=0 spine=8 tokens=927 core=668 focus=\"id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 / stage=canonical / scope=project / kind=f..."
     ]
   },
-  "refreshed_at": "2026-04-19T12:57:47.473948629Z"
+  "refreshed_at": "2026-04-25T21:40:48.783708421Z"
 }

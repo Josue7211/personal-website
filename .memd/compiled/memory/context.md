@@ -12,19 +12,19 @@
 - visibility: `all`
 - route: `auto`
 - intent: `current_task`
-- bundle: `.memd`
+- bundle: `/home/josue/Documents/projects/personal-website/.memd`
 
 
 ## Context
 
-- id=1cc3f28f record="id=1cc3f28f-2103-4a2f-b865-6465847938d7 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | ..."
-- id=07930cfb record="id=07930cfb-a2a7-467d-87d4-3927dd39220e | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | ..."
-- id=1629641b record="id=1629641b-8a91-4a62-9ce8-0f3f75aa659f | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | ..."
-- id=b07dd9ac record="id=b07dd9ac-e530-4b41-8b45-e6353781b0df | stage=canonical | scope=synced | kind=status | status=active | project=personal-website | ns=main | vis=private | a..."
+- id=6153901f record="id=6153901f-3a69-4185-9943-4a15eec3fa3c | stage=canonical | scope=local | kind=live_truth | status=active | project=personal-website | ns=main | vis=private ..."
+- id=e59c2616 record="id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | ag..."
+- id=0bd4b700 record="id=0bd4b700-5678-489a-a5e4-51495f31e6fd | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | ag..."
+- id=b68adfea record="id=b68adfea-49be-4ff9-a879-55b725a225ab | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | ag..."
 
 ## Items
 
-- [Context](items/context/context-01-51af98ae)
-- [Context](items/context/context-02-ca01ede6)
-- [Context](items/context/context-03-e9e56c4e)
-- [Context](items/context/context-04-425348a5)
+- [Context](items/context/context-01-abb7e593)
+- [Context](items/context/context-02-b56ccad3)
+- [Context](items/context/context-03-bc0c143d)
+- [Context](items/context/context-04-80bafc29)

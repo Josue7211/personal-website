@@ -233,6 +233,7 @@
   const hero = document.getElementById('top');
   const work = document.getElementById('work');
   const about = document.getElementById('about');
+  const contact = document.getElementById('contact');
   let lastScroll = 0;
   function onScroll() {
     const sy = window.scrollY;
@@ -242,6 +243,7 @@
     const heroH = hero ? hero.offsetHeight : vh;
     const workRect = work ? work.getBoundingClientRect() : null;
     const aboutRect = about ? about.getBoundingClientRect() : null;
+    const contactRect = contact ? contact.getBoundingClientRect() : null;
 
     // Hero exit completes very quickly so the sphere gets a clean stage.
     const heroExit = Math.max(0, Math.min(1, sy / (vh * 0.35)));
@@ -272,6 +274,15 @@
     document.documentElement.style.setProperty('--about-zoom', aboutProg);
     document.body.classList.toggle('zooming-about', aboutProg > 0.02 && aboutProg < 0.98);
     document.body.classList.toggle('in-about', aboutProg > 0.85);
+
+    let contactProg = 0;
+    if (contactRect) {
+      const contactEnter = vh * 0.92;
+      const contactSettle = vh * 0.46;
+      contactProg = Math.max(0, Math.min(1, (contactEnter - contactRect.top) / (contactEnter - contactSettle)));
+    }
+    document.documentElement.style.setProperty('--contact-in', contactProg);
+    document.body.classList.toggle('in-contact', contactProg > 0.95);
 
     // Scene mode: 'work' once hero is gone; 'past' once about takes over.
     let mode = 'hero';
@@ -309,13 +320,17 @@
         return;
       }
       const alpha = Math.min(1, Math.max(0, basis.facing) * 1.5);
+      const lift = (1 - alpha) * 18;
+      const scale = 0.88 + alpha * 0.12;
+      const blur = (1 - alpha) * 6;
       el.style.opacity = String(alpha);
+      el.style.filter = `blur(${blur}px)`;
       const HALF = 90;
       const a = basis.ux / HALF;
       const b = basis.uy / HALF;
       const c = basis.vx / HALF;
       const d = basis.vy / HALF;
-      el.style.transform = `matrix(${a}, ${b}, ${c}, ${d}, ${basis.ox}, ${basis.oy}) translate(-50%, -50%)`;
+      el.style.transform = `matrix(${a}, ${b}, ${c}, ${d}, ${basis.ox}, ${basis.oy}) translate(-50%, -50%) translateY(${-lift}px) scale(${scale})`;
     });
     // Quick-links: anchored on sub-facets
     qlEls.forEach(({ el, conf }) => {
@@ -326,9 +341,13 @@
         return;
       }
       const alpha = Math.min(1, Math.max(0, basis.facing) * 1.8);
+      const lift = (1 - alpha) * 12;
+      const scale = 0.92 + alpha * 0.08;
+      const blur = (1 - alpha) * 4;
       el.style.opacity = String(alpha);
+      el.style.filter = `blur(${blur}px)`;
       el.style.pointerEvents = alpha > 0.5 ? 'auto' : 'none';
-      el.style.transform = `translate(${basis.ox}px, ${basis.oy}px) translate(-50%, -50%)`;
+      el.style.transform = `translate(${basis.ox}px, ${basis.oy}px) translate(-50%, -50%) translateY(${-lift}px) scale(${scale})`;
     });
     requestAnimationFrame(positionLabels);
   }

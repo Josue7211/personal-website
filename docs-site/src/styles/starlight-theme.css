@@ -1,0 +1,222 @@
+/* Signals & Mind — Starlight theme override.
+   Maps Starlight's --sl-* tokens onto the cinematic violet/serif design system
+   so the docs feel like the same product as the main site. */
+
+:root,
+:root[data-theme='dark'] {
+  /* ===== Palette (design's --bg / --ink / --v-*) ===== */
+  --sl-color-bg: #0a0612;
+  --sl-color-bg-nav: rgba(10, 6, 18, 0.85);
+  --sl-color-bg-sidebar: #0a0612;
+  --sl-color-bg-inline-code: rgba(124, 58, 237, 0.12);
+  --sl-color-bg-accent: rgba(124, 58, 237, 0.1);
+
+  --sl-color-text: #ece7f5;
+  --sl-color-text-accent: #c9b8fb;
+  --sl-color-text-invert: #0a0612;
+  --sl-color-white: #ece7f5;
+  --sl-color-gray-1: #ece7f5;
+  --sl-color-gray-2: #cdc6e0;
+  --sl-color-gray-3: #a9a1c4;
+  --sl-color-gray-4: #7a7191;
+  --sl-color-gray-5: #4a4458;
+  --sl-color-gray-6: #2a2535;
+  --sl-color-gray-7: #15101e;
+  --sl-color-black: #0a0612;
+
+  --sl-color-accent-low: #2a0e5e;
+  --sl-color-accent: #7c3aed;
+  --sl-color-accent-high: #c9b8fb;
+  --sl-color-purple: #a78bfa;
+
+  --sl-color-hairline: rgba(255, 255, 255, 0.08);
+  --sl-color-hairline-light: rgba(255, 255, 255, 0.12);
+  --sl-color-hairline-shade: rgba(255, 255, 255, 0.06);
+
+  /* ===== Type stacks ===== */
+  --sl-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --sl-font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* Tighter rhythm */
+  --sl-text-base: 0.9375rem; /* 15px */
+  --sl-line-height: 1.7;
+  --sl-line-height-headings: 1.15;
+
+  /* Sharper corners (matches design D-14: 2-4px) */
+  --sl-content-pad-x: clamp(1rem, 4vw, 2.5rem);
+  --sl-sidebar-width: 17.5rem;
+  --sl-sidebar-pad-x: 1.5rem;
+}
+
+/* ===== Backdrop: subtle violet glow under content ===== */
+body {
+  background:
+    radial-gradient(circle at 50% -20%, rgba(124, 58, 237, 0.18), transparent 38rem),
+    var(--sl-color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== Top nav ===== */
+header.header {
+  border-bottom: 1px solid var(--sl-color-hairline);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.site-title,
+.site-title span {
+  font-family: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* ===== Headings: Instrument Serif, italic accent for h1 em ===== */
+.sl-markdown-content h1,
+.sl-markdown-content h2 {
+  font-family: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.018em;
+}
+
+.sl-markdown-content h1 {
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-block-end: 1rem;
+}
+
+.sl-markdown-content h1 em,
+.sl-markdown-content h2 em {
+  color: var(--sl-color-purple);
+  font-style: italic;
+}
+
+.sl-markdown-content h2 {
+  font-size: 2rem;
+  margin-block: 3.5rem 1rem;
+  padding-block-start: 0;
+  border-block-start: 0;
+}
+
+.sl-markdown-content h3 {
+  font-family: var(--sl-font);
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-block: 2rem 0.75rem;
+}
+
+/* ===== Lede paragraph (first p after h1) ===== */
+.sl-markdown-content > h1 + p {
+  font-family: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.375rem;
+  line-height: 1.45;
+  color: var(--sl-color-gray-2);
+  max-width: 62ch;
+  padding-block-end: 2rem;
+  border-block-end: 1px solid var(--sl-color-hairline);
+  margin-block-end: 2.5rem;
+}
+
+/* ===== Body copy ===== */
+.sl-markdown-content p,
+.sl-markdown-content ul,
+.sl-markdown-content ol {
+  max-width: 68ch;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+/* ===== Inline code: violet chip ===== */
+.sl-markdown-content :not(pre) > code {
+  background: rgba(124, 58, 237, 0.12);
+  color: var(--sl-color-text-accent);
+  border: 0;
+  border-radius: 3px;
+  padding: 1px 6px;
+  font-size: 0.8125rem;
+}
+
+/* ===== Code blocks: dark, sharp ===== */
+.sl-markdown-content pre,
+.expressive-code .frame pre {
+  border-radius: 4px;
+  border: 1px solid var(--sl-color-hairline);
+}
+
+/* ===== Inline links ===== */
+.sl-markdown-content a:not(.sl-anchor-link) {
+  color: var(--sl-color-purple);
+  text-decoration: none;
+  border-block-end: 1px solid rgba(167, 139, 250, 0.3);
+  transition: color 0.2s, border-color 0.2s;
+}
+.sl-markdown-content a:not(.sl-anchor-link):hover {
+  color: var(--sl-color-text-accent);
+  border-block-end-color: var(--sl-color-purple);
+}
+
+/* ===== Sidebar nav: violet active state ===== */
+.sidebar-content a[aria-current='page'],
+.sidebar-content a[aria-current='page']:hover {
+  background: rgba(124, 58, 237, 0.1);
+  color: var(--sl-color-text-accent);
+  border-inline-start: 1px solid var(--sl-color-purple);
+}
+
+.sidebar-content summary,
+.sidebar-content .group-label,
+.sidebar-content .large {
+  font-family: var(--sl-font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sl-color-purple);
+}
+
+/* ===== Right outline ("On this page") ===== */
+.right-sidebar-container starlight-toc nav {
+  font-family: var(--sl-font-mono);
+}
+starlight-toc nav h2 {
+  font-family: var(--sl-font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sl-color-purple);
+}
+starlight-toc a {
+  font-family: var(--sl-font);
+  border-inline-start: 1px solid var(--sl-color-hairline);
+  padding-inline-start: 0.75rem;
+  transition: color 0.2s, border-color 0.2s;
+}
+starlight-toc a[aria-current='true'] {
+  color: var(--sl-color-text-accent);
+  border-inline-start-color: var(--sl-color-purple);
+}
+
+/* ===== Pagination footer ===== */
+.pagination-links a {
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 4px;
+  padding: 1.25rem 1.4rem;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.pagination-links a:hover {
+  border-color: var(--sl-color-purple);
+  background: rgba(124, 58, 237, 0.06);
+}
+.pagination-links a span:last-child {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 1.25rem;
+}
+
+/* ===== Search box ===== */
+site-search button[data-open-modal] {
+  border-radius: 4px;
+}
+
+/* ===== Reduced motion: kill non-essential transitions ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
