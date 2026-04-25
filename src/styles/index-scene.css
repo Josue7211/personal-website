@@ -1279,7 +1279,14 @@ body.in-contact .contact-title {
   text-transform: uppercase;
   color: var(--ink-low);
   background: transparent;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
   pointer-events: none;
+}
+body.in-contact .footer {
+  opacity: 1;
+  transform: none;
 }
 .footer-clock { color: var(--ink-dim); }
 
