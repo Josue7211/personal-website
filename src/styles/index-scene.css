@@ -796,6 +796,9 @@ body.is-guiding-contact:not(.in-contact) .nav-now-playing {
   text-shadow: 0 16px 52px rgba(0,0,0,0.36);
 }
 .section-title em { font-style: italic; color: var(--v-400); }
+.section#about .section-head {
+  border-bottom: 0;
+}
 
 /* ====== Projects ====== */
 .projects {
@@ -2157,23 +2160,18 @@ body[data-scene-mode="work"] .face-label {
   height: calc(100% + 142vh);
   contain: paint;
   background:
-    linear-gradient(
-      to bottom,
-      rgba(20, 8, 42, 0) 0%,
-      rgba(20, 8, 42, calc(var(--about-zoom, 0) * 0.08)) 24%,
-      rgba(20, 8, 42, calc(var(--about-zoom, 0) * 0.2)) 42%,
-      rgba(13, 10, 20, calc(var(--about-zoom, 0) * 0.62)) 72%,
-      rgba(10, 10, 10, calc(var(--about-zoom, 0) * 0.9)) 100%
+    radial-gradient(
+      ellipse at 50% 28%,
+      rgba(52, 20, 108, calc(var(--about-zoom, 0) * 0.46)) 0%,
+      rgba(28, 10, 64, calc(var(--about-zoom, 0) * 0.32)) 40%,
+      rgba(10, 10, 10, 0) 78%
     ),
     radial-gradient(
-      ellipse at 50% 44%,
-      rgba(52, 20, 108, calc(var(--about-zoom, 0) * 0.56)) 0%,
-      rgba(28, 10, 64, calc(var(--about-zoom, 0) * 0.38)) 38%,
-      rgba(10, 10, 10, calc(var(--about-zoom, 0) * 0.42)) 76%,
-      rgba(10, 10, 10, 0) 100%
+      ellipse at 48% 74%,
+      rgba(14, 10, 22, calc(var(--about-zoom, 0) * 0.72)) 0%,
+      rgba(10, 10, 10, calc(var(--about-zoom, 0) * 0.34)) 54%,
+      rgba(10, 10, 10, 0) 82%
     );
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 84%, rgba(0,0,0,0.78) 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 84%, rgba(0,0,0,0.78) 100%);
   opacity: clamp(0, calc(var(--about-zoom, 0) * 1.08), 1);
   z-index: -1;
   pointer-events: none;
@@ -2188,21 +2186,11 @@ body[data-scene-mode="work"] .face-label {
   height: calc(100% + 124vh);
   contain: paint;
   background:
-    linear-gradient(
-      to bottom,
-      rgba(34, 14, 74, 0) 0%,
-      rgba(34, 14, 74, calc(var(--about-zoom, 0) * 0.22)) 24%,
-      rgba(22, 10, 48, calc(var(--about-zoom, 0) * 0.22)) 44%,
-      rgba(10, 10, 10, calc(var(--contact-in, 0) * 0.18)) 70%,
-      rgba(10, 10, 10, calc(var(--contact-in, 0) * 0.42)) 100%
-    ),
     radial-gradient(
       ellipse at 50% 72%,
       rgba(168, 85, 247, calc(var(--contact-in, 0) * 0.16)),
       rgba(10, 10, 10, 0) 58%
     );
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 100%);
   opacity: clamp(0, calc((var(--about-zoom, 0) - 0.05) * 2.1), 1);
   filter: blur(46px);
   z-index: -1;
