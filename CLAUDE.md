@@ -13,3 +13,12 @@ Immersive Astro portfolio site with a cinematic main experience and a separate d
 - NAS builds may need temporary cache/output under `/tmp/personal-website-target`.
 - Design reference: [docs/superpowers/specs/2026-03-30-personal-website-design.md](docs/superpowers/specs/2026-03-30-personal-website-design.md)
 - Work inside `src/layouts`, `src/pages`, and `src/styles`.
+
+## Design System
+Always read `DESIGN.md` before any visual or UI change. Tokens, typography, color,
+spacing, motion, and aesthetic rules are codified there. The running site
+(`src/styles/tokens.css` + `src/styles/index-scene.css`) is the implementation;
+DESIGN.md is the contract. If they diverge, update DESIGN.md to match the running
+site, then make the change. Do not introduce new accent colors, light mode, bubbly
+radii, gradient buttons, or generic AI-default patterns without explicit user
+approval.
