@@ -1084,7 +1084,7 @@ body.is-guiding-contact:not(.in-contact) .nav-now-playing {
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
-  padding: calc(clamp(72px, 10vh, 112px) + var(--contact-overlap)) var(--pad-x) clamp(96px, 10vh, 128px);
+  padding: calc(clamp(36px, 6vh, 72px) + var(--contact-overlap)) var(--pad-x) clamp(48px, 7vh, 84px);
   width: 100%;
   max-width: none;
   margin: calc(var(--contact-overlap) * -1) auto 0;
@@ -1611,8 +1611,9 @@ body[data-hero="split"] .hero-title {
   }
   .contact {
     --contact-overlap: clamp(120px, 22vh, 220px);
-    align-content: end;
-    padding-top: calc(96px + var(--contact-overlap));
+    align-content: center;
+    padding-top: calc(56px + var(--contact-overlap));
+    padding-bottom: 72px;
   }
   .contact-title {
     font-size: 4rem;
