@@ -438,7 +438,7 @@ export default function initIndexScene() {
     }
     document.documentElement.style.setProperty('--about-zoom', String(aboutProgress))
     document.body.classList.toggle('zooming-about', aboutProgress > 0.02 && aboutProgress < 0.98)
-    document.body.classList.toggle('in-about', aboutProgress > 0.78)
+    document.body.classList.toggle('in-about', aboutProgress > 0.54)
 
     let contactProgress = 0
     if (contactRect) {

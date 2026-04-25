@@ -1489,6 +1489,9 @@ body:not(.intro-active) .hero-canvas { will-change: transform; }
   transition: width 0.9s cubic-bezier(.2,.8,.2,1) 0.2s;
 }
 .section-head.in::after { width: 100%; }
+.section#about .section-head::after {
+  content: none;
+}
 
 /* Project title slide-in */
 .project.reveal .project-title { transition: transform 0.6s cubic-bezier(.2,.8,.2,1), opacity 0.6s; }
@@ -1712,9 +1715,9 @@ body.in-about .face-labels { opacity: 0; }
    content is already legible by the time canvas begins to fade. */
 .section#about .about,
 .section#about .section-head {
-  opacity: clamp(0, calc((var(--about-zoom, 0) - 0.02) * 1.18 - max(0, (var(--contact-in, 0) - 0.62) * 2.4)), 1);
-  transform: translateY(calc((1 - var(--about-zoom, 0)) * 64px - max(0px, (var(--contact-in, 0) - 0.62) * 96px)))
-             scale(calc(0.91 + var(--about-zoom, 0) * 0.09));
+  opacity: clamp(0, calc((var(--about-zoom, 0) - 0.02) * 2.6 - max(0, (var(--contact-in, 0) - 0.62) * 2.4)), 1);
+  transform: translateY(calc((1 - var(--about-zoom, 0)) * 38px - max(0px, (var(--contact-in, 0) - 0.62) * 96px)))
+             scale(calc(0.97 + var(--about-zoom, 0) * 0.03));
   transform-origin: center top;
   transition: none;
   will-change: transform, opacity;
@@ -1729,6 +1732,11 @@ body.in-about .section#about .about,
 body.in-about .section#about .section-head {
   opacity: clamp(0, calc(1 - max(0, (var(--contact-in, 0) - 0.48) * 2.2)), 1);
   transform: translateY(calc(max(0px, (var(--contact-in, 0) - 0.62) * -96px)));
+}
+body.in-about:not(.in-contact) .section#about .about,
+body.in-about:not(.in-contact) .section#about .section-head {
+  opacity: 1;
+  transform: none;
 }
 body.in-contact .section#about .about,
 body.in-contact .section#about .section-head {
