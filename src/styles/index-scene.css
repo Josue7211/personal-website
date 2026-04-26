@@ -1084,7 +1084,7 @@ body.is-guiding-contact:not(.in-contact) .nav-now-playing {
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
-  padding: calc(clamp(36px, 6vh, 72px) + var(--contact-overlap)) var(--pad-x) clamp(48px, 7vh, 84px);
+  padding: clamp(48px, 7vh, 84px) var(--pad-x);
   width: 100%;
   max-width: none;
   margin: calc(var(--contact-overlap) * -1) auto 0;
@@ -1616,8 +1616,8 @@ body[data-hero="split"] .hero-title {
   .contact {
     --contact-overlap: clamp(120px, 22vh, 220px);
     align-content: center;
-    padding-top: calc(56px + var(--contact-overlap));
-    padding-bottom: 72px;
+    padding-top: clamp(44px, 7vh, 64px);
+    padding-bottom: clamp(56px, 8vh, 72px);
   }
   .contact-title {
     font-size: 4rem;
@@ -1677,6 +1677,7 @@ body.index-scene::after {
   height: 100vh;
   z-index: 0;
   pointer-events: auto;
+  touch-action: none;
   filter: saturate(1.18) contrast(1.08);
 }
 body[data-guided-state="attract"] .scene-canvas {
@@ -2129,6 +2130,8 @@ body[data-scene-mode="work"] .face-label {
   z-index: 20;
   background: transparent;
   min-height: 100vh;
+  display: grid;
+  align-content: center;
   pointer-events: auto;
   isolation: isolate;
   overflow: visible;

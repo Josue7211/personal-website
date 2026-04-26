@@ -152,7 +152,32 @@ function clampScrollTarget(value: number) {
 }
 
 function getSectionTop(element: HTMLElement, offsetVh = 0) {
-  return clampScrollTarget(window.scrollY + element.getBoundingClientRect().top - window.innerHeight * offsetVh)
+  return clampScrollTarget(
+    window.scrollY + element.getBoundingClientRect().top - window.innerHeight * offsetVh
+  )
+}
+
+function getContentCenterTarget(element: HTMLElement, selectors: string[]) {
+  const rootTop = window.scrollY + element.getBoundingClientRect().top
+  const bounds = selectors
+    .map((selector) => element.querySelector<HTMLElement>(selector))
+    .filter((child): child is HTMLElement => child instanceof HTMLElement)
+    .map((child) => {
+      const rect = child.getBoundingClientRect()
+      return {
+        top: window.scrollY + rect.top,
+        bottom: window.scrollY + rect.bottom,
+      }
+    })
+
+  if (bounds.length === 0) {
+    return clampScrollTarget(rootTop + element.offsetHeight / 2 - window.innerHeight / 2)
+  }
+
+  const top = Math.min(...bounds.map((bound) => bound.top))
+  const bottom = Math.max(...bounds.map((bound) => bound.bottom))
+
+  return clampScrollTarget((top + bottom) / 2 - window.innerHeight / 2)
 }
 
 function nearestIndex(values: number[], current: number) {
@@ -398,16 +423,28 @@ export default function initIndexScene() {
 
   if (lenis && hero instanceof HTMLElement && work instanceof HTMLElement && about instanceof HTMLElement && contact instanceof HTMLElement) {
     const sections = [
-      { el: hero, offsetVh: 0 },
-      { el: work, offsetVh: 0.08 },
-      { el: about, offsetVh: 0.16 },
-      { el: contact, offsetVh: 0.1 },
+      { getTarget: () => getSectionTop(hero, 0) },
+      { getTarget: () => getSectionTop(work, 0.08) },
+      { getTarget: () => getContentCenterTarget(about, ['.section-head', '.about']) },
+      {
+        getTarget: () =>
+          getContentCenterTarget(contact, [
+            '.contact-kicker',
+            '.contact-title',
+            '.contact-email',
+            '.contact-socials',
+          ]),
+      },
     ]
     let snapLockedUntil = 0
     let wheelAccumulator = 0
     let lastWheelAt = 0
+    let activeSnapIndex = nearestIndex(
+      sections.map((section) => section.getTarget()),
+      lenis.targetScroll ?? lenis.animatedScroll ?? window.scrollY
+    )
 
-    const getTargets = () => sections.map((section) => getSectionTop(section.el, section.offsetVh))
+    const getTargets = () => sections.map((section) => section.getTarget())
 
     window.addEventListener(
       'wheel',
@@ -431,16 +468,21 @@ export default function initIndexScene() {
 
         const targets = getTargets()
         const current = lenis.targetScroll ?? lenis.animatedScroll ?? window.scrollY
-        const currentIndex = nearestIndex(targets, current)
+        const nearestCurrentIndex = nearestIndex(targets, current)
+        const currentIndex =
+          Math.abs(targets[nearestCurrentIndex] - current) < window.innerHeight * 0.42
+            ? nearestCurrentIndex
+            : activeSnapIndex
         const nextIndex = Math.max(0, Math.min(targets.length - 1, currentIndex + direction))
         if (nextIndex === currentIndex) return
 
-        snapLockedUntil = now + 980
+        activeSnapIndex = nextIndex
+        snapLockedUntil = now + 820
         document.body.dataset.snapState = 'snapping'
 
         lenis.scrollTo(targets[nextIndex], {
           immediate: false,
-          duration: 0.9,
+          duration: 0.72,
           easing: (t: number) => 1 - Math.pow(1 - t, 4),
           lock: true,
           force: true,
@@ -448,7 +490,7 @@ export default function initIndexScene() {
 
         window.setTimeout(() => {
           if (performance.now() >= snapLockedUntil) document.body.dataset.snapState = 'free'
-        }, 1040)
+        }, 880)
       },
       { passive: false, capture: true }
     )

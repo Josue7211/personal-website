@@ -236,6 +236,7 @@ window.initScene3D = function (canvas, opts = {}) {
   };
   const _arcballVec = new THREE.Vector3();
   const _dragQuat = new THREE.Quaternion();
+  const _dragAxis = new THREE.Vector3();
   const _stepQuat = new THREE.Quaternion();
   const _autoQuat = new THREE.Quaternion();
   let zoomAnchorQuat = null;
@@ -290,6 +291,17 @@ window.initScene3D = function (canvas, opts = {}) {
     if (!dragging) return;
     const currentVec = projectToArcball(e.clientX, e.clientY);
     _dragQuat.setFromUnitVectors(dragState.startVec, currentVec);
+    const w = THREE.MathUtils.clamp(_dragQuat.w, -1, 1);
+    const angle = 2 * Math.acos(w);
+    const sinHalf = Math.sqrt(Math.max(0, 1 - w * w));
+    if (sinHalf > 1e-4 && angle > 1e-4) {
+      _dragAxis.set(
+        _dragQuat.x / sinHalf,
+        _dragQuat.y / sinHalf,
+        _dragQuat.z / sinHalf
+      ).normalize();
+      _dragQuat.setFromAxisAngle(_dragAxis, angle * 2.6);
+    }
     manualQuat.copy(_dragQuat).multiply(dragState.startQuat).normalize();
     captureInertia(dragState.lastVec, currentVec);
     dragState.lastVec.copy(currentVec);
@@ -446,7 +458,7 @@ window.initScene3D = function (canvas, opts = {}) {
 
     // About-zoom: ease camera deep into a specific face so the sphere
     // "swallows" the viewport, transitioning into the About section.
-    const zoomT = aboutProg;
+    const zoomT = aboutProg <= 0.16 ? 0 : Math.min(1, (aboutProg - 0.16) / 0.84);
     const eased = zoomT * zoomT * (3 - 2 * zoomT); // smoothstep
 
     // Camera pulls in on entering work, then dives into the target face.
@@ -494,7 +506,13 @@ window.initScene3D = function (canvas, opts = {}) {
       targetQuat = manualQuat.clone().multiply(_autoQuat);
     }
 
-    const rotLerp = zoomT > 0.01 ? 0.07 + eased * 0.11 : 0.052;
+    const rotLerp = zoomT > 0.01
+      ? 0.07 + eased * 0.11
+      : dragging
+        ? 0.34
+        : dragState.inertiaSpeed > 1e-4
+          ? 0.11
+          : 0.052;
     faceGroup.quaternion.slerp(targetQuat, rotLerp);
 
     // Subtle float / parallax (disabled during zoom)
