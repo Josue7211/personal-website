@@ -460,17 +460,18 @@ window.initScene3D = function (canvas, opts = {}) {
     // "swallows" the viewport, transitioning into the About section.
     const zoomT = aboutProg <= 0.16 ? 0 : Math.min(1, (aboutProg - 0.16) / 0.84);
     const eased = zoomT * zoomT * (3 - 2 * zoomT); // smoothstep
+    const portalT = eased * eased * (3 - 2 * eased);
 
     // Camera pulls in on entering work, then dives into the target face.
-    const targetZ = 5 - workProg * 1.28 - eased * 5.55;
-    camera.position.z += (targetZ - camera.position.z) * 0.07;
+    const targetZ = 5 - workProg * 1.16 - portalT * 5.95;
+    camera.position.z += (targetZ - camera.position.z) * (zoomT > 0.01 ? 0.082 : 0.06);
     if (scene.fog) {
-      const targetDensity = 0.035 + workProg * 0.012 + eased * 0.05;
+      const targetDensity = 0.035 + workProg * 0.012 + portalT * 0.062;
       scene.fog.density += (targetDensity - scene.fog.density) * 0.06;
     }
 
     // Group scale: small pull in hero/work, major blow-up on zoom
-    const targetScale = 1 + workProg * 0.18 + eased * 1.48;
+    const targetScale = 1 + workProg * 0.16 + portalT * 1.78;
     faceGroup.scale.setScalar(
       faceGroup.scale.x + (targetScale - faceGroup.scale.x) * 0.08
     );
@@ -487,7 +488,7 @@ window.initScene3D = function (canvas, opts = {}) {
       if (zoomAnchorQuat === null) {
         zoomAnchorQuat = faceGroup.quaternion.clone();
       }
-      targetQuat = zoomAnchorQuat.clone().slerp(_zoomTargetQuat, eased);
+      targetQuat = zoomAnchorQuat.clone().slerp(_zoomTargetQuat, portalT);
     } else if (sceneMode === 'work') {
       _autoQuat.setFromEuler(new THREE.Euler(
         t * 0.06 + Math.sin(t * 0.2) * 0.12,
@@ -523,8 +524,8 @@ window.initScene3D = function (canvas, opts = {}) {
 
     // During zoom, offset the sphere so the TARGET facet (upper-left area of
     // the front face) moves to screen center, then the camera pushes in.
-    const offsetX = -eased * 0.35;
-    const offsetY = eased * 0.55;
+    const offsetX = -portalT * 0.42;
+    const offsetY = portalT * 0.62;
     if (zoomT > 0.01) {
       faceGroup.position.x += (offsetX - faceGroup.position.x) * 0.08;
       faceGroup.position.y += (offsetY - faceGroup.position.y) * 0.08;

@@ -106,6 +106,8 @@ const TWEAK_DEFAULTS = {
   accent: 'default',
 } as const
 
+const PAGE_LABELS = ['Top', 'Work', 'About', 'Contact'] as const
+
 function clamp01(value: number) {
   return Math.max(0, Math.min(1, value))
 }
@@ -113,6 +115,15 @@ function clamp01(value: number) {
 function smoothProgress(value: number) {
   const t = clamp01(value)
   return t * t * t * (t * (t * 6 - 15) + 10)
+}
+
+function cinematicEase(value: number) {
+  const t = clamp01(value)
+  if (t < 0.62) {
+    return 0.78 * (1 - Math.pow(1 - t / 0.62, 3))
+  }
+
+  return 0.78 + 0.22 * smoothProgress((t - 0.62) / 0.38)
 }
 
 function mountLenis(lenis: Lenis | null) {
@@ -186,6 +197,20 @@ function nearestIndex(values: number[], current: number) {
     const distance = Math.abs(value - current)
     return distance < bestDistance ? index : bestIndex
   }, 0)
+}
+
+function getSnapTiming(fromIndex: number, toIndex: number) {
+  const key = `${fromIndex}-${toIndex}`
+  const timings: Record<string, { duration: number; lockMs: number }> = {
+    '0-1': { duration: 0.92, lockMs: 1060 },
+    '1-2': { duration: 1.22, lockMs: 1380 },
+    '2-3': { duration: 1.08, lockMs: 1220 },
+    '1-0': { duration: 0.84, lockMs: 980 },
+    '2-1': { duration: 1.08, lockMs: 1240 },
+    '3-2': { duration: 0.98, lockMs: 1140 },
+  }
+
+  return timings[key] ?? { duration: 0.98, lockMs: 1120 }
 }
 
 export default function initIndexScene() {
@@ -439,12 +464,61 @@ export default function initIndexScene() {
     let snapLockedUntil = 0
     let wheelAccumulator = 0
     let lastWheelAt = 0
+    let snapStateTimer = 0
     let activeSnapIndex = nearestIndex(
       sections.map((section) => section.getTarget()),
       lenis.targetScroll ?? lenis.animatedScroll ?? window.scrollY
     )
 
     const getTargets = () => sections.map((section) => section.getTarget())
+    const rail = document.createElement('nav')
+    rail.className = 'section-rail'
+    rail.setAttribute('aria-label', 'Page sections')
+
+    const railButtons = PAGE_LABELS.map((label, index) => {
+      const button = document.createElement('button')
+      button.type = 'button'
+      button.className = 'section-rail-dot'
+      button.setAttribute('aria-label', `Go to ${label}`)
+      button.dataset.index = String(index)
+      button.innerHTML = `<span>${label}</span>`
+      button.addEventListener('click', () => {
+        const targets = getTargets()
+        const fromIndex = activeSnapIndex
+        const timing = getSnapTiming(fromIndex, index)
+        activeSnapIndex = index
+        document.body.dataset.scrollDirection = index >= fromIndex ? 'down' : 'up'
+        document.body.dataset.transitionKey = `${fromIndex}-${index}`
+        document.body.dataset.snapState = 'snapping'
+        document.body.dataset.activePage = PAGE_LABELS[index].toLowerCase()
+        window.clearTimeout(snapStateTimer)
+        lenis.scrollTo(targets[index], {
+          immediate: false,
+          duration: timing.duration,
+          easing: cinematicEase,
+          lock: true,
+          force: true,
+        })
+        snapStateTimer = window.setTimeout(() => {
+          document.body.dataset.snapState = 'free'
+        }, timing.lockMs + 120)
+      })
+      rail.appendChild(button)
+      return button
+    })
+
+    document.body.appendChild(rail)
+
+    const writeActivePage = (index: number) => {
+      railButtons.forEach((button, buttonIndex) => {
+        const active = buttonIndex === index
+        button.classList.toggle('active', active)
+        button.setAttribute('aria-current', active ? 'true' : 'false')
+      })
+      document.body.dataset.activePage = PAGE_LABELS[index].toLowerCase()
+    }
+
+    writeActivePage(activeSnapIndex)
 
     window.addEventListener(
       'wheel',
@@ -476,21 +550,26 @@ export default function initIndexScene() {
         const nextIndex = Math.max(0, Math.min(targets.length - 1, currentIndex + direction))
         if (nextIndex === currentIndex) return
 
+        const timing = getSnapTiming(currentIndex, nextIndex)
         activeSnapIndex = nextIndex
-        snapLockedUntil = now + 820
+        snapLockedUntil = now + timing.lockMs
+        document.body.dataset.scrollDirection = direction > 0 ? 'down' : 'up'
+        document.body.dataset.transitionKey = `${currentIndex}-${nextIndex}`
         document.body.dataset.snapState = 'snapping'
+        writeActivePage(nextIndex)
+        window.clearTimeout(snapStateTimer)
 
         lenis.scrollTo(targets[nextIndex], {
           immediate: false,
-          duration: 0.72,
-          easing: (t: number) => 1 - Math.pow(1 - t, 4),
+          duration: timing.duration,
+          easing: cinematicEase,
           lock: true,
           force: true,
         })
 
-        window.setTimeout(() => {
+        snapStateTimer = window.setTimeout(() => {
           if (performance.now() >= snapLockedUntil) document.body.dataset.snapState = 'free'
-        }, 880)
+        }, timing.lockMs + 120)
       },
       { passive: false, capture: true }
     )
@@ -558,7 +637,7 @@ export default function initIndexScene() {
     }
     document.documentElement.style.setProperty('--about-zoom', String(aboutProgress))
     document.body.classList.toggle('zooming-about', aboutProgress > 0.02 && aboutProgress < 0.98)
-    document.body.classList.toggle('in-about', aboutProgress > 0.54)
+    document.body.classList.toggle('in-about', aboutProgress > 0.86)
 
     let contactProgress = 0
     if (contactRect) {
