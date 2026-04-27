@@ -3,38 +3,39 @@
 `ROADMAP.md` is the single roadmap source of truth for this repo.
 
 <!-- ROADMAP_STATE
-truth_date: 2026-04-19
+truth_date: 2026-04-26
 version: v1
 version_status: in_progress
 current_milestone: V1
 milestone_status: in_progress
-current_phase: B1
-phase_status: planning_complete_awaiting_greenlight
+current_phase: Polish + Split Docs Deploy
+phase_status: implementation_in_progress
 next_milestone: V1
-next_step: Start B1 scroll infrastructure from docs/phases/v1/phase-b1-scroll-infrastructure.md
-active_blockers: [astro6_vite8_drift, homepage_is_stub_only, docs_shell_only]
-note: Roadmap reframed 2026-04-19 to the cinematic treatment (docs/plans/cinematic-treatment.md). Phase IDs A1..G1 are stable; scope updated to carry the shot-list and bebop aesthetic. Detailed plans live at docs/plans/v1/.
-last_handoff: v1_cinematic_reframe_2026-04-19
+next_step: Fix the docs.aparcedo.org public Cloudflare 403; origin nginx serves the deployed docs build with 200.
+active_blockers: [docs_public_cloudflare_403]
+note: Roadmap refreshed 2026-04-26 after the homepage became the cinematic interactive site and docs moved to docs.aparcedo.org as a separate Starlight site.
+last_handoff: v1_polish_split_docs_2026-04-26
 -->
 
 ## Status Snapshot
 
-- truth date: `2026-04-19`
+- truth date: `2026-04-26`
 - current version: `v1`
 - version status: `in_progress`
 - current milestone: `V1: Launch the cinematic personal website`
-- current phase: `B1: Scroll Infrastructure` — ready to start
-- completed: `A1: Foundation`
-- next step: build Lenis + GSAP ScrollTrigger sync, verify on pinned test section, then hand off to C1 boot + hero
+- current phase: `Polish + Split Docs Deploy` — in progress
+- completed: `A1: Foundation`, cinematic homepage build, resume/contact wiring, docs-site split config
+- next step: fix the docs.aparcedo.org public Cloudflare 403; origin nginx serves the deployed docs build with 200
 - roadmap rule: this file is the single roadmap truth; `HANDOFF.json` carries machine state, `docs/handoff/` carries human handoff notes
 
 ## Current Product Truth
 
-- The Astro scaffold, design tokens, layouts, and film grain exist.
-- The homepage is still a stub; no shot-list scenes are wired up.
-- The docs section is only a shell layout; no content collections, sidebar, or search.
+- The homepage is now the cinematic interactive site: intro boot, Three.js hero/work scene, guided scroll, about, contact, resume download, and project drawer.
+- Docs are a separate Starlight website under `docs-site`, with main-site links pointing at `https://docs.aparcedo.org`.
 - `npm run dev` runs at `http://127.0.0.1:4321/`.
-- Astro warns that Vite 8 resolves where Astro 6 expects Vite 7.
+- Direct Vite usage was removed; Vite remains only as Astro's transitive dependency. `npm audit` is clean.
+- Resume, GitHub, LinkedIn, X, Reddit, email, and docs links are aligned with current public handles.
+- Local docs build works and the services VM origin serves `docs.aparcedo.org` with `200`; the public Cloudflare edge still returns `403`, so fix Cloudflare/tunnel routing before calling docs live.
 
 ## Design Contract
 
@@ -68,11 +69,10 @@ Goal: ship a memorable, cinematic portfolio site that opens with a film sequence
 
 Open backlog lives under `docs/backlog/`.
 
-- **[high]** [Astro 6 currently resolves Vite 8 instead of the expected Vite 7 line](docs/backlog/v1/2026-04-18-vite-8-drift-with-astro-6.md)
-- **[high]** [Homepage is still a foundation stub rather than the cinematic landing experience](docs/backlog/v1/2026-04-18-homepage-still-foundation-stub.md)
-- **[high]** [Docs section is still shell-only with no real content system or navigation](docs/backlog/v1/2026-04-18-docs-section-still-shell-only.md)
-- **[medium]** Token file (`src/styles/tokens.css`) predates the cinematic palette and must be aligned in B1
-- **[medium]** Site copy still says `@aparcedo`; real handle is `@Josue7211` — fix in E1
+- **[high]** Fix `https://docs.aparcedo.org` public Cloudflare edge; origin nginx already serves the deployed docs build with `200`.
+- **[medium]** Keep project drawer proof content sharp and replace any project that no longer belongs on the public homepage.
+- **[medium]** Reduce `astro check` hint noise from generated/legacy browser scripts so real type problems stand out.
+- **[low]** Retire or rewrite stale backlog docs that describe the old stub homepage/docs shell.
 
 ## Reference Docs
 
@@ -96,6 +96,6 @@ See `§16` of the cinematic treatment. Summary:
 
 1. Audio commitment path: tier-2 (Spotify embed) baseline + tier-3 (original stings) — pending confirmation
 2. Amber `#fbbf24` as rare accent — pending confirmation
-3. Public-facing email — pending pick between `bobbyparzero@gmail.com` and `josue@aparcedo.org`
+3. Public-facing email: `josue@aparcedo.org`
 4. Category count — 8 base faces confirmed unless a category drops out
-5. Docs aesthetic — cinematic shell vs reading mode — pending pick
+5. Docs aesthetic: separate Starlight reading site at `docs.aparcedo.org`

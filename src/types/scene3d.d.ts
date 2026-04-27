@@ -1,3 +1,5 @@
+import type * as ThreeNamespace from 'three'
+
 export {}
 
 type SceneMode = 'hero' | 'work' | 'past'
@@ -29,6 +31,8 @@ type Scene3DInstance = {
   getHoveredFace(): unknown
   getFaceMeshes(): unknown[]
   setHoveredFace(index: number | null): void
+  setPaused(paused: boolean): void
+  getActiveProjectIndex(): number | null
   getSubFacetBasis(
     face: number,
     a: number,
@@ -39,6 +43,7 @@ type Scene3DInstance = {
 
 declare global {
   interface Window {
+    THREE?: typeof ThreeNamespace
     initScene3D?: (
       canvas: HTMLCanvasElement,
       opts: {

@@ -1,4 +1,4 @@
-$env:MEMD_BUNDLE_ROOT = "/home/josue/Documents/projects/personal-website/.memd"
+$env:MEMD_BUNDLE_ROOT = ".memd"
 $bundleBackendEnv = Join-Path $env:MEMD_BUNDLE_ROOT "backend.env.ps1"
 if (Test-Path $bundleBackendEnv) { . $bundleBackendEnv }
 . (Join-Path $env:MEMD_BUNDLE_ROOT "env.ps1")

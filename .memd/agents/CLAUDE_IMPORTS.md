@@ -2,4 +2,4 @@
 
 @../wake.md
 
-Deeper recall: `memd resume --output /home/josue/Documents/projects/personal-website/.memd` or `memd lookup --output /home/josue/Documents/projects/personal-website/.memd --query "..."`.
+Deeper recall: `memd resume --output .memd` or `memd lookup --output .memd --query "..."`.

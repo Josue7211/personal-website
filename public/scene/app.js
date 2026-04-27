@@ -210,7 +210,7 @@
   // vertices — the "small diamond" intersection points where 4 big faces meet.
   const QUICK_LINKS = [
     { face: 2, bary: [1, 0, 0], href: '#about',    label: 'About',   kicker: '→ me' },
-    { face: 4, bary: [0, 1, 0], href: 'docs.html', label: 'Docs',    kicker: '→ case studies' },
+    { face: 4, bary: [0, 1, 0], href: 'https://docs.aparcedo.org', label: 'Docs',    kicker: '→ docs site' },
     { face: 6, bary: [0, 0, 1], href: '#contact',  label: 'Contact', kicker: '→ say hi' },
   ];
   const qlContainer = document.getElementById('quick-links');
@@ -220,6 +220,10 @@
       const a = document.createElement('a');
       a.className = 'quick-link';
       a.href = q.href;
+      if (q.href.startsWith('http')) {
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+      }
       a.innerHTML = `
         <span class="ql-kicker">${q.kicker}</span>
         <span class="ql-label">${q.label}</span>

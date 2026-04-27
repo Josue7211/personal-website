@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-04-25T21:40:49.765778058Z",
-  "project_root": "/home/josue/Documents/projects/personal-website",
+  "generated_at": "2026-04-26T14:12:25.381727856Z",
+  "project_root": "",
   "capabilities": [
     {
       "harness": "claude",
@@ -8567,7 +8567,7 @@
       "portability_class": "universal",
       "source_path": "CLAUDE.md",
       "bridge_hint": null,
-      "hash": "84497a5d50bc1f4a87a2557cdb89948b67a76bb9c4667d29da539ef5c1a74d0a",
+      "hash": "452fd6ae65db7c1a9c043e7c87dd2f9837058bc12157f292ea7d0c507adb96d9",
       "notes": []
     }
   ]

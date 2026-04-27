@@ -1,9 +1,9 @@
 {
-  "turn_key": "536efe7f7dd808f48305224e23c13e614bbaf902880c1b6dd68e40bcaba1debb",
+  "turn_key": "6a39bb641dc651a11cca971ae5082e9099900a5f4eae1d5f9fb86a5b267bb61f",
   "project": "personal-website",
   "namespace": "main",
   "agent": "codex@session-5b36b772",
   "mode": "wake",
-  "query": "id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087061 | c=cl... | working 4 -> 6 | status m .memd/.last-wake",
-  "refreshed_at": "2026-04-25T21:40:49.548215132Z"
+  "query": "id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087061 | c=cl... | status m .memd/.last-wake",
+  "refreshed_at": "2026-04-26T02:24:14.160617356Z"
 }

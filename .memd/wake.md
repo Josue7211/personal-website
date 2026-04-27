@@ -8,7 +8,7 @@
 
 ## Live
 
-- resume_delta: working 4 -> 6
+- file_edited: .memd/.last-wake
 
 ## Durable Truth
 

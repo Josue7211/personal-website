@@ -1,5 +1,5 @@
 // docs-site/astro.config.ts
-// Starlight-only Astro project. Deployed to docs.josue.aparcedo.org.
+// Starlight-only Astro project. Deployed to docs.aparcedo.org.
 // Main cinematic site lives in the parent repo's astro.config.ts.
 import { defineConfig } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
@@ -15,8 +15,8 @@ export default defineConfig({
       logo: { src: './src/assets/docs-logo.svg', replacesTitle: false },
       customCss: ['./src/styles/starlight-theme.css'],
       social: [
-        { icon: 'github', label: 'GitHub', href: 'https://github.com/aparcedo' },
-        { icon: 'email', label: 'Email', href: 'mailto:hi@josueaparcedo.dev' },
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/Josue7211' },
+        { icon: 'email', label: 'Email', href: 'mailto:josue@aparcedo.org' },
       ],
       lastUpdated: true,
       pagination: true,
@@ -73,7 +73,7 @@ export default defineConfig({
         },
       ],
       editLink: {
-        baseUrl: 'https://github.com/aparcedo/personal-website/edit/main/docs-site/',
+        baseUrl: 'https://github.com/Josue7211/personal-website/edit/main/docs-site/',
       },
     }),
     sitemap(),

@@ -28,10 +28,7 @@ export function createGuidedRailController(args: ControllerArgs) {
   let holdStartedAt = 0
   let lastWheelDelta = 0
   let lastWheelAt = 0
-  let lastCommandedSection: GuidedRailSectionId | null = null
-  let lastCommandedState: GuidedRailState = 'free'
   let releasedSection: GuidedRailSectionId | null = null
-  let rafId = 0
 
   const sectionEls: Record<GuidedRailSectionId, HTMLElement> = {
     hero: args.hero,
@@ -81,8 +78,6 @@ export function createGuidedRailController(args: ControllerArgs) {
     void activeSection
     void nextState
     void targetTop
-    lastCommandedSection = null
-    lastCommandedState = 'free'
   }
 
   function frame(time: number) {
@@ -92,7 +87,7 @@ export function createGuidedRailController(args: ControllerArgs) {
     const snapshots = (Object.keys(sectionEls) as GuidedRailSectionId[]).map((id) => ({
       id,
       distanceToTarget: getTargetTop(id) - scrollY,
-      direction: deltaY >= 0 ? 1 : -1,
+      direction: (deltaY >= 0 ? 1 : -1) as -1 | 1,
     }))
 
     const chosen = chooseActiveSection(snapshots, SECTION_CONFIG)
@@ -134,13 +129,11 @@ export function createGuidedRailController(args: ControllerArgs) {
     } else {
       state = 'free'
       holdStartedAt = 0
-      lastCommandedSection = null
-      lastCommandedState = 'free'
       releasedSection = null
       writeBodyState(null, 'free')
     }
 
-    rafId = window.requestAnimationFrame(frame)
+    window.requestAnimationFrame(frame)
   }
 
   function mount() {
@@ -155,7 +148,7 @@ export function createGuidedRailController(args: ControllerArgs) {
       { passive: true }
     )
 
-    rafId = window.requestAnimationFrame(frame)
+    window.requestAnimationFrame(frame)
   }
 
   return { mount }

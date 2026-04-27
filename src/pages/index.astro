@@ -10,6 +10,7 @@ import '../styles/index-scene.css'
   bodyClass="index-scene intro-active"
 >
   <FilmGrain />
+  <a class="skip-link" href="#work">Skip to work</a>
   <div class="site-atmosphere" aria-hidden="true"></div>
 
   <!-- ============ INTRO LOADER ============ -->
@@ -49,7 +50,14 @@ import '../styles/index-scene.css'
   </script>
 
   <!-- ============ SHARED 3D CANVAS ============ -->
-  <canvas class="scene-canvas" id="scene-canvas"></canvas>
+  <canvas
+    class="scene-canvas"
+    id="scene-canvas"
+    role="img"
+    aria-label="Interactive crystalline project sphere"
+  >
+    Interactive project sphere. Selected work is listed below.
+  </canvas>
 
   <!-- ============ NAV ============ -->
   <header class="nav">
@@ -147,14 +155,27 @@ import '../styles/index-scene.css'
       <span class="section-num">[ 01 ] SELECTED WORK</span>
       <h2 class="section-title">Things I've <em>built</em>.</h2>
       <p class="work-sub">
-        Eight faces. Eight flagships. <em>Double-click a face</em> — or drag to spin.
+        Eighteen project signals. <em>Click a tile</em> — or tap a project.
       </p>
+    </div>
+
+    <div class="project-roulette" id="project-roulette" aria-label="Featured projects">
+      <span class="project-roulette-kicker">Featured projects</span>
+      <div class="project-roulette-list" id="project-roulette-list"></div>
     </div>
 
     <div class="face-labels" id="face-labels"></div>
     <div class="quick-links" id="quick-links"></div>
+    <div class="mobile-work-list" id="mobile-projects" aria-label="Selected projects"></div>
 
-    <div class="project-drawer" id="project-drawer" aria-hidden="true">
+    <div
+      class="project-drawer"
+      id="project-drawer"
+      aria-hidden="true"
+      aria-modal="true"
+      role="dialog"
+      tabindex="-1"
+    >
       <button class="drawer-close" id="drawer-close" aria-label="Close">
         <span>CLOSE</span><span class="drawer-x">×</span>
       </button>
@@ -163,8 +184,15 @@ import '../styles/index-scene.css'
         <h3 class="drawer-title" id="drawer-title"></h3>
         <div class="drawer-tags" id="drawer-tags"></div>
         <p class="drawer-desc" id="drawer-desc"></p>
+        <div class="drawer-proof" id="drawer-proof"></div>
         <div class="drawer-meta" id="drawer-meta"></div>
-        <a class="drawer-cta" id="drawer-cta" href="#">READ CASE STUDY →</a>
+        <a
+          class="drawer-cta"
+          id="drawer-cta"
+          href="https://github.com/Josue7211"
+          target="_blank"
+          rel="noopener noreferrer"
+        >READ CASE STUDY →</a>
       </div>
     </div>
   </section>
@@ -193,7 +221,11 @@ import '../styles/index-scene.css'
         </p>
 
         <div class="cv-block">
-          <a href="#" class="cv-btn">
+          <a
+            href="/resume/josue-aparcedo.pdf"
+            class="cv-btn"
+            download="Josue-Aparcedo-Resume.pdf"
+          >
             <span class="cv-label">RESUME / CV</span>
             <span class="cv-action">Download PDF ↓</span>
           </a>
@@ -222,7 +254,7 @@ import '../styles/index-scene.css'
             <dt>— Reach me</dt>
             <dd><span>josue@aparcedo.org</span><span class="dim">email</span></dd>
             <dd><span>@Josue7211</span><span class="dim">github</span></dd>
-            <dd><span>/in/aparcedo</span><span class="dim">linkedin</span></dd>
+            <dd><span>/in/josueaparcedo</span><span class="dim">linkedin</span></dd>
           </dl>
         </div>
       </aside>
@@ -240,9 +272,10 @@ import '../styles/index-scene.css'
     >
     <div class="contact-socials reveal">
       <a href="https://github.com/Josue7211" target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
-      <a href="https://www.linkedin.com/in/aparcedo" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a>
-      <a href="https://github.com/Josue7211/memd" target="_blank" rel="noopener noreferrer">MEMD ↗</a>
-      <a href="/docs">DOCS →</a>
+      <a href="https://www.linkedin.com/in/josueaparcedo/" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a>
+      <a href="https://x.com/aapjosue" target="_blank" rel="noopener noreferrer">X ↗</a>
+      <a href="https://www.reddit.com/user/Josue7211" target="_blank" rel="noopener noreferrer">REDDIT ↗</a>
+      <a href="https://docs.aparcedo.org" target="_blank" rel="noopener noreferrer">DOCS ↗</a>
     </div>
   </section>
 
@@ -252,8 +285,8 @@ import '../styles/index-scene.css'
     <span class="footer-clock" id="clock">—:—:—</span>
   </footer>
 
-  <!-- scripts — kept as global <script> so prototype's window.* contract holds -->
-  <script is:inline src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <!-- scene3d.js keeps a small window.* contract; Three is supplied by the bundled index scene script. -->
+  <script is:inline type="module" src="/vendor/three-global.js"></script>
   <script is:inline src="/scene/scene3d.js"></script>
   <script>
     import initIndexScene from '../scripts/index-scene'

@@ -12,8 +12,8 @@
 - visibility: `all`
 - route: `auto`
 - intent: `current_task`
-- bundle: `/home/josue/Documents/projects/personal-website/.memd`
+- bundle: `.memd`
 
-- lane=working | index=3
+- lane=working | index=7
 - id=b68adfea record="id=b68adfea-49be-4ff9-a879-55b725a225ab | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087325 | c=Ho..."
-- budget=1320/1600 | pressure=low | refresh=false
+- budget=1540/1600 | pressure=high | refresh=true

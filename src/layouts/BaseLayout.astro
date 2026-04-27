@@ -5,17 +5,41 @@ interface Props {
   title: string
   description?: string
   bodyClass?: string
+  image?: string
 }
 
-const { title, description = 'Software engineer, builder, creator.', bodyClass } = Astro.props
+const {
+  title,
+  description = 'Computer engineering student building at the edge of hardware and software.',
+  bodyClass,
+  image = '/og-image.png',
+} = Astro.props
+
+const site = 'https://josue.aparcedo.org'
+const canonical = new URL(Astro.url.pathname, site).toString()
+const socialImage = new URL(image, site).toString()
+const fullTitle = `${title} — Josue Aparcedo`
 ---
 
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} — Josue Aparcedo</title>
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="author" content="Josue Aparcedo" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Josue Aparcedo" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

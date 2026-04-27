@@ -8,6 +8,9 @@ type Project = {
   title: string
   tags: string[]
   desc: string
+  problem: string
+  built: string
+  impact: string
   meta: Array<[string, string]>
   url: string
 }
@@ -20,14 +23,61 @@ type QuickLink = {
   kicker: string
 }
 
+type Scene3DInstance = {
+  setMode(mode: 'hero' | 'work' | 'past'): void
+  setScrollProg(progress: number): void
+  setAboutProg(progress: number): void
+  getFaceScreenPos(index: number): {
+    x: number
+    y: number
+    visible: boolean
+    facing: number
+  } | null
+  getHoveredFace(): unknown
+  getFaceMeshes(): unknown[]
+  setHoveredFace(index: number | null): void
+  setPaused(paused: boolean): void
+  getActiveProjectIndex(): number | null
+  getFaceScreenBasis(
+    face: number
+  ): {
+    visible: boolean
+    facing: number
+    ux: number
+    uy: number
+    vx: number
+    vy: number
+    ox: number
+    oy: number
+  } | null
+  getSubFacetBasis(
+    face: number,
+    a: number,
+    b: number,
+    c: number
+  ): {
+    visible: boolean
+    facing: number
+    ux: number
+    uy: number
+    vx: number
+    vy: number
+    ox: number
+    oy: number
+  } | null
+}
+
 const PROJECTS: Project[] = [
   {
     id: 'memd',
     num: '001 / 2026',
     title: 'memd',
     tags: ['RUST', 'AGENTS', 'MEMORY'],
-    desc: 'Open-source memory manager and retrieval control plane for LLM agents. Persistent context, handoffs, recall across sessions.',
-    meta: [['Stack', 'Rust'], ['Role', 'Creator / maintainer'], ['Repo', 'github.com/Josue7211/memd']],
+    desc: 'Memory and retrieval control plane for LLM coding agents. Repo-scoped wake files, lookup, checkpoints, and handoffs.',
+    problem: 'Long agent sessions lose decisions, corrections, and project context when the transcript gets compacted or a tool changes.',
+    built: 'A Rust CLI and file-backed memory layer with wake files, semantic lookup, checkpoints, and repo-level state.',
+    impact: 'Turns scattered session history into durable project context that can survive handoffs and long implementation runs.',
+    meta: [['Stack', 'Rust'], ['Role', 'Creator'], ['Surface', 'CLI + memory store']],
     url: 'https://github.com/Josue7211/memd',
   },
   {
@@ -35,8 +85,11 @@ const PROJECTS: Project[] = [
     num: '002 / 2026',
     title: 'security-sweep',
     tags: ['SECURITY', 'AGENTS', 'RED-TEAM'],
-    desc: 'Pentagon-grade red-team security scanning for Claude Code. Nineteen agents, two tiers, zero gaps.',
-    meta: [['Agents', '19'], ['Role', 'Creator'], ['Repo', 'github.com/Josue7211/security-sweep']],
+    desc: 'Multi-pass security review workflow for Claude Code projects. Threat modeling, dependency checks, secret scanning, and exploit-minded review.',
+    problem: 'AI-assisted code still needs adversarial review; generic linting misses design flaws, unsafe defaults, and workflow leaks.',
+    built: 'A tiered audit system that assigns focused review passes across secrets, dependencies, auth, data handling, and deployment risk.',
+    impact: 'Makes security review repeatable enough to run before shipping instead of waiting for a post-launch scramble.',
+    meta: [['Agents', '19'], ['Role', 'Creator'], ['Focus', 'Security review']],
     url: 'https://github.com/Josue7211/security-sweep',
   },
   {
@@ -44,8 +97,11 @@ const PROJECTS: Project[] = [
     num: '003 / 2026',
     title: 'claude-autoresearch',
     tags: ['SHELL', 'AGENTS', 'LOOP'],
-    desc: "Autonomous overnight improvement loop for Claude Code. Inspired by Karpathy's autoresearch.",
-    meta: [['Stack', 'Shell'], ['Role', 'Creator'], ['Repo', 'github.com/Josue7211/claude-autoresearch']],
+    desc: 'Autonomous overnight improvement loop for Claude Code. Runs research, captures findings, and resumes with useful context.',
+    problem: 'Research loops stall when they depend on a person babysitting every prompt, checkpoint, and restart.',
+    built: 'Shell automation for repeated research passes, capture files, resumable context, and next-step handoff notes.',
+    impact: 'Converts idle machine time into structured investigation work that is ready to review the next morning.',
+    meta: [['Stack', 'Shell'], ['Role', 'Creator'], ['Mode', 'Research loop']],
     url: 'https://github.com/Josue7211/claude-autoresearch',
   },
   {
@@ -53,8 +109,11 @@ const PROJECTS: Project[] = [
     num: '004 / 2025',
     title: 'Bjorn',
     tags: ['HARDWARE', '3D-PRINT', 'FIRMWARE'],
-    desc: 'Heavily modified Ender 3 V2 NEO. Firmware, slicer profiles, and mechanical mods to print most materials at high speeds.',
-    meta: [['Base', 'Ender 3 V2 NEO'], ['Role', 'All of it'], ['Repo', 'github.com/Josue7211/Bjorn']],
+    desc: 'Modified Ender 3 V2 NEO build: firmware, slicer profiles, mechanical changes, and calibration notes.',
+    problem: 'Stock hobby printers hit limits fast: inconsistent motion, narrow material range, and tuning that does not transfer.',
+    built: 'Firmware changes, slicer profiles, mechanical upgrades, and repeatable calibration notes for higher-speed material experiments.',
+    impact: 'Shows hardware debugging in the real world: thermals, motion, materials, tolerances, and failure analysis.',
+    meta: [['Base', 'Ender 3 V2 NEO'], ['Role', 'Firmware + mods'], ['Focus', 'High-speed materials']],
     url: 'https://github.com/Josue7211/Bjorn',
   },
   {
@@ -62,8 +121,11 @@ const PROJECTS: Project[] = [
     num: '005 / 2025',
     title: 'homelab-cli',
     tags: ['SHELL', 'INFRA', 'SELF-HOSTED'],
-    desc: 'Sixteen bash CLIs for running a self-hosted homelab - Sonarr, Radarr, Plex, AdGuard, qBittorrent, Portainer.',
-    meta: [['CLIs', '16'], ['Stack', 'Shell'], ['Repo', 'github.com/Josue7211/homelab-cli']],
+    desc: 'Sixteen Bash CLIs for operating a self-hosted stack: media, DNS, containers, downloads, and service recovery.',
+    problem: 'Homelab services sprawl into too many dashboards, ports, log locations, and manual recovery steps.',
+    built: 'Focused terminal commands for Sonarr, Radarr, Plex, AdGuard, qBittorrent, Portainer, and related service checks.',
+    impact: 'Makes the homelab easier to operate under pressure because common fixes become explicit commands.',
+    meta: [['CLIs', '16'], ['Stack', 'Shell'], ['Focus', 'Homelab ops']],
     url: 'https://github.com/Josue7211/homelab-cli',
   },
   {
@@ -71,8 +133,11 @@ const PROJECTS: Project[] = [
     num: '006 / 2026',
     title: 'AgentSecrets',
     tags: ['RUST', 'SECURITY', 'SECRETS'],
-    desc: 'Self-hosted secret broker for agent workflows. Masked responses, human approvals, full audit trails.',
-    meta: [['Stack', 'Rust'], ['Role', 'Creator'], ['Repo', 'github.com/Josue7211/AgentSecrets']],
+    desc: 'Self-hosted secret broker for agent workflows: masked responses, human approval, and audit trails.',
+    problem: 'Agent workflows often need credentials, but putting raw secrets in prompts or logs is the wrong boundary.',
+    built: 'A Rust broker that mediates secret requests, masks returned values, asks for approval, and records sensitive access.',
+    impact: 'Keeps credential use explicit and auditable while still letting automation complete real tasks.',
+    meta: [['Stack', 'Rust'], ['Role', 'Creator'], ['Focus', 'Secret broker']],
     url: 'https://github.com/Josue7211/AgentSecrets',
   },
   {
@@ -80,8 +145,11 @@ const PROJECTS: Project[] = [
     num: '007 / 2026',
     title: 'claude-dream',
     tags: ['SHELL', 'AGENTS', 'MEMORY'],
-    desc: "Memory consolidation skills for Claude Code. Replicates Anthropic's unreleased /dream and /autodream flows.",
-    meta: [['Stack', 'Shell'], ['Role', 'Creator'], ['Repo', 'github.com/Josue7211/claude-dream']],
+    desc: 'Memory consolidation skills for Claude Code. Session recap, durable lessons, and carry-forward notes.',
+    problem: 'Useful corrections and lessons disappear unless they are converted into a compact memory artifact.',
+    built: 'Shell skills that summarize session state, extract reusable lessons, and write carry-forward notes for future work.',
+    impact: 'Cuts repeated mistakes by making important session knowledge available after the chat is gone.',
+    meta: [['Stack', 'Shell'], ['Role', 'Creator'], ['Focus', 'Memory consolidation']],
     url: 'https://github.com/Josue7211/claude-dream',
   },
   {
@@ -89,15 +157,138 @@ const PROJECTS: Project[] = [
     num: '008 / 2025',
     title: 'mac-bridge',
     tags: ['JAVASCRIPT', 'MACOS', 'INFRA'],
-    desc: 'REST bridge for macOS services - Reminders, Notes, Contacts, Find My, Messages. Runs on a Mac, reachable over Tailscale.',
-    meta: [['Stack', 'JavaScript'], ['Transport', 'Tailscale'], ['Repo', 'github.com/Josue7211/mac-bridge']],
+    desc: 'REST bridge for macOS services: Reminders, Notes, Contacts, Find My, and Messages over Tailscale.',
+    problem: 'macOS apps hold useful personal data, but they are awkward to automate safely from remote machines.',
+    built: 'A small JavaScript service that exposes selected local actions over a private Tailscale network.',
+    impact: 'Turns a Mac into a controlled automation endpoint without exposing personal services to the public internet.',
+    meta: [['Stack', 'JavaScript'], ['Transport', 'Tailscale'], ['Focus', 'macOS bridge']],
     url: 'https://github.com/Josue7211/mac-bridge',
+  },
+  {
+    id: 'agent-shell',
+    num: '009 / 2026',
+    title: 'AgentShell',
+    tags: ['RUST', 'AGENTS', 'TERMINAL'],
+    desc: 'Rust agent shell project for local automation experiments and command-oriented agent workflows.',
+    problem: 'Agent tooling needs a controlled execution surface that is closer to a real terminal than a toy prompt loop.',
+    built: 'A Rust codebase focused on shell-style agent operation, local control boundaries, and repeatable command execution.',
+    impact: 'Explores the interface between autonomous agents and the operating system where most real developer work happens.',
+    meta: [['Stack', 'Rust'], ['Role', 'Creator'], ['Focus', 'Agent shell']],
+    url: 'https://github.com/Josue7211/AgentShell',
+  },
+  {
+    id: 'cornerstone',
+    num: '010 / 2026',
+    title: 'cornerstone',
+    tags: ['JAVASCRIPT', 'OS', 'AI'],
+    desc: 'AI 98 OS experiment: a desktop-inspired interface for agentic workflows and personal computing ideas.',
+    problem: 'Most AI tools live as chat boxes instead of operating environments with persistent state, windows, and workflows.',
+    built: 'A JavaScript interface prototype that treats agent work like an operating system surface instead of a single panel.',
+    impact: 'Pushes portfolio work beyond utility scripts into product-shaped interface exploration.',
+    meta: [['Stack', 'JavaScript'], ['Role', 'Creator'], ['Focus', 'AI OS']],
+    url: 'https://github.com/Josue7211/cornerstone',
+  },
+  {
+    id: 'clawcontrol',
+    num: '011 / 2026',
+    title: 'clawcontrol',
+    tags: ['TYPESCRIPT', 'TOOLS', 'CONTROL'],
+    desc: 'TypeScript control surface for Claude/agent workflow experiments.',
+    problem: 'Agent workflows need more direct controls for running, watching, and steering background work.',
+    built: 'A TypeScript project exploring operator controls and workflow surfaces for agent-assisted development.',
+    impact: 'Adds a product layer around raw automation so agent work becomes easier to supervise.',
+    meta: [['Stack', 'TypeScript'], ['Role', 'Creator'], ['Focus', 'Agent control']],
+    url: 'https://github.com/Josue7211/clawcontrol',
+  },
+  {
+    id: 'claude-sync',
+    num: '012 / 2026',
+    title: 'claude-sync',
+    tags: ['SHELL', 'SYNC', 'HOMELAB'],
+    desc: 'Sync Claude Code config through Syncthing and project mounts through NAS paths without SSH dependency.',
+    problem: 'Working across machines gets messy when config, projects, and local agent setup drift apart.',
+    built: 'Shell automation for syncing Claude Code config and project access across a local/self-hosted workflow.',
+    impact: 'Keeps multi-machine development usable without turning every setup step into manual dotfile surgery.',
+    meta: [['Stack', 'Shell'], ['Transport', 'Syncthing'], ['Focus', 'Config sync']],
+    url: 'https://github.com/Josue7211/claude-sync',
+  },
+  {
+    id: 'spotify-takeover',
+    num: '013 / 2026',
+    title: 'spotify-takeover',
+    tags: ['MUSIC', 'CROSS-PLATFORM', 'APP'],
+    desc: 'Cross-platform music app concept for iOS, Linux, macOS, and Windows.',
+    problem: 'Music ownership and playback workflows often split between closed services, local libraries, and separate devices.',
+    built: 'An app experiment aimed at unifying music playback across desktop and mobile platforms.',
+    impact: 'Shows product thinking around daily-use media software instead of only developer tooling.',
+    meta: [['Surface', 'Cross-platform app'], ['Role', 'Creator'], ['Focus', 'Music']],
+    url: 'https://github.com/Josue7211/spotify-takeover',
+  },
+  {
+    id: 'sunshine-detailing',
+    num: '014 / 2024',
+    title: 'SunshineDetailing',
+    tags: ['TYPESCRIPT', 'BUSINESS', 'BOOKING'],
+    desc: 'Business website for booking appointments and presenting auto detailing services.',
+    problem: 'Small service businesses need a clean web presence that converts visitors into scheduled work.',
+    built: 'A TypeScript website with booking-oriented content and customer-facing service structure.',
+    impact: 'Grounds the portfolio in practical client-style web work, not only personal tooling.',
+    meta: [['Stack', 'TypeScript'], ['Role', 'Builder'], ['Surface', 'Business site']],
+    url: 'https://github.com/Josue7211/SunshineDetailing',
+  },
+  {
+    id: 'business-dashboard',
+    num: '015 / 2023',
+    title: 'business-dashboard',
+    tags: ['JAVASCRIPT', 'DASHBOARD', 'FINANCE'],
+    desc: 'Client and financial dashboard with real-time updates for business management.',
+    problem: 'Operational data becomes hard to act on when client records, financial views, and status updates are split apart.',
+    built: 'A JavaScript dashboard focused on secure client views, financial information, and business update flows.',
+    impact: 'Shows early full-stack product thinking around internal tools and business operations.',
+    meta: [['Stack', 'JavaScript'], ['Role', 'Builder'], ['Surface', 'Dashboard']],
+    url: 'https://github.com/Josue7211/business-dashboard',
+  },
+  {
+    id: 'alice',
+    num: '016 / 2023',
+    title: 'Alice',
+    tags: ['ASSISTANT', 'AUTOMATION', 'AI'],
+    desc: 'Personal virtual assistant project exploring automation, helper workflows, and user-facing assistant behavior.',
+    problem: 'Useful personal assistants need to connect real tasks, context, and commands instead of staying as demos.',
+    built: 'An assistant experiment around task handling, automation surfaces, and personal workflow support.',
+    impact: 'Connects older assistant ideas to the newer agent tooling direction across the portfolio.',
+    meta: [['Role', 'Creator'], ['Surface', 'Assistant'], ['Focus', 'Automation']],
+    url: 'https://github.com/Josue7211/Alice',
+  },
+  {
+    id: 'personal-website',
+    num: '017 / 2026',
+    title: 'personal-website',
+    tags: ['ASTRO', 'PORTFOLIO', 'DESIGN'],
+    desc: 'Cinematic Astro portfolio with a 3D project orb, resume surface, contact links, and separate docs integration.',
+    problem: 'A normal portfolio grid would undersell the mix of systems, agent tooling, hardware, and design work.',
+    built: 'An Astro site with custom Three.js interaction, responsive sections, social metadata, and deploy-focused polish.',
+    impact: 'Makes the portfolio itself a proof-of-work project instead of a wrapper around the projects.',
+    meta: [['Stack', 'Astro + Three.js'], ['Role', 'Creator'], ['Surface', 'Portfolio']],
+    url: 'https://github.com/Josue7211/personal-website',
+  },
+  {
+    id: 'docs',
+    num: '018 / 2026',
+    title: 'docs',
+    tags: ['MDX', 'NOTES', 'KNOWLEDGE'],
+    desc: 'docs.aparcedo.org source: a separate MDX notes site for systems, signals, hardware, and off-topic writing.',
+    problem: 'Portfolio pages and durable technical notes want different structures, URLs, and reading experiences.',
+    built: 'A standalone docs site with MDX content, topic sections, and deployment wiring for docs.aparcedo.org.',
+    impact: 'Keeps long-form learning material out of the portfolio while still making it easy to find.',
+    meta: [['Stack', 'MDX'], ['Domain', 'docs.aparcedo.org'], ['Focus', 'Knowledge base']],
+    url: 'https://github.com/Josue7211/docs',
   },
 ]
 
 const QUICK_LINKS: QuickLink[] = [
   { face: 2, bary: [1, 0, 0], href: '#about', label: 'About', kicker: '-> me' },
-  { face: 4, bary: [0, 1, 0], href: 'docs.html', label: 'Docs', kicker: '-> case studies' },
+  { face: 4, bary: [0, 1, 0], href: 'https://docs.aparcedo.org', label: 'Docs', kicker: '-> docs site' },
   { face: 6, bary: [0, 0, 1], href: '#contact', label: 'Contact', kicker: '-> say hi' },
 ]
 
@@ -119,11 +310,7 @@ function smoothProgress(value: number) {
 
 function cinematicEase(value: number) {
   const t = clamp01(value)
-  if (t < 0.62) {
-    return 0.78 * (1 - Math.pow(1 - t / 0.62, 3))
-  }
-
-  return 0.78 + 0.22 * smoothProgress((t - 0.62) / 0.38)
+  return 1 - Math.pow(1 - t, 3)
 }
 
 function mountLenis(lenis: Lenis | null) {
@@ -174,10 +361,9 @@ function getContentCenterTarget(element: HTMLElement, selectors: string[]) {
     .map((selector) => element.querySelector<HTMLElement>(selector))
     .filter((child): child is HTMLElement => child instanceof HTMLElement)
     .map((child) => {
-      const rect = child.getBoundingClientRect()
       return {
-        top: window.scrollY + rect.top,
-        bottom: window.scrollY + rect.bottom,
+        top: rootTop + child.offsetTop,
+        bottom: rootTop + child.offsetTop + child.offsetHeight,
       }
     })
 
@@ -202,15 +388,15 @@ function nearestIndex(values: number[], current: number) {
 function getSnapTiming(fromIndex: number, toIndex: number) {
   const key = `${fromIndex}-${toIndex}`
   const timings: Record<string, { duration: number; lockMs: number }> = {
-    '0-1': { duration: 0.92, lockMs: 1060 },
-    '1-2': { duration: 1.22, lockMs: 1380 },
-    '2-3': { duration: 1.08, lockMs: 1220 },
-    '1-0': { duration: 0.84, lockMs: 980 },
-    '2-1': { duration: 1.08, lockMs: 1240 },
-    '3-2': { duration: 0.98, lockMs: 1140 },
+    '0-1': { duration: 0.82, lockMs: 940 },
+    '1-2': { duration: 0.9, lockMs: 1040 },
+    '2-3': { duration: 0.82, lockMs: 940 },
+    '1-0': { duration: 0.76, lockMs: 880 },
+    '2-1': { duration: 0.84, lockMs: 980 },
+    '3-2': { duration: 0.78, lockMs: 900 },
   }
 
-  return timings[key] ?? { duration: 0.98, lockMs: 1120 }
+  return timings[key] ?? { duration: 0.82, lockMs: 940 }
 }
 
 export default function initIndexScene() {
@@ -351,7 +537,7 @@ export default function initIndexScene() {
   }
   tickCursor()
 
-  const hoverSelector = 'a, button, .face-label, .experiment'
+  const hoverSelector = 'a, button, .face-label, .mobile-project-card, .experiment'
   document.addEventListener('pointerover', (event) => {
     const target = event.target instanceof Element ? event.target : null
     if (!target?.closest(hoverSelector)) return
@@ -406,6 +592,9 @@ export default function initIndexScene() {
   const contact = document.getElementById('contact')
   const labelsContainer = document.getElementById('face-labels')
   const quickLinksContainer = document.getElementById('quick-links')
+  const mobileProjectsContainer = document.getElementById('mobile-projects')
+  const rouletteContainer = document.getElementById('project-roulette')
+  const rouletteList = document.getElementById('project-roulette-list')
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   if (prefersReducedMotion) {
@@ -427,15 +616,12 @@ export default function initIndexScene() {
   mountLenis(lenis)
 
   let scene3D: Scene3DInstance | undefined
-  if (sceneCanvas instanceof HTMLCanvasElement && window.initScene3D) {
-    scene3D = window.initScene3D(sceneCanvas, {
-      projects: PROJECTS,
-      onFaceClick: (project, index) => openProject(project as Project, index),
-    })
-    if (scene3D) window.__scene3d = scene3D
-  }
 
-  if (lenis && hero instanceof HTMLElement && work instanceof HTMLElement && about instanceof HTMLElement && contact instanceof HTMLElement && scene3D) {
+  const mountGuidedRail = () => {
+    if (!lenis || !(hero instanceof HTMLElement) || !(work instanceof HTMLElement) || !(about instanceof HTMLElement) || !(contact instanceof HTMLElement) || !scene3D) {
+      return
+    }
+
     createGuidedRailController({
       lenis,
       hero,
@@ -445,6 +631,25 @@ export default function initIndexScene() {
       scene3D,
     }).mount()
   }
+
+  const mountScene3D = async () => {
+    if (!(sceneCanvas instanceof HTMLCanvasElement) || !window.initScene3D) return
+    if (!window.THREE) {
+      window.addEventListener('three-ready', () => void mountScene3D(), { once: true })
+      return
+    }
+
+    scene3D = window.initScene3D(sceneCanvas, {
+      projects: PROJECTS,
+      onFaceClick: (project, index) => openProject(project as Project, index),
+    })
+    if (scene3D) {
+      window.__scene3d = scene3D
+      mountGuidedRail()
+    }
+  }
+
+  void mountScene3D()
 
   if (lenis && hero instanceof HTMLElement && work instanceof HTMLElement && about instanceof HTMLElement && contact instanceof HTMLElement) {
     const sections = [
@@ -465,6 +670,7 @@ export default function initIndexScene() {
     let wheelAccumulator = 0
     let lastWheelAt = 0
     let snapStateTimer = 0
+    let nowPlayingTimer = 0
     let activeSnapIndex = nearestIndex(
       sections.map((section) => section.getTarget()),
       lenis.targetScroll ?? lenis.animatedScroll ?? window.scrollY
@@ -541,12 +747,7 @@ export default function initIndexScene() {
         wheelAccumulator = 0
 
         const targets = getTargets()
-        const current = lenis.targetScroll ?? lenis.animatedScroll ?? window.scrollY
-        const nearestCurrentIndex = nearestIndex(targets, current)
-        const currentIndex =
-          Math.abs(targets[nearestCurrentIndex] - current) < window.innerHeight * 0.42
-            ? nearestCurrentIndex
-            : activeSnapIndex
+        const currentIndex = activeSnapIndex
         const nextIndex = Math.max(0, Math.min(targets.length - 1, currentIndex + direction))
         if (nextIndex === currentIndex) return
 
@@ -556,8 +757,10 @@ export default function initIndexScene() {
         document.body.dataset.scrollDirection = direction > 0 ? 'down' : 'up'
         document.body.dataset.transitionKey = `${currentIndex}-${nextIndex}`
         document.body.dataset.snapState = 'snapping'
+        document.body.dataset.nowPlayingState = nextIndex === 1 ? 'waiting' : 'ready'
         writeActivePage(nextIndex)
         window.clearTimeout(snapStateTimer)
+        window.clearTimeout(nowPlayingTimer)
 
         lenis.scrollTo(targets[nextIndex], {
           immediate: false,
@@ -566,6 +769,12 @@ export default function initIndexScene() {
           lock: true,
           force: true,
         })
+
+        if (nextIndex === 1) {
+          nowPlayingTimer = window.setTimeout(() => {
+            document.body.dataset.nowPlayingState = 'ready'
+          }, Math.min(260, timing.lockMs * 0.3))
+        }
 
         snapStateTimer = window.setTimeout(() => {
           if (performance.now() >= snapLockedUntil) document.body.dataset.snapState = 'free'
@@ -588,9 +797,99 @@ export default function initIndexScene() {
         <span class="fl-line"></span>
       `
       element.addEventListener('click', () => openProject(project, index))
+      element.addEventListener('pointerenter', () => scene3D?.setHoveredFace(index))
+      element.addEventListener('pointerleave', () => scene3D?.setHoveredFace(null))
+      element.addEventListener('focus', () => scene3D?.setHoveredFace(index))
+      element.addEventListener('blur', () => scene3D?.setHoveredFace(null))
       labelsContainer.appendChild(element)
       faceLabels.push(element)
     })
+  }
+
+  if (mobileProjectsContainer) {
+    const mobileProjectCards = PROJECTS.map((project, index) => {
+      const button = document.createElement('button')
+      button.className = 'mobile-project-card'
+      button.type = 'button'
+      button.setAttribute('aria-label', `Open ${project.title} project details`)
+
+      const topRow = document.createElement('span')
+      topRow.className = 'mobile-project-top'
+
+      const num = document.createElement('span')
+      num.className = 'mobile-project-num'
+      num.textContent = project.num
+
+      const tag = document.createElement('span')
+      tag.className = 'mobile-project-tag'
+      tag.textContent = project.tags[0] ?? 'PROJECT'
+
+      const title = document.createElement('span')
+      title.className = 'mobile-project-title'
+      title.textContent = project.title
+
+      const copy = document.createElement('span')
+      copy.className = 'mobile-project-copy'
+      copy.textContent = project.impact
+
+      topRow.append(num, tag)
+      button.append(topRow, title, copy)
+      button.addEventListener('click', () => openProject(project, index))
+      return button
+    })
+
+    mobileProjectsContainer.replaceChildren(...mobileProjectCards)
+  }
+
+  const rouletteRows: HTMLButtonElement[] = []
+  let rouletteActiveIndex = -1
+
+  const getRouletteOffset = (projectIndex: number, activeIndex: number) => {
+    const count = PROJECTS.length
+    let offset = projectIndex - activeIndex
+    if (offset > count / 2) offset -= count
+    if (offset < count / -2) offset += count
+    return offset
+  }
+
+  const renderRoulette = (activeIndex: number) => {
+    if (!rouletteList || activeIndex === rouletteActiveIndex) return
+    rouletteActiveIndex = activeIndex
+
+    rouletteRows.forEach((row, projectIndex) => {
+      const offset = getRouletteOffset(projectIndex, activeIndex)
+      const distance = Math.abs(offset)
+      row.dataset.active = projectIndex === activeIndex ? 'true' : 'false'
+      row.style.setProperty('--row-offset', String(offset))
+      row.style.setProperty('--row-distance', String(distance))
+      row.setAttribute('aria-current', projectIndex === activeIndex ? 'true' : 'false')
+    })
+  }
+
+  if (rouletteContainer && rouletteList && PROJECTS.length > 0) {
+    rouletteRows.push(
+      ...PROJECTS.map((project, projectIndex) => {
+        const row = document.createElement('button')
+        row.type = 'button'
+        row.className = 'project-roulette-row'
+        row.addEventListener('click', () => {
+          scene3D?.setHoveredFace(projectIndex)
+          openProject(project, projectIndex)
+        })
+        row.addEventListener('pointerenter', () => scene3D?.setHoveredFace(projectIndex))
+        row.addEventListener('pointerleave', () => scene3D?.setHoveredFace(null))
+        row.addEventListener('focus', () => scene3D?.setHoveredFace(projectIndex))
+        row.addEventListener('blur', () => scene3D?.setHoveredFace(null))
+        row.innerHTML = `
+          <span class="roulette-num">${project.num.split(' ')[0]}</span>
+          <span class="roulette-title">${project.title}</span>
+          <span class="roulette-tag">${project.tags[0] ?? 'PROJECT'}</span>
+        `
+        return row
+      })
+    )
+    rouletteList.replaceChildren(...rouletteRows)
+    renderRoulette(0)
   }
 
   const quickLinkElements: Array<{ el: HTMLAnchorElement; conf: QuickLink }> = []
@@ -599,6 +898,10 @@ export default function initIndexScene() {
       const anchor = document.createElement('a')
       anchor.className = 'quick-link'
       anchor.href = linkConfig.href
+      if (linkConfig.href.startsWith('http')) {
+        anchor.target = '_blank'
+        anchor.rel = 'noopener noreferrer'
+      }
       anchor.innerHTML = `
         <span class="ql-kicker">${linkConfig.kicker}</span>
         <span class="ql-label">${linkConfig.label}</span>
@@ -735,14 +1038,36 @@ export default function initIndexScene() {
   }
   window.requestAnimationFrame(positionLabels)
 
+  const updateRoulette = () => {
+    if (scene3D && rouletteContainer && document.body.dataset.sceneMode === 'work') {
+      const activeIndex = scene3D.getActiveProjectIndex()
+      if (activeIndex != null && PROJECTS[activeIndex]) renderRoulette(activeIndex)
+    }
+
+    window.requestAnimationFrame(updateRoulette)
+  }
+  window.requestAnimationFrame(updateRoulette)
+
   const drawer = document.getElementById('project-drawer')
   const drawerClose = document.getElementById('drawer-close')
   const drawerTitle = document.getElementById('drawer-title')
   const drawerIndex = document.getElementById('drawer-index')
   const drawerDesc = document.getElementById('drawer-desc')
   const drawerTags = document.getElementById('drawer-tags')
+  const drawerProof = document.getElementById('drawer-proof')
   const drawerMeta = document.getElementById('drawer-meta')
   const drawerCta = document.getElementById('drawer-cta')
+  let drawerReturnFocus: HTMLElement | null = null
+
+  const drawerFocusableSelector =
+    'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+
+  const getDrawerFocusables = () => {
+    if (!drawer) return []
+    return Array.from(drawer.querySelectorAll<HTMLElement>(drawerFocusableSelector)).filter(
+      (element) => !element.hasAttribute('disabled') && element.offsetParent !== null
+    )
+  }
 
   const renderDrawerTags = (tags: string[]) => {
     if (!drawerTags) return
@@ -770,13 +1095,47 @@ export default function initIndexScene() {
     )
   }
 
-  function openProject(project: Project | null | undefined, _index: number) {
+  const renderDrawerProof = (project: Project) => {
+    if (!drawerProof) return
+
+    const rows: Array<[string, string]> = [
+      ['Problem', project.problem],
+      ['Built', project.built],
+      ['Impact', project.impact],
+    ]
+
+    drawerProof.replaceChildren(
+      ...rows.map(([label, copy]) => {
+        const section = document.createElement('section')
+        section.className = 'drawer-proof-section'
+
+        const kicker = document.createElement('span')
+        kicker.className = 'drawer-proof-kicker'
+        kicker.textContent = label
+
+        const body = document.createElement('p')
+        body.className = 'drawer-proof-copy'
+        body.textContent = copy
+
+        section.append(kicker, body)
+        return section
+      })
+    )
+  }
+
+  function openProject(project: Project | null | undefined, index: number) {
     if (!drawer || !project) return
+    scene3D?.setHoveredFace(index)
+    scene3D?.setPaused(true)
+
+    drawerReturnFocus =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null
 
     if (drawerTitle) drawerTitle.textContent = project.title
     if (drawerIndex) drawerIndex.textContent = project.num
     if (drawerDesc) drawerDesc.textContent = project.desc
     renderDrawerTags(project.tags)
+    renderDrawerProof(project)
     renderDrawerMeta(project.meta)
 
     if (drawerCta instanceof HTMLAnchorElement) {
@@ -789,17 +1148,52 @@ export default function initIndexScene() {
 
     drawer.classList.add('open')
     drawer.setAttribute('aria-hidden', 'false')
+    window.setTimeout(() => {
+      const focusTarget =
+        drawerClose instanceof HTMLElement ? drawerClose : getDrawerFocusables()[0] ?? drawer
+      focusTarget.focus()
+    }, 0)
   }
 
   const closeDrawer = () => {
     if (!drawer) return
     drawer.classList.remove('open')
     drawer.setAttribute('aria-hidden', 'true')
+    scene3D?.setHoveredFace(null)
+    scene3D?.setPaused(false)
+    drawerReturnFocus?.focus()
+    drawerReturnFocus = null
   }
 
   drawerClose?.addEventListener('click', closeDrawer)
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeDrawer()
+    if (!drawer?.classList.contains('open')) return
+
+    if (event.key === 'Escape') {
+      closeDrawer()
+      return
+    }
+
+    if (event.key !== 'Tab') return
+
+    const focusables = getDrawerFocusables()
+    if (focusables.length === 0) {
+      event.preventDefault()
+      drawer.focus()
+      return
+    }
+
+    const first = focusables[0]
+    const last = focusables[focusables.length - 1]
+    const active = document.activeElement
+
+    if (event.shiftKey && active === first) {
+      event.preventDefault()
+      last.focus()
+    } else if (!event.shiftKey && active === last) {
+      event.preventDefault()
+      first.focus()
+    }
   })
 
   if (window.initExperimentTile) {

@@ -33,17 +33,17 @@ window.initScene3D = function (canvas, opts = {}) {
 
   // ---- Lighting ----
   scene.add(new THREE.AmbientLight(0x160c22, 0.72));
-  const key = new THREE.PointLight(0xf2d38a, 86, 24);
+  const key = new THREE.PointLight(0xf2d38a, 54, 24);
   key.position.set(3.4, 3.2, 3); scene.add(key);
-  const fill = new THREE.PointLight(0x8fd7ff, 28, 24);
+  const fill = new THREE.PointLight(0x8fd7ff, 22, 24);
   fill.position.set(-3.6, -2.2, 2.4); scene.add(fill);
-  const rim = new THREE.PointLight(0xa78bfa, 72, 26);
+  const rim = new THREE.PointLight(0xa78bfa, 52, 26);
   rim.position.set(-2.4, 3.4, -3.2); scene.add(rim);
 
   // ---- Subdivided octahedron approximating a sphere (geodesic-style) ----
   // 8 base faces, each subdivided into smaller triangles for the geodesic look.
   const RADIUS = 1.7;
-  const SUBDIV = 3;
+  const SUBDIV = 4;
 
   // Base 8-face octahedron — used for big-face centroids / normals.
   const baseGeo = new THREE.OctahedronGeometry(RADIUS, 0);
@@ -52,8 +52,58 @@ window.initScene3D = function (canvas, opts = {}) {
   const faceGroup = new THREE.Group();
   const faceMeshes = [];   // one Group per big octahedron face
   const subMeshes  = [];   // flat list of every sub-triangle mesh (raycast target)
+  const projectSlots = [];
+  const markerSprites = [];
 
   const spherify = (v, r) => v.clone().normalize().multiplyScalar(r);
+  const FACE_PALETTE = [
+    0xa855f7, 0xf2d38a, 0x8fd7ff, 0x34d399,
+    0xfb7185, 0x60a5fa, 0xf97316, 0xc4b5fd,
+  ];
+
+  function colorToRgba(color, alpha) {
+    return `rgba(${Math.round(color.r * 255)}, ${Math.round(color.g * 255)}, ${Math.round(color.b * 255)}, ${alpha})`;
+  }
+
+  function makeProjectSprite(project, index, accent) {
+    const labelCanvas = document.createElement('canvas');
+    labelCanvas.width = 192;
+    labelCanvas.height = 72;
+    const ctx = labelCanvas.getContext('2d');
+    if (!ctx) return null;
+
+    const num = String(index + 1).padStart(2, '0');
+    const title = (project && project.title ? String(project.title) : 'project')
+      .slice(0, 20)
+      .toUpperCase();
+
+    ctx.clearRect(0, 0, labelCanvas.width, labelCanvas.height);
+    ctx.fillStyle = 'rgba(8, 4, 16, 0.5)';
+    ctx.fillRect(0, 0, labelCanvas.width, labelCanvas.height);
+    ctx.strokeStyle = colorToRgba(accent, 0.48);
+    ctx.lineWidth = 2;
+    ctx.strokeRect(4, 4, labelCanvas.width - 8, labelCanvas.height - 8);
+    ctx.fillStyle = 'rgba(236, 231, 245, 0.86)';
+    ctx.font = '600 24px monospace';
+    ctx.fillText(num, 16, 32);
+    ctx.fillStyle = colorToRgba(accent, 0.76);
+    ctx.font = '500 11px monospace';
+    ctx.fillText(title, 16, 54);
+
+    const texture = new THREE.CanvasTexture(labelCanvas);
+    if (THREE.SRGBColorSpace) texture.colorSpace = THREE.SRGBColorSpace;
+    const material = new THREE.SpriteMaterial({
+      map: texture,
+      transparent: true,
+      opacity: 0,
+      depthWrite: false,
+      depthTest: true,
+    });
+    const sprite = new THREE.Sprite(material);
+    sprite.scale.set(0.24, 0.09, 1);
+    sprite.userData = { projectIndex: index, baseScale: 0.24 };
+    return sprite;
+  }
 
   // Tessellated sphere — SAME buffer that feeds the wireframe, so sub-mesh
   // fills register exactly under the wires.
@@ -71,6 +121,7 @@ window.initScene3D = function (canvas, opts = {}) {
     const c = new THREE.Vector3().fromBufferAttribute(basePos, i * 3 + 2);
     const centroid = new THREE.Vector3().addVectors(a, b).add(c).multiplyScalar(1/3);
     const normal = centroid.clone().normalize();
+    const accent = new THREE.Color(FACE_PALETTE[i % FACE_PALETTE.length]);
     baseNormals.push(normal);
 
     const faceHolder = new THREE.Group();
@@ -79,8 +130,10 @@ window.initScene3D = function (canvas, opts = {}) {
       centroid: spherify(centroid, RADIUS * 0.98),
       normal: normal.clone(),
       a: a.clone(), b: b.clone(), c: c.clone(),
-      project: PROJECTS[i] || null,
+      accent,
+      lift: 0,
       subs: [],
+      projectSlot: null,
     };
     faceGroup.add(faceHolder);
     faceMeshes.push(faceHolder);
@@ -102,33 +155,99 @@ window.initScene3D = function (canvas, opts = {}) {
       if (d > bestDot) { bestDot = d; bestI = i; }
     }
     const faceHolder = faceMeshes[bestI];
+    const neutralAccent = new THREE.Color(0xa855f7);
+    const baseColor = new THREE.Color(0x100b16);
+    const baseEmissive = new THREE.Color(0x2a0e5e);
+    const triCentroid = p1.clone().add(p2).add(p3).multiplyScalar(1 / 3);
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.Float32BufferAttribute(
       [p1.x,p1.y,p1.z, p2.x,p2.y,p2.z, p3.x,p3.y,p3.z], 3
     ));
     g.computeVertexNormals();
     const mat = new THREE.MeshPhysicalMaterial({
-      color: 0x100b16,
-      metalness: 0.42,
-      roughness: 0.28,
-      clearcoat: 0.7,
-      clearcoatRoughness: 0.34,
-      emissive: 0x2a0e5e,
-      emissiveIntensity: 0.24,
+      color: baseColor.clone(),
+      metalness: 0.24,
+      roughness: 0.58,
+      clearcoat: 0.18,
+      clearcoatRoughness: 0.62,
+      emissive: baseEmissive.clone(),
+      emissiveIntensity: 0.1,
       transparent: true,
-      opacity: 0.88,
+      opacity: 0.76,
       side: THREE.DoubleSide,
     });
     const m = new THREE.Mesh(g, mat);
     m.userData = {
       faceIndex: bestI,
       parentFace: faceHolder,
-      project: PROJECTS[bestI] || null,
+      project: null,
+      projectIndex: null,
+      slot: false,
+      accent: neutralAccent.clone(),
+      baseColor,
+      baseEmissive,
+      centroid: triCentroid,
+      normal: triCentroid.clone().normalize(),
+      a: p1.clone(),
+      b: p2.clone(),
+      c: p3.clone(),
     };
     faceHolder.add(m);
     faceHolder.userData.subs.push(m);
     subMeshes.push(m);
   }
+
+  const orderedSlotCandidates = subMeshes.slice().sort((a, b) => {
+    const an = a.userData.normal;
+    const bn = b.userData.normal;
+    const aa = Math.atan2(an.z, an.x);
+    const ba = Math.atan2(bn.z, bn.x);
+    if (Math.abs(aa - ba) > 0.0001) return aa - ba;
+    return an.y - bn.y;
+  });
+  const usedSlots = new Set();
+
+  PROJECTS.forEach((project, index) => {
+    if (!orderedSlotCandidates.length) return;
+
+    const start = Math.floor((index * orderedSlotCandidates.length) / Math.max(1, PROJECTS.length));
+    let slot = null;
+    for (let step = 0; step < orderedSlotCandidates.length; step++) {
+      const candidate = orderedSlotCandidates[(start + step) % orderedSlotCandidates.length];
+      if (usedSlots.has(candidate)) continue;
+      slot = candidate;
+      break;
+    }
+    if (!slot) return;
+
+    usedSlots.add(slot);
+    const faceHolder = slot.userData.parentFace;
+    if (!faceHolder) return;
+
+    const accent = new THREE.Color(FACE_PALETTE[index % FACE_PALETTE.length]);
+    const slotColor = new THREE.Color(0x100b16);
+    const slotEmissive = new THREE.Color(0x2a0e5e).lerp(accent, 0.045);
+
+    slot.userData.project = project;
+    slot.userData.projectIndex = index;
+    slot.userData.slot = true;
+    slot.userData.accent = accent.clone();
+    slot.userData.baseColor = slotColor;
+    slot.userData.baseEmissive = slotEmissive;
+    slot.material.color.copy(slotColor);
+    slot.material.emissive.copy(slotEmissive);
+    slot.material.opacity = 0.76;
+    projectSlots[index] = { mesh: slot, faceHolder, marker: null };
+    if (!faceHolder.userData.projectSlot) faceHolder.userData.projectSlot = slot;
+
+    const marker = makeProjectSprite(project, index, accent);
+    if (marker) {
+      marker.position.copy(slot.userData.centroid.clone().normalize().multiplyScalar(RADIUS * 1.035));
+      faceHolder.add(marker);
+      projectSlots[index].marker = marker;
+      markerSprites.push(marker);
+    }
+  });
   scene.add(faceGroup);
 
   // Wireframe overlay — slightly inflated copy of the exact same tessellation.
@@ -200,10 +319,12 @@ window.initScene3D = function (canvas, opts = {}) {
 
   let hoveredFace = null;   // parent Group
   let hoveredSub = null;    // specific sub-triangle mesh under cursor
-  let selectedFace = null;
+  let manualHoverFaceIndex = null;
   let sceneMode = 'hero';   // 'hero' | 'work' | 'past'
   let scrollProg = 0;       // overall 0..1 across hero+work
   let aboutProg = 0;        // 0..1 zoom-into-face transition to about
+  let paused = false;
+  let activeProjectIndex = 0;
 
   window.addEventListener('pointermove', (e) => {
     mouse.nx = (e.clientX / window.innerWidth) * 2 - 1;
@@ -212,16 +333,150 @@ window.initScene3D = function (canvas, opts = {}) {
     mouse.y = e.clientY;
   });
 
-  canvas.addEventListener('dblclick', (e) => {
+  function pickProject(clientX, clientY) {
     if (sceneMode !== 'work') return;
-    ndc.set(mouse.nx, mouse.ny);
+    const rect = canvas.getBoundingClientRect();
+    ndc.set(
+      ((clientX - rect.left) / Math.max(1, rect.width)) * 2 - 1,
+      -((clientY - rect.top) / Math.max(1, rect.height)) * 2 + 1
+    );
     raycaster.setFromCamera(ndc, camera);
     const hits = raycaster.intersectObjects(subMeshes, false);
-    if (hits.length && hits[0].object.userData.project) {
-      const sub = hits[0].object;
-      if (opts.onFaceClick) opts.onFaceClick(sub.userData.project, sub.userData.faceIndex);
-    }
+    const hit = hits.find((item) => item.object.userData.project);
+    return hit ? hit.object : null;
+  }
+
+  function openPickedProject(sub) {
+    if (!sub || !opts.onFaceClick) return;
+    opts.onFaceClick(sub.userData.project, sub.userData.projectIndex);
+  }
+
+  canvas.addEventListener('dblclick', (e) => {
+    openPickedProject(pickProject(e.clientX, e.clientY));
   });
+
+  function projectLocalToScreen(faceHolder, point) {
+    const w = point.clone()
+      .add(faceHolder.position)
+      .applyQuaternion(faceGroup.quaternion)
+      .add(faceGroup.position);
+    const proj = w.project(camera);
+    return {
+      x: (proj.x * 0.5 + 0.5) * window.innerWidth,
+      y: (-proj.y * 0.5 + 0.5) * window.innerHeight,
+    };
+  }
+
+  function getFaceFacing(faceHolder, localPoint, localNormal) {
+    const worldNormal = (localNormal || faceHolder.userData.normal).clone().applyQuaternion(faceGroup.quaternion);
+    const worldPoint = localPoint.clone()
+      .add(faceHolder.position)
+      .applyQuaternion(faceGroup.quaternion)
+      .add(faceGroup.position);
+    const camDir = new THREE.Vector3().subVectors(camera.position, worldPoint).normalize();
+    return worldNormal.dot(camDir);
+  }
+
+  function getActiveFaceIndex() {
+    if (hoveredSub) return hoveredSub.userData.projectIndex;
+    return manualHoverFaceIndex;
+  }
+
+  function getFaceHoverFactor(index) {
+    return getActiveFaceIndex() === index ? 1 : 0;
+  }
+
+  function updateBodyHoverState() {
+    document.body.classList.toggle('face-hovered', getActiveFaceIndex() != null);
+  }
+
+  function brightenColor(baseColor, accent, amount) {
+    return baseColor.clone().lerp(accent, amount);
+  }
+
+  function softenOpacity(value) {
+    return Math.max(0.2, Math.min(1, value));
+  }
+
+  function easeVisible(value) {
+    const t = Math.max(0, Math.min(1, value));
+    return t * t * (3 - 2 * t);
+  }
+
+  function isTapFrom(start, e) {
+    if (!start) return false;
+    const dx = e.clientX - start.x;
+    const dy = e.clientY - start.y;
+    return dx * dx + dy * dy < 64 && performance.now() - start.time < 600;
+  }
+
+  let clickStart = null;
+
+  function clearHover() {
+    hoveredSub = null;
+    hoveredFace = null;
+    updateBodyHoverState();
+  }
+
+  function getProjectSlotScreenState(index) {
+    const projectSlot = projectSlots[index];
+    const faceHolder = projectSlot?.faceHolder;
+    const slot = projectSlot?.mesh;
+    if (!faceHolder || !slot) return null;
+
+    const localPoint = slot.userData.centroid;
+    const screen = projectLocalToScreen(faceHolder, localPoint);
+    const facing = getFaceFacing(faceHolder, localPoint, slot.userData.normal);
+    const dx = (screen.x - window.innerWidth * 0.5) / Math.max(1, window.innerWidth);
+    const dy = (screen.y - window.innerHeight * 0.5) / Math.max(1, window.innerHeight);
+    const centerDistance = Math.sqrt(dx * dx + dy * dy);
+
+    return {
+      screen,
+      facing,
+      score: facing * 0.9 - centerDistance * 2.8,
+    };
+  }
+
+  function updateActiveProjectIndex() {
+    if (manualHoverFaceIndex != null) {
+      activeProjectIndex = manualHoverFaceIndex;
+      return;
+    }
+
+    let bestIndex = activeProjectIndex;
+    let bestScore = -Infinity;
+    const currentScore = getProjectSlotScreenState(activeProjectIndex)?.score ?? -Infinity;
+    for (let index = 0; index < PROJECTS.length && index < projectSlots.length; index++) {
+      const state = getProjectSlotScreenState(index);
+      if (!state) continue;
+      if (state.score > bestScore) {
+        bestScore = state.score;
+        bestIndex = index;
+      }
+    }
+    if (bestIndex === activeProjectIndex || bestScore > currentScore + 0.06) {
+      activeProjectIndex = bestIndex;
+    }
+  }
+
+  function writeHoverFromRaycast() {
+    if (sceneMode === 'work') {
+      ndc.set(mouse.tx, mouse.ty);
+      raycaster.setFromCamera(ndc, camera);
+      const hits = raycaster.intersectObjects(subMeshes, false);
+      const projectHit = hits.find((item) => item.object.userData.project);
+      const newSub = projectHit ? projectHit.object : null;
+      const newFace = newSub ? newSub.userData.parentFace : null;
+      if (newSub !== hoveredSub) {
+        hoveredSub = newSub;
+        hoveredFace = newFace;
+        updateBodyHoverState();
+      }
+    } else {
+      clearHover();
+    }
+  }
 
   // ---- Drag to spin ----
   let dragging = false;
@@ -274,6 +529,8 @@ window.initScene3D = function (canvas, opts = {}) {
   }
 
   canvas.addEventListener('pointerdown', (e) => {
+    if (paused) return;
+    clickStart = { x: e.clientX, y: e.clientY, time: performance.now() };
     dragging = true;
     dragState.pointerId = e.pointerId;
     dragState.startVec.copy(projectToArcball(e.clientX, e.clientY));
@@ -284,11 +541,14 @@ window.initScene3D = function (canvas, opts = {}) {
   });
   window.addEventListener('pointerup', (e) => {
     if (dragState.pointerId != null && e.pointerId !== dragState.pointerId) return;
+    const shouldOpen = isTapFrom(clickStart, e);
     dragging = false;
     dragState.pointerId = null;
+    if (shouldOpen) openPickedProject(pickProject(e.clientX, e.clientY));
+    clickStart = null;
   });
   window.addEventListener('pointermove', (e) => {
-    if (!dragging) return;
+    if (!dragging || paused) return;
     const currentVec = projectToArcball(e.clientX, e.clientY);
     _dragQuat.setFromUnitVectors(dragState.startVec, currentVec);
     const w = THREE.MathUtils.clamp(_dragQuat.w, -1, 1);
@@ -312,16 +572,29 @@ window.initScene3D = function (canvas, opts = {}) {
     setScrollProg(p) { scrollProg = Math.max(0, Math.min(1, p)); },
     setMode(m) { sceneMode = m; },
     setAboutProg(p) { aboutProg = Math.max(0, Math.min(1, p)); },
+    setPaused(value) {
+      paused = !!value;
+      if (paused) {
+        activeProjectIndex = getActiveFaceIndex() ?? activeProjectIndex;
+        dragging = false;
+        dragState.inertiaSpeed = 0;
+      }
+    },
+    getActiveProjectIndex() { return activeProjectIndex; },
     getFaceScreenPos(i) {
       // Returns {x,y,visible} of face centroid in screen space
-      if (!faceMeshes[i]) return null;
-      const fm = faceMeshes[i];
-      const world = fm.userData.centroid.clone()
+      const projectSlot = projectSlots[i];
+      const fm = projectSlot?.faceHolder || faceMeshes[i];
+      if (!fm) return null;
+      const slot = projectSlot?.mesh || fm.userData.projectSlot;
+      const localPoint = slot ? slot.userData.centroid : fm.userData.centroid;
+      const localNormal = slot ? slot.userData.normal : fm.userData.normal;
+      const world = localPoint.clone()
+        .add(fm.position)
         .applyQuaternion(faceGroup.quaternion)
         .add(faceGroup.position);
       const v = world.clone().project(camera);
-      const dotToCam = fm.userData.normal.clone()
-        .applyQuaternion(faceGroup.quaternion).z;
+      const dotToCam = getFaceFacing(fm, localPoint, localNormal);
       return {
         x: (v.x * 0.5 + 0.5) * window.innerWidth,
         y: (-v.y * 0.5 + 0.5) * window.innerHeight,
@@ -332,37 +605,25 @@ window.initScene3D = function (canvas, opts = {}) {
     getFaceScreenBasis(i) {
       // For a geodesic-sphere face, build a stable in-plane basis around the
       // spherified centroid and project to screen so labels sit on the surface.
-      if (!faceMeshes[i]) return null;
-      const fm = faceMeshes[i];
-      const a = fm.userData.a, b = fm.userData.b;
-      const centroid = fm.userData.centroid;
-      const localNormal = fm.userData.normal;
+      const projectSlot = projectSlots[i];
+      const fm = projectSlot?.faceHolder || faceMeshes[i];
+      if (!fm) return null;
+      const slot = projectSlot?.mesh || fm.userData.projectSlot;
+      const a = slot ? slot.userData.a : fm.userData.a;
+      const b = slot ? slot.userData.b : fm.userData.b;
+      const centroid = slot ? slot.userData.centroid : fm.userData.centroid;
+      const localNormal = slot ? slot.userData.normal : fm.userData.normal;
 
       // u: tangent across the face (along the a→b edge, projected to plane)
       const edge = b.clone().sub(a).normalize();
       const u = edge.clone().sub(localNormal.clone().multiplyScalar(edge.dot(localNormal))).normalize();
       const v = new THREE.Vector3().crossVectors(localNormal, u).normalize();
 
-      const SCALE = 0.55;
-      const project = (p) => {
-        const w = p.clone().applyQuaternion(faceGroup.quaternion).add(faceGroup.position);
-        const proj = w.project(camera);
-        return {
-          x: (proj.x * 0.5 + 0.5) * window.innerWidth,
-          y: (-proj.y * 0.5 + 0.5) * window.innerHeight,
-        };
-      };
-
-      const O = project(centroid);
-      const U = project(centroid.clone().add(u.clone().multiplyScalar(SCALE)));
-      const V = project(centroid.clone().add(v.clone().multiplyScalar(SCALE)));
-
-      const worldNormal = localNormal.clone().applyQuaternion(faceGroup.quaternion);
-      const camDir = new THREE.Vector3().subVectors(
-        camera.position,
-        centroid.clone().applyQuaternion(faceGroup.quaternion).add(faceGroup.position)
-      ).normalize();
-      const facing = worldNormal.dot(camDir);
+      const SCALE = slot ? 0.22 : 0.55;
+      const O = projectLocalToScreen(fm, centroid);
+      const U = projectLocalToScreen(fm, centroid.clone().add(u.clone().multiplyScalar(SCALE)));
+      const V = projectLocalToScreen(fm, centroid.clone().add(v.clone().multiplyScalar(SCALE)));
+      const facing = getFaceFacing(fm, centroid, localNormal);
 
       return {
         ox: O.x, oy: O.y,
@@ -375,7 +636,9 @@ window.initScene3D = function (canvas, opts = {}) {
     getHoveredFace() { return hoveredFace; },
     getFaceMeshes() { return faceMeshes; },
     setHoveredFace(i) {
-      hoveredFace = (i == null) ? null : faceMeshes[i];
+      manualHoverFaceIndex = (i == null) ? null : i;
+      hoveredFace = (i == null) ? null : projectSlots[i]?.faceHolder || faceMeshes[i] || null;
+      updateBodyHoverState();
     },
     // Anchor at a point within big face `i`, given barycentric coords (ba, bb, bc).
     // Used for sub-facet quick-link labels (About, Docs, Contact).
@@ -395,23 +658,10 @@ window.initScene3D = function (canvas, opts = {}) {
       const v = new THREE.Vector3().crossVectors(normal, u).normalize();
 
       const SCALE = 0.18;
-      const project = (p) => {
-        const w = p.clone().applyQuaternion(faceGroup.quaternion).add(faceGroup.position);
-        const proj = w.project(camera);
-        return {
-          x: (proj.x * 0.5 + 0.5) * window.innerWidth,
-          y: (-proj.y * 0.5 + 0.5) * window.innerHeight,
-        };
-      };
-      const O = project(anchor);
-      const U = project(anchor.clone().add(u.clone().multiplyScalar(SCALE)));
-      const V = project(anchor.clone().add(v.clone().multiplyScalar(SCALE)));
-      const worldNormal = normal.clone().applyQuaternion(faceGroup.quaternion);
-      const camDir = new THREE.Vector3().subVectors(
-        camera.position,
-        anchor.clone().applyQuaternion(faceGroup.quaternion).add(faceGroup.position)
-      ).normalize();
-      const facing = worldNormal.dot(camDir);
+      const O = projectLocalToScreen(fm, anchor);
+      const U = projectLocalToScreen(fm, anchor.clone().add(u.clone().multiplyScalar(SCALE)));
+      const V = projectLocalToScreen(fm, anchor.clone().add(v.clone().multiplyScalar(SCALE)));
+      const facing = getFaceFacing(fm, anchor);
       return {
         ox: O.x, oy: O.y,
         ux: U.x - O.x, uy: U.y - O.y,
@@ -437,15 +687,21 @@ window.initScene3D = function (canvas, opts = {}) {
   const _zoomTargetQuat = new THREE.Quaternion().setFromEuler(new THREE.Euler(zoomTgtX, zoomTgtY, 0, 'XYZ'));
 
   function animate() {
-    t += 0.016;
+    t += paused ? 0 : 0.012;
     bgMat.uniforms.uTime.value = t;
+
+    if (paused) {
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+      return;
+    }
 
     // Smooth pointer
     mouse.tx += (mouse.nx - mouse.tx) * 0.08;
     mouse.ty += (mouse.ny - mouse.ty) * 0.08;
 
     // Drag inertia, keep applying the last arcball step after release.
-    if (!dragging && dragState.inertiaSpeed > 1e-4) {
+    if (!paused && !dragging && dragState.inertiaSpeed > 1e-4) {
       _stepQuat.setFromAxisAngle(dragState.inertiaAxis, dragState.inertiaSpeed);
       manualQuat.premultiply(_stepQuat).normalize();
       dragState.inertiaSpeed *= 0.94;
@@ -489,18 +745,20 @@ window.initScene3D = function (canvas, opts = {}) {
         zoomAnchorQuat = faceGroup.quaternion.clone();
       }
       targetQuat = zoomAnchorQuat.clone().slerp(_zoomTargetQuat, portalT);
+    } else if (paused) {
+      targetQuat = faceGroup.quaternion.clone();
     } else if (sceneMode === 'work') {
       _autoQuat.setFromEuler(new THREE.Euler(
-        t * 0.06 + Math.sin(t * 0.2) * 0.12,
-        t * 0.12,
+        t * 0.04 + Math.sin(t * 0.16) * 0.07,
+        t * 0.082,
         0,
         'XYZ'
       ));
       targetQuat = manualQuat.clone().multiply(_autoQuat);
     } else {
       _autoQuat.setFromEuler(new THREE.Euler(
-        mouse.ty * 0.25 + t * 0.05,
-        mouse.tx * 0.5 + t * 0.12,
+        mouse.ty * 0.25 + t * 0.036,
+        mouse.tx * 0.5 + t * 0.076,
         0,
         'XYZ'
       ));
@@ -513,7 +771,9 @@ window.initScene3D = function (canvas, opts = {}) {
         ? 0.34
         : dragState.inertiaSpeed > 1e-4
           ? 0.11
-          : 0.052;
+          : paused
+            ? 0
+            : 0.038;
     faceGroup.quaternion.slerp(targetQuat, rotLerp);
 
     // Subtle float / parallax (disabled during zoom)
@@ -536,27 +796,52 @@ window.initScene3D = function (canvas, opts = {}) {
     core.rotation.y = t * 0.6;
 
     // Raycast hover — only in work mode (for highlight)
-    if (sceneMode === 'work') {
-      ndc.set(mouse.tx, mouse.ty);
-      raycaster.setFromCamera(ndc, camera);
-      const hits = raycaster.intersectObjects(subMeshes, false);
-      const newSub = hits[0] ? hits[0].object : null;
-      const newFace = newSub ? newSub.userData.parentFace : null;
-      if (newSub !== hoveredSub) {
-        hoveredSub = newSub;
-        hoveredFace = newFace;
-        document.body.classList.toggle('face-hovered', !!hoveredSub);
-      }
-    } else {
-      hoveredSub = null;
-      hoveredFace = null;
-    }
+    writeHoverFromRaycast();
+    updateActiveProjectIndex();
+    const activeProjectSlotIndex = getActiveFaceIndex() ?? activeProjectIndex;
 
-    // Sub-triangle hover tint — emissive bumps only on the hovered sub-diamond
+    projectSlots.forEach((projectSlot, index) => {
+      if (!projectSlot) return;
+      const active = activeProjectSlotIndex === index;
+      const faceHolder = projectSlot.faceHolder;
+      const slot = projectSlot.mesh;
+      const facing = slot ? getFaceFacing(faceHolder, slot.userData.centroid, slot.userData.normal) : 0;
+
+      const marker = projectSlot.marker;
+      if (!marker) return;
+      const visible = sceneMode === 'work' && facing > 0.1;
+      const opacityTarget = visible ? (active ? 0.72 : 0.34) * easeVisible(Math.min(1, facing * 1.8)) : 0;
+      marker.material.opacity += (opacityTarget - marker.material.opacity) * 0.12;
+      const scaleTarget = active ? 0.3 : 0.24;
+      marker.scale.x += (scaleTarget - marker.scale.x) * 0.12;
+      marker.scale.y += (scaleTarget * 0.38 - marker.scale.y) * 0.12;
+    });
+
+    // Project tile tint — only one sub-triangle per project is interactive.
     subMeshes.forEach((m) => {
-      const target = (m === hoveredSub) ? 1.65 : 0.24;
+      const isProjectSlot = !!m.userData.slot;
+      const slotActive = isProjectSlot && m.userData.projectIndex === activeProjectSlotIndex;
+      const subActive = m === hoveredSub;
+      const target = subActive ? 0.42 : slotActive ? 0.22 : isProjectSlot ? 0.12 : 0.08;
       m.material.emissiveIntensity += (target - m.material.emissiveIntensity) * 0.15;
-      const opacityTarget = 0.88 - eased * 0.18 + workProg * 0.04;
+      const colorTarget = brightenColor(
+        m.userData.baseColor,
+        m.userData.accent,
+        slotActive ? 0.045 : isProjectSlot ? 0.012 : workProg * 0.006
+      );
+      const emissiveTarget = brightenColor(
+        m.userData.baseEmissive,
+        m.userData.accent,
+        slotActive ? 0.12 : isProjectSlot ? 0.04 : 0.02
+      );
+      m.material.color.lerp(colorTarget, 0.08);
+      m.material.emissive.lerp(emissiveTarget, 0.08);
+      const liftTarget = slotActive ? 0.014 : 0;
+      const normal = m.userData.normal || faceMeshes[m.userData.faceIndex]?.userData.normal;
+      if (normal) {
+        m.position.lerp(normal.clone().multiplyScalar(liftTarget), 0.14);
+      }
+      const opacityTarget = softenOpacity((slotActive ? 0.78 : isProjectSlot ? 0.72 : 0.68) - eased * 0.16 + workProg * 0.015);
       m.material.opacity += (opacityTarget - m.material.opacity) * 0.08;
     });
 

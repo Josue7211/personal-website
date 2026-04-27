@@ -12,10 +12,10 @@
 - visibility: `all`
 - route: `auto`
 - intent: `current_task`
-- bundle: `/home/josue/Documents/projects/personal-website/.memd`
+- bundle: `.memd`
 
 - lane=workspace | index=1
-- project=personal-website namespace=main workspace=none visibility=private items=6 active=6 contested=0 trust=0.67 cf=0.74
+- project=personal-website namespace=main workspace=none visibility=private items=15 active=15 contested=0 trust=0.67 cf=0.73
 
 ## Hive
 

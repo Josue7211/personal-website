@@ -1,10 +1,10 @@
 {
   "focus": "id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087061 | c=Cl...",
   "pressure": null,
-  "next_recovery": null,
+  "next_recovery": "evicted working-set item: id=c602e59e-43ae-4561-baa5-0247e8ab1084 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,auto-short-term,bundle-refresh,remember | cf=0.72 | upd=1777210969 | c=status: wake project=personal-website namespace=main agent=codex@session-5b36b772 working=4 inbox=0 spine=7 tokens=885 core=647 focus=\"id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 / stage=canonical / scope=project / kind=f...",
   "lane": "personal-website / main / none",
-  "working_records": 6,
+  "working_records": 7,
   "inbox_items": 0,
-  "rehydration_items": 0,
-  "recorded_at": "2026-04-25T21:40:49.799580670Z"
+  "rehydration_items": 4,
+  "recorded_at": "2026-04-26T14:12:25.417413645Z"
 }

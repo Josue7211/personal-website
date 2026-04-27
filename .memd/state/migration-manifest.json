@@ -1,33 +1,37 @@
 {
-  "generated_at": "2026-04-25T21:40:49.779536905Z",
-  "project_root": "/home/josue/Documents/projects/personal-website",
-  "source_registry_hash": "70e7775d0ed6e7f655fb43bca3fdf990f7daa7cbd6d44bb232d11f92774e66b3",
-  "source_registry_path": "/home/josue/Documents/projects/personal-website/.memd/state/source-registry.json",
+  "generated_at": "2026-04-26T14:12:25.396134307Z",
+  "project_root": "",
+  "source_registry_hash": "9458533185d5eb2bcab8e43562dba188308b49366608fab7e7e93fffc9187a7a",
+  "source_registry_path": ".memd/state/source-registry.json",
   "layer_summary": [
     {
       "layer": "live_truth",
       "sources": 4,
       "summary": [
-        "resume_delta: working 4 -> 6",
         "file_edited: .memd/.last-wake",
         "file_edited: .memd/agents/CLAUDE_IMPORTS.md",
-        "file_edited: .memd/agents/HARNESS_BRIDGES.md"
+        "file_edited: .memd/agents/HARNESS_BRIDGES.md",
+        "file_edited: .memd/agents/agent-zero.ps1"
       ]
     },
     {
       "layer": "project_brain",
-      "sources": 10,
+      "sources": 14,
       "summary": [
-        "id=6153901f-3a69-4185-9943-4a15eec3fa3c | stage=canonical | scope=local | kind=live_truth | status=active | project=personal-website | ns=main | vis=private | agent=memd | tags=live_truth,repo_changes | cf=0.98 | upd=1777153245 | c=file_edited: .memd/.last-wake file_edited: .memd/agents/CLAUDE_IMPORTS.md file_edited: .memd/agents/HARNESS_BRIDGES.md file_edited: .memd/agents/agent-zero.ps1 file_edited: .memd/agents/agent-zero.sh file_edited: .mem...",
+        "id=f7478454-e39a-4d1e-b07c-49e9d789de89 | stage=canonical | scope=local | kind=live_truth | status=active | project=memd | ns=main | vis=private | agent=memd | tags=live_truth,repo_changes | cf=0.98 | upd=1777212314 | c=file_created: docs/verification/SUBSTRATE_BENCHMARKS.md",
         "id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087061 | c=Cloudflare tunnel systemd token lives on media VM. New service hosting (e.g. docs.aparcedo.org) goes on services VM. Tunnel ingress on media VM routes public hostnames to services VM internal addr.",
         "id=0bd4b700-5678-489a-a5e4-51495f31e6fd | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087440 | c=Homelab SSH access (codex@josuesdesktop): use BW item 'Homelab' (id ffe13244-116d-4595-a459-0055cad8a07c, type=5 sshKey) for private key. Hosts reach via Tailscale magic IPs: services=100.124.53.97 (port 22), media VM...",
-        "id=b68adfea-49be-4ff9-a879-55b725a225ab | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087325 | c=Homelab SSH key in Bitwarden: item name 'Homelab' (id ffe13244-116d-4595-a459-0055cad8a07c), type=5 (sshKey). Use 'bw get item Homelab' and read .sshKey.privateKey. Single key for all homelab VMs. User: aparcedodev. S...",
+        "id=78c5e90f-f19f-4038-bbe7-decc325ca1ba | stage=canonical | scope=project | kind=decision | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777210962 | c=Docs for personal-website are a separate website at docs.aparcedo.org; homepage links should point to that host rather than local /docs or docs.html.",
+        "id=b58e2403-d049-48e1-8772-438b869416ab | stage=canonical | scope=project | kind=decision | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777212740 | c=Public LinkedIn for personal-website is now https://www.linkedin.com/in/josueaparcedo/ . Use display /in/josueaparcedo.",
+        "id=a6c2be68-bd3f-4ecb-a40d-abe2bd8b9563 | stage=canonical | scope=project | kind=decision | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777212314 | c=Public LinkedIn for personal-website is https://www.linkedin.com/in/josue-aparcedo-2bab6622a/ . Replace old /in/aparcedo links.",
+        "id=6e68ddb0-45a6-4534-ade2-410712f7b2fb | stage=canonical | scope=project | kind=decision | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777211463 | c=Public social handles for personal-website: X is @aapjosue; Reddit is u/Josue7211. Contact row should use x.com/aapjosue and reddit.com/user/Josue7211.",
         "id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087061 | c=Cl...",
         "id=0bd4b700-5678-489a-a5e4-51495f31e6fd | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087440 | c=Ho...",
-        "id=b68adfea-49be-4ff9-a879-55b725a225ab | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087325 | c=Ho...",
-        "id=6153901f-3a69-4185-9943-4a15eec3fa3c | stage=canonical | scope=local | kind=live_truth | status=active | project=personal-website | ns=main | vis=private | agent=memd | tags=live_truth,repo_changes | cf=0.98 | upd=...",
-        "id=9bd9e145-bfaa-4747-aa4c-c1b5d9d99e12 | stage=canonical | scope=synced | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=resume_state,session_stat...",
-        "id=ab3699a5-ea4b-4ba7-ba1a-ccdad2b1bac3 | stage=canonical | scope=project | kind=status | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | tags=checkpoint,current-task,..."
+        "id=78c5e90f-f19f-4038-bbe7-decc325ca1ba | stage=canonical | scope=project | kind=decision | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777210962 | ...",
+        "id=b58e2403-d049-48e1-8772-438b869416ab | stage=canonical | scope=project | kind=decision | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777212740 | ...",
+        "id=a6c2be68-bd3f-4ecb-a40d-abe2bd8b9563 | stage=canonical | scope=project | kind=decision | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777212314 | ...",
+        "id=6e68ddb0-45a6-4534-ade2-410712f7b2fb | stage=canonical | scope=project | kind=decision | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777211463 | ...",
+        "id=b68adfea-49be-4ff9-a879-55b725a225ab | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=main | vis=private | agent=codex@session-5b36b772 | cf=0.70 | upd=1777087325 | c=Ho..."
       ]
     },
     {
