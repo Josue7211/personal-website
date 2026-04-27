@@ -31,6 +31,7 @@ type Scene3DInstance = {
   getHoveredFace(): unknown
   getFaceMeshes(): unknown[]
   setHoveredFace(index: number | null): void
+  setFocusedProjectIndex(index: number | null): void
   setPaused(paused: boolean): void
   getActiveProjectIndex(): number | null
   getSubFacetBasis(

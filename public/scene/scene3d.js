@@ -325,6 +325,7 @@ window.initScene3D = function (canvas, opts = {}) {
   let aboutProg = 0;        // 0..1 zoom-into-face transition to about
   let paused = false;
   let activeProjectIndex = 0;
+  let focusedProjectIndex = null;
 
   window.addEventListener('pointermove', (e) => {
     mouse.nx = (e.clientX / window.innerWidth) * 2 - 1;
@@ -443,6 +444,10 @@ window.initScene3D = function (canvas, opts = {}) {
       activeProjectIndex = manualHoverFaceIndex;
       return;
     }
+    if (focusedProjectIndex != null) {
+      activeProjectIndex = focusedProjectIndex;
+      return;
+    }
 
     let bestIndex = activeProjectIndex;
     let bestScore = -Infinity;
@@ -494,6 +499,9 @@ window.initScene3D = function (canvas, opts = {}) {
   const _dragAxis = new THREE.Vector3();
   const _stepQuat = new THREE.Quaternion();
   const _autoQuat = new THREE.Quaternion();
+  const _autoQuatInverse = new THREE.Quaternion();
+  const _frontQuat = new THREE.Quaternion();
+  const _frontTarget = new THREE.Vector3(0, 0, 1);
   let zoomAnchorQuat = null;
 
   function projectToArcball(clientX, clientY) {
@@ -567,6 +575,34 @@ window.initScene3D = function (canvas, opts = {}) {
     dragState.lastVec.copy(currentVec);
   });
 
+  function getProjectFrontQuat(index) {
+    const projectSlot = projectSlots[index];
+    const faceHolder = projectSlot?.faceHolder;
+    const slot = projectSlot?.mesh;
+    if (!faceHolder || !slot) return null;
+
+    const localPoint = slot.userData.centroid.clone().add(faceHolder.position).normalize();
+    return _frontQuat.setFromUnitVectors(localPoint, _frontTarget).clone();
+  }
+
+  function getWorkAutoQuat() {
+    return _autoQuat.setFromEuler(new THREE.Euler(
+      t * 0.028 + Math.sin(t * 0.12) * 0.045,
+      t * 0.052,
+      0,
+      'XYZ'
+    ));
+  }
+
+  function syncManualQuatToDisplayed() {
+    if (sceneMode === 'work') {
+      const autoQuat = getWorkAutoQuat().clone();
+      manualQuat.copy(faceGroup.quaternion).multiply(_autoQuatInverse.copy(autoQuat).invert()).normalize();
+      return;
+    }
+    manualQuat.copy(faceGroup.quaternion).normalize();
+  }
+
   // ---- Public API ----
   const api = {
     setScrollProg(p) { scrollProg = Math.max(0, Math.min(1, p)); },
@@ -579,6 +615,21 @@ window.initScene3D = function (canvas, opts = {}) {
         dragging = false;
         dragState.inertiaSpeed = 0;
       }
+    },
+    setFocusedProjectIndex(index) {
+      if (index == null || !projectSlots[index]) {
+        focusedProjectIndex = null;
+        syncManualQuatToDisplayed();
+        clearHover();
+        return;
+      }
+      focusedProjectIndex = index;
+      activeProjectIndex = index;
+      manualHoverFaceIndex = null;
+      hoveredSub = null;
+      hoveredFace = projectSlots[index]?.faceHolder || null;
+      dragState.inertiaSpeed = 0;
+      updateBodyHoverState();
     },
     getActiveProjectIndex() { return activeProjectIndex; },
     getFaceScreenPos(i) {
@@ -747,14 +798,10 @@ window.initScene3D = function (canvas, opts = {}) {
       targetQuat = zoomAnchorQuat.clone().slerp(_zoomTargetQuat, portalT);
     } else if (paused) {
       targetQuat = faceGroup.quaternion.clone();
+    } else if (sceneMode === 'work' && focusedProjectIndex != null) {
+      targetQuat = getProjectFrontQuat(focusedProjectIndex) || faceGroup.quaternion.clone();
     } else if (sceneMode === 'work') {
-      _autoQuat.setFromEuler(new THREE.Euler(
-        t * 0.04 + Math.sin(t * 0.16) * 0.07,
-        t * 0.082,
-        0,
-        'XYZ'
-      ));
-      targetQuat = manualQuat.clone().multiply(_autoQuat);
+      targetQuat = manualQuat.clone().multiply(getWorkAutoQuat());
     } else {
       _autoQuat.setFromEuler(new THREE.Euler(
         mouse.ty * 0.25 + t * 0.036,
@@ -771,6 +818,8 @@ window.initScene3D = function (canvas, opts = {}) {
         ? 0.34
         : dragState.inertiaSpeed > 1e-4
           ? 0.11
+          : focusedProjectIndex != null
+            ? 0.075
           : paused
             ? 0
             : 0.038;

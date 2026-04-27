@@ -2201,11 +2201,29 @@ body[data-scene-mode="work"] .face-label {
   left: var(--pad-x);
   top: 50%;
   width: min(350px, 30vw);
+  padding: 14px;
   transform: translateY(-50%) translateX(calc((1 - var(--work-in, 0)) * -18px));
   z-index: 6;
   pointer-events: auto;
   opacity: calc(var(--work-in, 0) * (1 - var(--about-zoom, 0) * 1.4));
-  transition: opacity 0.28s ease, transform 0.28s ease;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.project-roulette:hover,
+.project-roulette:focus-within {
+  border-color: rgba(196, 181, 253, 0.22);
+  background:
+    linear-gradient(180deg, rgba(8, 4, 16, 0.58), rgba(8, 4, 16, 0.34)),
+    rgba(20, 12, 34, 0.32);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.28);
 }
 
 .project-roulette-kicker {
@@ -2223,6 +2241,8 @@ body[data-scene-mode="work"] .face-label {
   height: 340px;
   overflow: hidden;
   mask-image: linear-gradient(to bottom, transparent, #000 13%, #000 87%, transparent);
+  overscroll-behavior: contain;
+  cursor: ns-resize;
 }
 
 .project-roulette-row {
@@ -2274,12 +2294,12 @@ body[data-scene-mode="work"] .face-label {
   opacity: 1;
   transform:
     translateY(calc(var(--row-offset) * 39px - 50%))
-    translateX(4px);
+    translateX(calc(var(--row-distance) * -4px));
 }
 
 .project-roulette-row[data-active="true"]:hover,
 .project-roulette-row[data-active="true"]:focus-visible {
-  transform: translateY(-50%) translateX(4px);
+  transform: translateY(-50%) translateX(0);
 }
 
 .roulette-num {

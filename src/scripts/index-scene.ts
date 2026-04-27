@@ -731,6 +731,13 @@ export default function initIndexScene() {
       (event) => {
         if (event.ctrlKey || event.metaKey) return
         if (document.getElementById('project-drawer')?.classList.contains('open')) return
+        if (
+          rouletteContainer &&
+          event.target instanceof Node &&
+          rouletteContainer.contains(event.target)
+        ) {
+          return
+        }
 
         const now = performance.now()
         event.preventDefault()
@@ -843,6 +850,9 @@ export default function initIndexScene() {
 
   const rouletteRows: HTMLButtonElement[] = []
   let rouletteActiveIndex = -1
+  let rouletteWheelRemainder = 0
+  const isProjectDrawerOpen = () =>
+    document.getElementById('project-drawer')?.classList.contains('open') === true
 
   const getRouletteOffset = (projectIndex: number, activeIndex: number) => {
     const count = PROJECTS.length
@@ -866,7 +876,39 @@ export default function initIndexScene() {
     })
   }
 
+  const setRouletteActive = (index: number, syncOrb = true) => {
+    if (PROJECTS.length === 0) return
+    const nextIndex = Math.max(0, Math.min(PROJECTS.length - 1, index))
+    renderRoulette(nextIndex)
+    if (syncOrb) scene3D?.setFocusedProjectIndex(nextIndex)
+  }
+
   if (rouletteContainer && rouletteList && PROJECTS.length > 0) {
+    rouletteContainer.addEventListener(
+      'wheel',
+      (event) => {
+        if (document.body.dataset.sceneMode !== 'work') return
+
+        event.preventDefault()
+        event.stopPropagation()
+
+        rouletteWheelRemainder += event.deltaY
+        const stepSize = 44
+        const rawSteps = Math.trunc(rouletteWheelRemainder / stepSize)
+        if (rawSteps === 0) return
+
+        rouletteWheelRemainder -= rawSteps * stepSize
+        const steps = Math.max(-5, Math.min(5, rawSteps))
+        setRouletteActive((rouletteActiveIndex < 0 ? 0 : rouletteActiveIndex) + steps)
+      },
+      { passive: false }
+    )
+
+    rouletteContainer.addEventListener('pointerleave', () => {
+      rouletteWheelRemainder = 0
+      if (!isProjectDrawerOpen()) scene3D?.setFocusedProjectIndex(null)
+    })
+
     rouletteRows.push(
       ...PROJECTS.map((project, projectIndex) => {
         const row = document.createElement('button')
@@ -876,10 +918,16 @@ export default function initIndexScene() {
           scene3D?.setHoveredFace(projectIndex)
           openProject(project, projectIndex)
         })
-        row.addEventListener('pointerenter', () => scene3D?.setHoveredFace(projectIndex))
-        row.addEventListener('pointerleave', () => scene3D?.setHoveredFace(null))
-        row.addEventListener('focus', () => scene3D?.setHoveredFace(projectIndex))
-        row.addEventListener('blur', () => scene3D?.setHoveredFace(null))
+        row.addEventListener('focus', () => setRouletteActive(projectIndex))
+        row.addEventListener('blur', () => {
+          if (!isProjectDrawerOpen()) scene3D?.setFocusedProjectIndex(null)
+        })
+        row.addEventListener('keydown', (event) => {
+          if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return
+          event.preventDefault()
+          setRouletteActive(projectIndex + (event.key === 'ArrowDown' ? 1 : -1))
+          rouletteRows[rouletteActiveIndex]?.focus()
+        })
         row.innerHTML = `
           <span class="roulette-num">${project.num.split(' ')[0]}</span>
           <span class="roulette-title">${project.title}</span>
