@@ -1,0 +1,561 @@
+---
+const recipient = 'josue@aparcedo.org'
+---
+
+<div
+  class="email-draft"
+  id="email-draft"
+  data-email-draft-root
+  data-recipient={recipient}
+  aria-hidden="true"
+  hidden
+>
+  <div class="email-draft__scrim" data-email-draft-close></div>
+  <section
+    class="email-draft__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="email-draft-title"
+  >
+    <header class="email-draft__header">
+      <div>
+        <p class="email-draft__kicker">Draft</p>
+        <h2 id="email-draft-title">Email Josue</h2>
+      </div>
+      <button class="email-draft__icon-btn" type="button" data-email-draft-close aria-label="Close draft">
+        &times;
+      </button>
+    </header>
+
+    <form class="email-draft__form" data-email-draft-form>
+      <label>
+        <span>To</span>
+        <input name="to" type="email" value={recipient} readonly />
+      </label>
+      <label>
+        <span>Subject</span>
+        <input name="subject" type="text" autocomplete="off" placeholder="Hello from your website" />
+      </label>
+      <label>
+        <span>Message</span>
+        <textarea name="body" rows="9" placeholder="Write the draft here."></textarea>
+      </label>
+
+      <div class="email-draft__actions">
+        <div class="email-draft__provider" data-email-provider>
+          <span id="email-provider-label">Export</span>
+          <input type="hidden" name="provider" value="gmail" data-email-provider-value />
+          <button
+            class="email-draft__provider-button"
+            type="button"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-labelledby="email-provider-label email-provider-selected"
+            data-email-provider-button
+          >
+            <span id="email-provider-selected" data-email-provider-selected>Gmail</span>
+            <span class="email-draft__provider-caret" aria-hidden="true"></span>
+          </button>
+          <div class="email-draft__provider-menu" role="listbox" tabindex="-1" hidden data-email-provider-menu>
+            <button type="button" role="option" aria-selected="true" data-email-provider-option value="gmail">
+              Gmail
+            </button>
+            <button type="button" role="option" aria-selected="false" data-email-provider-option value="outlook">
+              Outlook / Hotmail
+            </button>
+            <button type="button" role="option" aria-selected="false" data-email-provider-option value="yahoo">
+              Yahoo Mail
+            </button>
+            <button type="button" role="option" aria-selected="false" data-email-provider-option value="proton">
+              Proton Mail
+            </button>
+          </div>
+        </div>
+        <button type="button" class="email-draft__copy" data-email-draft-copy>Copy</button>
+        <button type="submit" class="email-draft__send">Open draft</button>
+      </div>
+      <p class="email-draft__status" data-email-draft-status aria-live="polite"></p>
+    </form>
+  </section>
+</div>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('[data-email-draft-root]')
+    if (!root || root.dataset.bound === 'true') return
+
+    root.dataset.bound = 'true'
+
+    const form = root.querySelector('[data-email-draft-form]')
+    const closeButtons = root.querySelectorAll('[data-email-draft-close]')
+    const copyButton = root.querySelector('[data-email-draft-copy]')
+    const status = root.querySelector('[data-email-draft-status]')
+    const providerRoot = root.querySelector('[data-email-provider]')
+    const providerButton = root.querySelector('[data-email-provider-button]')
+    const providerMenu = root.querySelector('[data-email-provider-menu]')
+    const providerOptions = root.querySelectorAll('[data-email-provider-option]')
+    const providerSelected = root.querySelector('[data-email-provider-selected]')
+    const providerValue = root.querySelector('[data-email-provider-value]')
+    const recipientInput = form?.elements.namedItem('to')
+    const subjectInput = form?.elements.namedItem('subject')
+    const bodyInput = form?.elements.namedItem('body')
+    let lastTrigger = null
+
+    const setStatus = (message) => {
+      if (!(status instanceof HTMLElement)) return
+      status.textContent = message
+    }
+
+    const getDraft = () => {
+      const to = recipientInput instanceof HTMLInputElement ? recipientInput.value : root.dataset.recipient || ''
+      const subject = subjectInput instanceof HTMLInputElement ? subjectInput.value : ''
+      const body = bodyInput instanceof HTMLTextAreaElement ? bodyInput.value : ''
+      return { to, subject, body }
+    }
+
+    const encodeParams = ({ to, subject, body }) => ({
+      to: encodeURIComponent(to),
+      subject: encodeURIComponent(subject),
+      body: encodeURIComponent(body),
+    })
+
+    const buildMailto = ({ to, subject, body }) => {
+      const params = new URLSearchParams()
+      if (subject) params.set('subject', subject)
+      if (body) params.set('body', body)
+      const query = params.toString()
+      return `mailto:${to}${query ? `?${query}` : ''}`
+    }
+
+    const buildProviderUrl = (provider, draft) => {
+      const encoded = encodeParams(draft)
+      if (provider === 'gmail') {
+        return `https://mail.google.com/mail/?view=cm&fs=1&to=${encoded.to}&su=${encoded.subject}&body=${encoded.body}`
+      }
+      if (provider === 'outlook') {
+        return `https://outlook.live.com/mail/0/deeplink/compose?to=${encoded.to}&subject=${encoded.subject}&body=${encoded.body}`
+      }
+      if (provider === 'yahoo') {
+        return `https://compose.mail.yahoo.com/?to=${encoded.to}&subject=${encoded.subject}&body=${encoded.body}`
+      }
+      if (provider === 'proton') {
+        return `https://mail.proton.me/inbox/#mailto=${encodeURIComponent(buildMailto(draft))}`
+      }
+      return buildMailto(draft)
+    }
+
+    const openDraft = (trigger) => {
+      lastTrigger = trigger
+      root.hidden = false
+      root.setAttribute('aria-hidden', 'false')
+      document.body.classList.add('email-draft-open')
+      setStatus('')
+
+      requestAnimationFrame(() => {
+        if (subjectInput instanceof HTMLInputElement && !subjectInput.value) {
+          subjectInput.focus()
+          return
+        }
+        if (bodyInput instanceof HTMLTextAreaElement) bodyInput.focus()
+      })
+    }
+
+    const closeDraft = () => {
+      root.hidden = true
+      root.setAttribute('aria-hidden', 'true')
+      document.body.classList.remove('email-draft-open')
+      closeProviderMenu()
+      setStatus('')
+      if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
+      if (lastTrigger instanceof HTMLElement) lastTrigger.blur()
+    }
+
+    const openFromHash = () => {
+      if (window.location.hash === '#email-draft') openDraft(null)
+    }
+
+    const setProvider = (option) => {
+      if (!(option instanceof HTMLButtonElement)) return
+      const value = option.value
+      if (providerValue instanceof HTMLInputElement) providerValue.value = value
+      if (providerSelected instanceof HTMLElement) providerSelected.textContent = option.textContent?.trim() || value
+      providerOptions.forEach((item) => {
+        item.setAttribute('aria-selected', item === option ? 'true' : 'false')
+      })
+      closeProviderMenu()
+      providerButton?.focus()
+    }
+
+    const openProviderMenu = () => {
+      if (!(providerMenu instanceof HTMLElement) || !(providerButton instanceof HTMLButtonElement)) return
+      providerMenu.hidden = false
+      providerButton.setAttribute('aria-expanded', 'true')
+    }
+
+    function closeProviderMenu() {
+      if (!(providerMenu instanceof HTMLElement) || !(providerButton instanceof HTMLButtonElement)) return
+      providerMenu.hidden = true
+      providerButton.setAttribute('aria-expanded', 'false')
+    }
+
+    document.addEventListener('click', (event) => {
+      const trigger = event.target instanceof Element
+        ? event.target.closest('[data-email-draft-trigger]')
+        : null
+      if (trigger) {
+        event.preventDefault()
+        openDraft(trigger)
+        return
+      }
+
+      if (
+        providerRoot instanceof HTMLElement &&
+        event.target instanceof Node &&
+        !providerRoot.contains(event.target)
+      ) {
+        closeProviderMenu()
+      }
+    })
+
+    closeButtons.forEach((button) => {
+      button.addEventListener('click', closeDraft)
+    })
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !root.hidden) closeDraft()
+    })
+
+    providerButton?.addEventListener('click', () => {
+      if (providerMenu instanceof HTMLElement && !providerMenu.hidden) {
+        closeProviderMenu()
+        return
+      }
+      openProviderMenu()
+    })
+
+    providerOptions.forEach((option) => {
+      option.addEventListener('click', () => setProvider(option))
+    })
+
+    window.addEventListener('hashchange', openFromHash)
+    openFromHash()
+
+    copyButton?.addEventListener('click', async () => {
+      const draft = getDraft()
+      const text = `To: ${draft.to}\nSubject: ${draft.subject}\n\n${draft.body}`
+      try {
+        await navigator.clipboard.writeText(text)
+        setStatus('Copied.')
+      } catch {
+        setStatus('Copy blocked by browser.')
+      }
+    })
+
+    form?.addEventListener('submit', (event) => {
+      event.preventDefault()
+      const provider = providerValue instanceof HTMLInputElement ? providerValue.value : 'mailto'
+      const url = buildProviderUrl(provider, getDraft())
+      const opened = window.open(url, '_blank', 'noopener,noreferrer')
+      setStatus(opened ? 'Opened in a new tab.' : 'Popup blocked. Allow popups or copy the draft.')
+    })
+  })()
+</script>
+
+<style>
+  :global(body.email-draft-open) {
+    overflow: hidden;
+  }
+
+  .email-draft[hidden] {
+    display: none;
+  }
+
+  .email-draft {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: grid;
+    place-items: center;
+    padding: clamp(16px, 4vw, 36px);
+    color: #f7f2ff;
+  }
+
+  .email-draft__scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 20%, rgba(143, 215, 255, 0.14), transparent 38rem),
+      rgba(4, 4, 8, 0.78);
+    backdrop-filter: blur(18px);
+  }
+
+  .email-draft__panel {
+    position: relative;
+    width: min(680px, 100%);
+    max-height: min(760px, calc(100vh - 32px));
+    overflow: auto;
+    scrollbar-width: none;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    background:
+      linear-gradient(135deg, rgba(18, 24, 32, 0.96), rgba(20, 14, 29, 0.96)),
+      rgba(8, 8, 12, 0.94);
+    box-shadow: 0 26px 110px rgba(0, 0, 0, 0.58);
+  }
+
+  .email-draft__panel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .email-draft__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding: clamp(20px, 4vw, 28px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.11);
+  }
+
+  .email-draft__kicker {
+    margin: 0 0 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(143, 215, 255, 0.82);
+  }
+
+  .email-draft h2 {
+    margin: 0;
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: clamp(2.1rem, 7vw, 4rem);
+    font-weight: 400;
+    line-height: 0.9;
+    letter-spacing: 0;
+  }
+
+  .email-draft button,
+  .email-draft input,
+  .email-draft textarea {
+    font: inherit;
+  }
+
+  .email-draft__icon-btn {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 auto;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .email-draft__form {
+    display: grid;
+    gap: 16px;
+    padding: clamp(20px, 4vw, 28px);
+  }
+
+  .email-draft label {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .email-draft label span {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.56);
+  }
+
+  .email-draft input,
+  .email-draft textarea {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.055);
+    color: #fff;
+    outline: none;
+  }
+
+  .email-draft input {
+    min-height: 46px;
+    padding: 0 13px;
+  }
+
+  .email-draft textarea {
+    min-height: 190px;
+    resize: vertical;
+    padding: 13px;
+    line-height: 1.55;
+  }
+
+  .email-draft input:focus,
+  .email-draft textarea:focus,
+  .email-draft button:focus-visible {
+    border-color: rgba(143, 215, 255, 0.76);
+    box-shadow: 0 0 0 3px rgba(143, 215, 255, 0.16);
+  }
+
+  .email-draft input[readonly] {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .email-draft__provider {
+    position: relative;
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .email-draft__provider > span,
+  .email-draft__provider > label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.56);
+  }
+
+  .email-draft__provider-button {
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 8px;
+    padding: 0 13px;
+    background:
+      linear-gradient(90deg, rgba(143, 215, 255, 0.08), rgba(168, 85, 247, 0.1)),
+      rgba(255, 255, 255, 0.055);
+    color: #fff;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .email-draft__provider-button[aria-expanded="true"] {
+    border-color: rgba(143, 215, 255, 0.58);
+    background: rgba(143, 215, 255, 0.1);
+  }
+
+  .email-draft__provider-caret {
+    width: 9px;
+    height: 9px;
+    flex: 0 0 auto;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    opacity: 0.72;
+    transform: translateY(-2px) rotate(45deg);
+  }
+
+  .email-draft__provider-menu {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(100% + 8px);
+    z-index: 3;
+    display: grid;
+    gap: 4px;
+    padding: 6px;
+    border: 1px solid rgba(143, 215, 255, 0.22);
+    border-radius: 8px;
+    background:
+      linear-gradient(135deg, rgba(17, 24, 39, 0.98), rgba(21, 13, 32, 0.98)),
+      #111827;
+    box-shadow: 0 18px 54px rgba(0, 0, 0, 0.46);
+  }
+
+  .email-draft__provider-menu[hidden] {
+    display: none;
+  }
+
+  .email-draft__provider-menu button {
+    min-height: 38px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 0 10px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.82);
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .email-draft__provider-menu button:hover,
+  .email-draft__provider-menu button:focus-visible {
+    border-color: rgba(143, 215, 255, 0.3);
+    background: rgba(143, 215, 255, 0.1);
+    color: #fff;
+  }
+
+  .email-draft__provider-menu button[aria-selected="true"] {
+    border-color: rgba(168, 85, 247, 0.36);
+    background: rgba(168, 85, 247, 0.18);
+    color: #fff;
+  }
+
+  .email-draft__actions {
+    display: grid;
+    grid-template-columns: minmax(190px, 1fr) auto auto;
+    align-items: end;
+    gap: 12px;
+  }
+
+  .email-draft__copy,
+  .email-draft__send {
+    min-height: 46px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 8px;
+    padding: 0 18px;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .email-draft__copy {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .email-draft__send {
+    background: linear-gradient(90deg, rgba(143, 215, 255, 0.22), rgba(168, 85, 247, 0.24));
+  }
+
+  .email-draft__copy:hover,
+  .email-draft__send:hover,
+  .email-draft__icon-btn:hover {
+    border-color: rgba(255, 255, 255, 0.36);
+  }
+
+  .email-draft__status {
+    min-height: 1.2em;
+    margin: 0;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.58);
+  }
+
+  @media (max-width: 640px) {
+    .email-draft {
+      align-items: end;
+      padding: 10px;
+    }
+
+    .email-draft__panel {
+      max-height: calc(100vh - 20px);
+    }
+
+    .email-draft__actions {
+      grid-template-columns: 1fr;
+    }
+
+    .email-draft__copy,
+    .email-draft__send {
+      width: 100%;
+    }
+  }
+</style>

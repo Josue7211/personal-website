@@ -65,11 +65,37 @@ import '../styles/index-scene.css'
       <span class="dot"></span>
       JOSUE.APARCEDO
     </a>
-    <span class="nav-mono nav-avail">AVAIL. FALL '26 →</span>
-    <span class="nav-mono nav-now-playing">
-      <span class="np-label">▶ NOW PLAYING</span>
-      <span class="np-track">Seatbelts — Tank!</span>
-    </span>
+    <div class="nav-mono nav-now-playing" aria-label="Soundtrack controls">
+      <span class="np-kicker">Now</span>
+      <span class="np-status" data-music-status>Ready</span>
+      <span class="np-track" data-music-track>Under the Moonlight</span>
+      <span class="np-inline-controls">
+        <button class="np-step" type="button" data-music-prev aria-label="Previous song">‹</button>
+        <button
+          class="np-play"
+          type="button"
+          data-music-toggle
+          aria-label="Play Under the Moonlight"
+          aria-pressed="false"
+        >
+          <span data-music-label>▶</span>
+        </button>
+        <button class="np-step" type="button" data-music-next aria-label="Next song">›</button>
+      </span>
+      <div class="np-controls">
+        <label class="np-volume">
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="0.18"
+            data-music-volume
+            aria-label="Soundtrack volume"
+          />
+        </label>
+      </div>
+    </div>
   </header>
 
   <!-- ============ HERO ============ -->
@@ -120,20 +146,20 @@ import '../styles/index-scene.css'
 
     <div class="hero-corner bl">
       <div class="corner-row">
-        <span class="corner-label"><span class="status-dot"></span>STATUS</span>
+        <span class="corner-label"><span class="status-dot"></span>AVAILABILITY</span>
         <span class="corner-val">Open to SWE/HW '26</span>
       </div>
       <div class="corner-row">
-        <span class="corner-label">▶ PLAYING</span>
+        <span class="corner-label">MUSIC</span>
         <span class="corner-val marquee"
           ><span
-            >Seatbelts — Tank! · Seatbelts — Space Lion · Seatbelts — Green Bird · Seatbelts — The Real Folk Blues ·
+            >Under the Moonlight · Remember · Cosmos · Memory ·
           </span></span
         >
       </div>
       <div class="corner-row">
-        <span class="corner-label">READING</span>
-        <span class="corner-val">Tufte, <em>Envisioning Information</em></span>
+        <span class="corner-label">LOCATION</span>
+        <span class="corner-val">Fort Myers, FL</span>
       </div>
     </div>
 
@@ -155,12 +181,12 @@ import '../styles/index-scene.css'
       <span class="section-num">[ 01 ] SELECTED WORK</span>
       <h2 class="section-title">Things I've <em>built</em>.</h2>
       <p class="work-sub">
-        Eighteen project signals. <em>Click a tile</em> — or tap a project.
+        <em>Click a project</em> — or tap a tile.
       </p>
     </div>
 
-    <div class="project-roulette" id="project-roulette" aria-label="Featured projects">
-      <span class="project-roulette-kicker">Featured projects</span>
+    <div class="project-roulette" id="project-roulette" aria-label="Projects list">
+      <span class="project-roulette-kicker">Projects list</span>
       <div class="project-roulette-list" id="project-roulette-list"></div>
     </div>
 
@@ -224,6 +250,15 @@ import '../styles/index-scene.css'
           <a
             href="/resume/josue-aparcedo.pdf"
             class="cv-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="cv-label">RESUME / CV</span>
+            <span class="cv-action">View in browser ↗</span>
+          </a>
+          <a
+            href="/resume/josue-aparcedo.pdf"
+            class="cv-btn"
             download="Josue-Aparcedo-Resume.pdf"
           >
             <span class="cv-label">RESUME / CV</span>
@@ -267,8 +302,8 @@ import '../styles/index-scene.css'
     <h2 class="contact-title reveal">
       Let's <em>build</em> together.
     </h2>
-    <a href="mailto:josue@aparcedo.org" class="contact-email reveal"
-      >josue@aparcedo.org</a
+    <a href="#email-draft" class="contact-email reveal" data-email-draft-trigger
+      ><span>josue@aparcedo.org</span><small>Click to draft</small></a
     >
     <div class="contact-socials reveal">
       <a href="https://github.com/Josue7211" target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
@@ -281,7 +316,7 @@ import '../styles/index-scene.css'
 
   <!-- ============ FOOTER ============ -->
   <footer class="footer">
-    <span>© JOSUE APARCEDO · 2026</span>
+    <span>MIT LICENSE · 2026</span>
     <span class="footer-clock" id="clock">—:—:—</span>
   </footer>
 

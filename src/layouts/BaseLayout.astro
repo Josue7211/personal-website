@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css'
+import EmailDraftBox from '../components/ui/EmailDraftBox.astro'
 
 interface Props {
   title: string
@@ -49,5 +50,6 @@ const fullTitle = `${title} — Josue Aparcedo`
   </head>
   <body class={bodyClass}>
     <slot />
+    <EmailDraftBox />
   </body>
 </html>

@@ -1,6 +1,7 @@
 import Lenis from 'lenis'
 
 import { createGuidedRailController } from '../scene/guided-rail/controller'
+import initMusicPlayer from './music-player'
 
 type Project = {
   id: string
@@ -36,6 +37,7 @@ type Scene3DInstance = {
   getHoveredFace(): unknown
   getFaceMeshes(): unknown[]
   setHoveredFace(index: number | null): void
+  setFocusedProjectIndex(index: number | null): void
   setPaused(paused: boolean): void
   getActiveProjectIndex(): number | null
   getFaceScreenBasis(
@@ -389,8 +391,8 @@ function getSnapTiming(fromIndex: number, toIndex: number) {
   const key = `${fromIndex}-${toIndex}`
   const timings: Record<string, { duration: number; lockMs: number }> = {
     '0-1': { duration: 0.82, lockMs: 940 },
-    '1-2': { duration: 0.9, lockMs: 1040 },
-    '2-3': { duration: 0.82, lockMs: 940 },
+    '1-2': { duration: 0.82, lockMs: 780 },
+    '2-3': { duration: 0.68, lockMs: 620 },
     '1-0': { duration: 0.76, lockMs: 880 },
     '2-1': { duration: 0.84, lockMs: 980 },
     '3-2': { duration: 0.78, lockMs: 900 },
@@ -585,6 +587,8 @@ export default function initIndexScene() {
     window.setInterval(updateClocks, 1000)
   }
 
+  initMusicPlayer()
+
   const sceneCanvas = document.getElementById('scene-canvas')
   const hero = document.getElementById('top')
   const work = document.getElementById('work')
@@ -669,6 +673,8 @@ export default function initIndexScene() {
     let snapLockedUntil = 0
     let wheelAccumulator = 0
     let lastWheelAt = 0
+    let drawerWheelAccumulator = 0
+    let lastDrawerWheelAt = 0
     let snapStateTimer = 0
     let nowPlayingTimer = 0
     let activeSnapIndex = nearestIndex(
@@ -730,7 +736,25 @@ export default function initIndexScene() {
       'wheel',
       (event) => {
         if (event.ctrlKey || event.metaKey) return
-        if (document.getElementById('project-drawer')?.classList.contains('open')) return
+        if (document.getElementById('project-drawer')?.classList.contains('open')) {
+          event.preventDefault()
+          event.stopPropagation()
+
+          const now = performance.now()
+          if (now - lastDrawerWheelAt > 240) drawerWheelAccumulator = 0
+          lastDrawerWheelAt = now
+          drawerWheelAccumulator += event.deltaY
+
+          if (Math.abs(drawerWheelAccumulator) < 48) return
+
+          const direction = drawerWheelAccumulator > 0 ? 1 : -1
+          drawerWheelAccumulator = 0
+          const currentProjectIndex = scene3D?.getActiveProjectIndex() ?? rouletteActiveIndex
+          const nextProjectIndex =
+            ((currentProjectIndex + direction) % PROJECTS.length + PROJECTS.length) % PROJECTS.length
+          openProject(PROJECTS[nextProjectIndex], nextProjectIndex)
+          return
+        }
         if (
           rouletteContainer &&
           event.target instanceof Node &&
@@ -742,7 +766,12 @@ export default function initIndexScene() {
         const now = performance.now()
         event.preventDefault()
 
-        if (now < snapLockedUntil) return
+        if (now < snapLockedUntil) {
+          const lockRemaining = snapLockedUntil - now
+          const wantsContact = activeSnapIndex === 2 && event.deltaY > 0
+          if (!wantsContact || lockRemaining > 420) return
+          snapLockedUntil = now
+        }
 
         if (now - lastWheelAt > 220) wheelAccumulator = 0
         lastWheelAt = now
@@ -804,10 +833,14 @@ export default function initIndexScene() {
         <span class="fl-line"></span>
       `
       element.addEventListener('click', () => openProject(project, index))
-      element.addEventListener('pointerenter', () => scene3D?.setHoveredFace(index))
-      element.addEventListener('pointerleave', () => scene3D?.setHoveredFace(null))
-      element.addEventListener('focus', () => scene3D?.setHoveredFace(index))
-      element.addEventListener('blur', () => scene3D?.setHoveredFace(null))
+      element.addEventListener('pointerenter', () => scene3D?.setFocusedProjectIndex(index))
+      element.addEventListener('pointerleave', () => {
+        if (!isProjectDrawerOpen()) scene3D?.setFocusedProjectIndex(null)
+      })
+      element.addEventListener('focus', () => scene3D?.setFocusedProjectIndex(index))
+      element.addEventListener('blur', () => {
+        if (!isProjectDrawerOpen()) scene3D?.setFocusedProjectIndex(null)
+      })
       labelsContainer.appendChild(element)
       faceLabels.push(element)
     })
@@ -851,6 +884,7 @@ export default function initIndexScene() {
   const rouletteRows: HTMLButtonElement[] = []
   let rouletteActiveIndex = -1
   let rouletteWheelRemainder = 0
+  let rouletteWheelLockedUntil = 0
   const isProjectDrawerOpen = () =>
     document.getElementById('project-drawer')?.classList.contains('open') === true
 
@@ -860,6 +894,11 @@ export default function initIndexScene() {
     if (offset > count / 2) offset -= count
     if (offset < count / -2) offset += count
     return offset
+  }
+
+  const wrapProjectIndex = (index: number) => {
+    const count = PROJECTS.length
+    return count === 0 ? 0 : ((index % count) + count) % count
   }
 
   const renderRoulette = (activeIndex: number) => {
@@ -878,9 +917,12 @@ export default function initIndexScene() {
 
   const setRouletteActive = (index: number, syncOrb = true) => {
     if (PROJECTS.length === 0) return
-    const nextIndex = Math.max(0, Math.min(PROJECTS.length - 1, index))
+    const nextIndex = wrapProjectIndex(index)
     renderRoulette(nextIndex)
-    if (syncOrb) scene3D?.setFocusedProjectIndex(nextIndex)
+    if (syncOrb) {
+      scene3D?.setFocusedProjectIndex(nextIndex)
+      if (isProjectDrawerOpen()) openProject(PROJECTS[nextIndex], nextIndex)
+    }
   }
 
   if (rouletteContainer && rouletteList && PROJECTS.length > 0) {
@@ -892,14 +934,17 @@ export default function initIndexScene() {
         event.preventDefault()
         event.stopPropagation()
 
-        rouletteWheelRemainder += event.deltaY
-        const stepSize = 44
-        const rawSteps = Math.trunc(rouletteWheelRemainder / stepSize)
-        if (rawSteps === 0) return
+        const now = performance.now()
+        if (now < rouletteWheelLockedUntil) return
 
-        rouletteWheelRemainder -= rawSteps * stepSize
-        const steps = Math.max(-5, Math.min(5, rawSteps))
-        setRouletteActive((rouletteActiveIndex < 0 ? 0 : rouletteActiveIndex) + steps)
+        rouletteWheelRemainder += event.deltaY
+        const stepSize = 58
+        if (Math.abs(rouletteWheelRemainder) < stepSize) return
+
+        const step = rouletteWheelRemainder > 0 ? 1 : -1
+        rouletteWheelRemainder = 0
+        rouletteWheelLockedUntil = now + 180
+        setRouletteActive((rouletteActiveIndex < 0 ? 0 : rouletteActiveIndex) + step)
       },
       { passive: false }
     )
@@ -1000,7 +1045,7 @@ export default function initIndexScene() {
     document.body.classList.toggle('in-contact', contactProgress > 0.82)
 
     let mode: 'hero' | 'work' | 'past' = 'hero'
-    if (aboutProgress > 0.42) {
+    if (aboutProgress > 0.34) {
       mode = 'past'
     } else if (heroExit > 0.7 && (!workRect || workRect.bottom > viewportHeight * 0.3)) {
       mode = 'work'
@@ -1029,33 +1074,38 @@ export default function initIndexScene() {
   onScroll()
 
   const positionLabels = () => {
-    if (!scene3D || faceLabels.length === 0) {
+    if (!scene3D) {
       window.requestAnimationFrame(positionLabels)
       return
     }
 
-    const showLabels = document.body.dataset.sceneMode === 'work'
+    const drawerOpen = isProjectDrawerOpen()
+    const showLabels = document.body.dataset.sceneMode === 'work' || drawerOpen
+    const activeLabelIndex = scene3D.getActiveProjectIndex()
 
     faceLabels.forEach((element, index) => {
       const basis = scene3D?.getFaceScreenBasis(index)
-      if (!basis || !showLabels || !basis.visible) {
+      const active = index === activeLabelIndex
+      const forceActive = drawerOpen && active
+      if (!basis || !showLabels || (!basis.visible && !forceActive)) {
         element.style.opacity = '0'
+        element.style.pointerEvents = 'none'
+        element.classList.remove('active')
         return
       }
 
-      const alpha = Math.min(1, Math.max(0, basis.facing) * 1.5)
+      const alpha = forceActive
+        ? Math.max(0.76, Math.min(1, Math.max(0, basis.facing) * 1.5))
+        : Math.min(1, Math.max(0, basis.facing) * 1.5)
       const lift = (1 - alpha) * 18
-      const scale = 0.88 + alpha * 0.12
+      const scale = 0.72 + alpha * 0.1 + (active ? 0.04 : 0)
       const blur = (1 - alpha) * 6
-      const half = 90
-      const a = basis.ux / half
-      const b = basis.uy / half
-      const c = basis.vx / half
-      const d = basis.vy / half
 
       element.style.opacity = String(alpha)
       element.style.filter = `blur(${blur}px)`
-      element.style.transform = `matrix(${a}, ${b}, ${c}, ${d}, ${basis.ox}, ${basis.oy}) translate(-50%, -50%) translateY(${-lift}px) scale(${scale})`
+      element.style.pointerEvents = alpha > 0.55 ? 'auto' : 'none'
+      element.style.transform = `translate(${basis.ox}px, ${basis.oy}px) translate(-50%, -50%) translateY(${-lift}px) scale(${scale})`
+      element.classList.toggle('active', active)
     })
 
     quickLinkElements.forEach(({ el, conf }) => {
@@ -1087,6 +1137,11 @@ export default function initIndexScene() {
   window.requestAnimationFrame(positionLabels)
 
   const updateRoulette = () => {
+    if (isProjectDrawerOpen()) {
+      window.requestAnimationFrame(updateRoulette)
+      return
+    }
+
     if (scene3D && rouletteContainer && document.body.dataset.sceneMode === 'work') {
       const activeIndex = scene3D.getActiveProjectIndex()
       if (activeIndex != null && PROJECTS[activeIndex]) renderRoulette(activeIndex)
@@ -1105,17 +1160,7 @@ export default function initIndexScene() {
   const drawerProof = document.getElementById('drawer-proof')
   const drawerMeta = document.getElementById('drawer-meta')
   const drawerCta = document.getElementById('drawer-cta')
-  let drawerReturnFocus: HTMLElement | null = null
-
-  const drawerFocusableSelector =
-    'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-
-  const getDrawerFocusables = () => {
-    if (!drawer) return []
-    return Array.from(drawer.querySelectorAll<HTMLElement>(drawerFocusableSelector)).filter(
-      (element) => !element.hasAttribute('disabled') && element.offsetParent !== null
-    )
-  }
+  const nowPlayingNav = document.querySelector<HTMLElement>('.nav-now-playing')
 
   const renderDrawerTags = (tags: string[]) => {
     if (!drawerTags) return
@@ -1173,11 +1218,10 @@ export default function initIndexScene() {
 
   function openProject(project: Project | null | undefined, index: number) {
     if (!drawer || !project) return
+    renderRoulette(index)
+    scene3D?.setFocusedProjectIndex(index)
     scene3D?.setHoveredFace(index)
     scene3D?.setPaused(true)
-
-    drawerReturnFocus =
-      document.activeElement instanceof HTMLElement ? document.activeElement : null
 
     if (drawerTitle) drawerTitle.textContent = project.title
     if (drawerIndex) drawerIndex.textContent = project.num
@@ -1195,25 +1239,42 @@ export default function initIndexScene() {
     }
 
     drawer.classList.add('open')
+    document.body.classList.add('project-open')
+    if (nowPlayingNav) {
+      nowPlayingNav.hidden = true
+      nowPlayingNav.setAttribute('aria-hidden', 'true')
+    }
     drawer.setAttribute('aria-hidden', 'false')
-    window.setTimeout(() => {
-      const focusTarget =
-        drawerClose instanceof HTMLElement ? drawerClose : getDrawerFocusables()[0] ?? drawer
-      focusTarget.focus()
-    }, 0)
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
   }
 
   const closeDrawer = () => {
     if (!drawer) return
     drawer.classList.remove('open')
+    document.body.classList.remove('project-open')
+    if (nowPlayingNav) {
+      nowPlayingNav.hidden = false
+      nowPlayingNav.removeAttribute('aria-hidden')
+    }
     drawer.setAttribute('aria-hidden', 'true')
+    scene3D?.setFocusedProjectIndex(null)
     scene3D?.setHoveredFace(null)
     scene3D?.setPaused(false)
-    drawerReturnFocus?.focus()
-    drawerReturnFocus = null
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
   }
 
   drawerClose?.addEventListener('click', closeDrawer)
+  document.addEventListener(
+    'click',
+    (event) => {
+      const target = event.target
+      if (!(target instanceof Element)) return
+      if (!target.closest('#drawer-close')) return
+      event.preventDefault()
+      closeDrawer()
+    },
+    { capture: true }
+  )
   document.addEventListener('keydown', (event) => {
     if (!drawer?.classList.contains('open')) return
 

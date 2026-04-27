@@ -2,37 +2,217 @@
 import MainLayout from '../layouts/MainLayout.astro'
 ---
 
-<MainLayout title="About">
-  <div class="stub-page">
-    <h1 class="stub-heading">About</h1>
-    <p class="stub-text">Full about section coming in Phase 5.</p>
-  </div>
+<MainLayout
+  title="About"
+  description="About Josue Aparcedo, a computer engineering student building agent, systems, and hardware tools."
+>
+  <main class="about-page">
+    <a class="back-link" href="/">← Back home</a>
+
+    <section class="about-hero" aria-labelledby="about-title">
+      <p class="eyebrow">About</p>
+      <h1 id="about-title">Josue Aparcedo</h1>
+      <p class="lede">
+        Computer Engineering student at Florida SouthWestern, building tools
+        for autonomous agents and the systems they run on.
+      </p>
+    </section>
+
+    <section class="about-grid" aria-label="About Josue">
+      <div class="about-copy">
+        <p>
+          I build memory, orchestration, secrets, red-team scanning, homelab,
+          and hardware projects. Most of my work sits where software meets
+          infrastructure: small tools that make agents and systems easier to
+          operate.
+        </p>
+        <p>
+          Right now I am aiming to transfer to UCF in Fall 2026 and looking for
+          SWE, hardware, or firmware internships for summer and fall 2026.
+        </p>
+        <p>
+          Based in Fort Myers, Florida. Open to practical teams, hard systems
+          problems, and people who like building things end to end.
+        </p>
+      </div>
+
+      <aside class="about-facts">
+        <dl>
+          <div>
+            <dt>Now</dt>
+            <dd>FSW · AA Computer Engineering</dd>
+          </div>
+          <div>
+            <dt>Focus</dt>
+            <dd>Agents · systems · hardware · security tooling</dd>
+          </div>
+          <div>
+            <dt>Looking for</dt>
+            <dd>SWE / hardware / firmware internships</dd>
+          </div>
+          <div>
+            <dt>Location</dt>
+            <dd>Fort Myers, FL · Eastern time</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+
+    <nav class="about-actions" aria-label="About links">
+      <a href="/resume/josue-aparcedo.pdf">Resume PDF</a>
+      <a href="#email-draft" data-email-draft-trigger>josue@aparcedo.org</a>
+      <a href="https://github.com/Josue7211" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://www.linkedin.com/in/josueaparcedo/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </nav>
+  </main>
 </MainLayout>
 
 <style>
-  .stub-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  .about-page {
     min-height: 100vh;
-    padding: 2rem;
-    text-align: center;
-    gap: 1rem;
+    padding: clamp(1.25rem, 3vw, 3rem);
+    background:
+      radial-gradient(circle at 20% 0%, rgba(168, 85, 247, 0.18), transparent 34rem),
+      linear-gradient(135deg, #09090f 0%, #111827 52%, #161016 100%);
+    color: var(--color-text);
   }
 
-  .stub-heading {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 6vw, 5rem);
-    font-weight: 900;
-    color: var(--color-primary);
-    margin: 0;
+  .back-link,
+  .about-actions a {
+    color: var(--color-text);
+    text-decoration: none;
   }
 
-  .stub-text {
-    font-family: var(--font-body);
+  .back-link {
+    display: inline-flex;
+    margin-bottom: clamp(3rem, 8vw, 7rem);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--color-text-muted);
-    font-size: 1rem;
+  }
+
+  .about-hero,
+  .about-grid,
+  .about-actions {
+    width: min(1120px, 100%);
+    margin-inline: auto;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  h1 {
     margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 14vw, 11rem);
+    line-height: 0.86;
+    letter-spacing: 0;
+    color: #fff;
+  }
+
+  .lede {
+    max-width: 760px;
+    margin: 2rem 0 0;
+    font-size: clamp(1.25rem, 2.4vw, 2rem);
+    line-height: 1.25;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.75fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    margin-top: clamp(4rem, 9vw, 8rem);
+  }
+
+  .about-copy {
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  .about-copy p {
+    margin: 0;
+    max-width: 760px;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.74);
+  }
+
+  .about-facts {
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+    padding-left: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .about-facts dl {
+    display: grid;
+    gap: 1.4rem;
+    margin: 0;
+  }
+
+  .about-facts dt {
+    margin-bottom: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .about-facts dd {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.86);
+    line-height: 1.45;
+  }
+
+  .about-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: clamp(3rem, 7vw, 6rem);
+  }
+
+  .about-actions a {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    padding: 0.85rem 1rem;
+    background: rgba(255, 255, 255, 0.06);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .about-actions a:hover,
+  .back-link:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: 760px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-facts {
+      border-left: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 1.5rem 0 0;
+    }
+
+    .about-actions {
+      flex-direction: column;
+    }
+
+    .about-actions a {
+      text-align: center;
+    }
   }
 </style>

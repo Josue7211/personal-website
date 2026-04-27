@@ -53,57 +53,12 @@ window.initScene3D = function (canvas, opts = {}) {
   const faceMeshes = [];   // one Group per big octahedron face
   const subMeshes  = [];   // flat list of every sub-triangle mesh (raycast target)
   const projectSlots = [];
-  const markerSprites = [];
 
   const spherify = (v, r) => v.clone().normalize().multiplyScalar(r);
   const FACE_PALETTE = [
     0xa855f7, 0xf2d38a, 0x8fd7ff, 0x34d399,
     0xfb7185, 0x60a5fa, 0xf97316, 0xc4b5fd,
   ];
-
-  function colorToRgba(color, alpha) {
-    return `rgba(${Math.round(color.r * 255)}, ${Math.round(color.g * 255)}, ${Math.round(color.b * 255)}, ${alpha})`;
-  }
-
-  function makeProjectSprite(project, index, accent) {
-    const labelCanvas = document.createElement('canvas');
-    labelCanvas.width = 192;
-    labelCanvas.height = 72;
-    const ctx = labelCanvas.getContext('2d');
-    if (!ctx) return null;
-
-    const num = String(index + 1).padStart(2, '0');
-    const title = (project && project.title ? String(project.title) : 'project')
-      .slice(0, 20)
-      .toUpperCase();
-
-    ctx.clearRect(0, 0, labelCanvas.width, labelCanvas.height);
-    ctx.fillStyle = 'rgba(8, 4, 16, 0.5)';
-    ctx.fillRect(0, 0, labelCanvas.width, labelCanvas.height);
-    ctx.strokeStyle = colorToRgba(accent, 0.48);
-    ctx.lineWidth = 2;
-    ctx.strokeRect(4, 4, labelCanvas.width - 8, labelCanvas.height - 8);
-    ctx.fillStyle = 'rgba(236, 231, 245, 0.86)';
-    ctx.font = '600 24px monospace';
-    ctx.fillText(num, 16, 32);
-    ctx.fillStyle = colorToRgba(accent, 0.76);
-    ctx.font = '500 11px monospace';
-    ctx.fillText(title, 16, 54);
-
-    const texture = new THREE.CanvasTexture(labelCanvas);
-    if (THREE.SRGBColorSpace) texture.colorSpace = THREE.SRGBColorSpace;
-    const material = new THREE.SpriteMaterial({
-      map: texture,
-      transparent: true,
-      opacity: 0,
-      depthWrite: false,
-      depthTest: true,
-    });
-    const sprite = new THREE.Sprite(material);
-    sprite.scale.set(0.24, 0.09, 1);
-    sprite.userData = { projectIndex: index, baseScale: 0.24 };
-    return sprite;
-  }
 
   // Tessellated sphere — SAME buffer that feeds the wireframe, so sub-mesh
   // fills register exactly under the wires.
@@ -197,7 +152,36 @@ window.initScene3D = function (canvas, opts = {}) {
     subMeshes.push(m);
   }
 
-  const orderedSlotCandidates = subMeshes.slice().sort((a, b) => {
+  const reservedSpecialAnchors = [
+    { face: 2, bary: [1, 0, 0] },
+    { face: 4, bary: [0, 1, 0] },
+    { face: 6, bary: [0, 0, 1] },
+  ].map((conf) => {
+    const fm = faceMeshes[conf.face];
+    if (!fm) return null;
+    const raw = fm.userData.a.clone().multiplyScalar(conf.bary[0])
+      .add(fm.userData.b.clone().multiplyScalar(conf.bary[1]))
+      .add(fm.userData.c.clone().multiplyScalar(conf.bary[2]));
+    return raw.normalize();
+  }).filter(Boolean);
+
+  function touchesReservedSpecialAnchor(slot) {
+    if (!reservedSpecialAnchors.length) return false;
+    const points = [
+      slot.userData.a,
+      slot.userData.b,
+      slot.userData.c,
+      slot.userData.centroid,
+    ];
+    return reservedSpecialAnchors.some((anchor) =>
+      points.some((point, pointIndex) => {
+        const dot = point.clone().normalize().dot(anchor);
+        return pointIndex < 3 ? dot > 0.998 : dot > 0.94;
+      })
+    );
+  }
+
+  const orderedSlotCandidates = subMeshes.filter((slot) => !touchesReservedSpecialAnchor(slot)).sort((a, b) => {
     const an = a.userData.normal;
     const bn = b.userData.normal;
     const aa = Math.atan2(an.z, an.x);
@@ -226,7 +210,7 @@ window.initScene3D = function (canvas, opts = {}) {
 
     const accent = new THREE.Color(FACE_PALETTE[index % FACE_PALETTE.length]);
     const slotColor = new THREE.Color(0x100b16);
-    const slotEmissive = new THREE.Color(0x2a0e5e).lerp(accent, 0.045);
+    const slotEmissive = new THREE.Color(0x2a0e5e);
 
     slot.userData.project = project;
     slot.userData.projectIndex = index;
@@ -237,16 +221,8 @@ window.initScene3D = function (canvas, opts = {}) {
     slot.material.color.copy(slotColor);
     slot.material.emissive.copy(slotEmissive);
     slot.material.opacity = 0.76;
-    projectSlots[index] = { mesh: slot, faceHolder, marker: null };
-    if (!faceHolder.userData.projectSlot) faceHolder.userData.projectSlot = slot;
 
-    const marker = makeProjectSprite(project, index, accent);
-    if (marker) {
-      marker.position.copy(slot.userData.centroid.clone().normalize().multiplyScalar(RADIUS * 1.035));
-      faceHolder.add(marker);
-      projectSlots[index].marker = marker;
-      markerSprites.push(marker);
-    }
+    projectSlots[index] = { mesh: slot, faceHolder };
   });
   scene.add(faceGroup);
 
@@ -343,7 +319,7 @@ window.initScene3D = function (canvas, opts = {}) {
     );
     raycaster.setFromCamera(ndc, camera);
     const hits = raycaster.intersectObjects(subMeshes, false);
-    const hit = hits.find((item) => item.object.userData.project);
+    const hit = hits.find((item) => isFrontProjectSlot(item.object));
     return hit ? hit.object : null;
   }
 
@@ -378,7 +354,15 @@ window.initScene3D = function (canvas, opts = {}) {
     return worldNormal.dot(camDir);
   }
 
+  function isFrontProjectSlot(slot) {
+    if (!slot?.userData?.project) return false;
+    const faceHolder = slot.userData.parentFace;
+    if (!faceHolder) return false;
+    return getFaceFacing(faceHolder, slot.userData.centroid, slot.userData.normal) > 0.18;
+  }
+
   function getActiveFaceIndex() {
+    if (focusedProjectIndex != null) return focusedProjectIndex;
     if (hoveredSub) return hoveredSub.userData.projectIndex;
     return manualHoverFaceIndex;
   }
@@ -419,15 +403,29 @@ window.initScene3D = function (canvas, opts = {}) {
     updateBodyHoverState();
   }
 
-  function getProjectSlotScreenState(index) {
+  function getProjectAnchorData(index) {
     const projectSlot = projectSlots[index];
-    const faceHolder = projectSlot?.faceHolder;
+    const fm = projectSlot?.faceHolder;
     const slot = projectSlot?.mesh;
-    if (!faceHolder || !slot) return null;
+    if (!fm || !slot) return null;
 
-    const localPoint = slot.userData.centroid;
-    const screen = projectLocalToScreen(faceHolder, localPoint);
-    const facing = getFaceFacing(faceHolder, localPoint, slot.userData.normal);
+    return {
+      faceHolder: fm,
+      anchor: slot.userData.centroid,
+      normal: slot.userData.normal,
+      a: slot.userData.a,
+      b: slot.userData.b,
+      c: slot.userData.c,
+    };
+  }
+
+  function getProjectSlotScreenState(index) {
+    const anchorData = getProjectAnchorData(index);
+    if (!anchorData) return null;
+
+    const localPoint = anchorData.anchor;
+    const screen = projectLocalToScreen(anchorData.faceHolder, localPoint);
+    const facing = getFaceFacing(anchorData.faceHolder, localPoint, anchorData.normal);
     const dx = (screen.x - window.innerWidth * 0.5) / Math.max(1, window.innerWidth);
     const dy = (screen.y - window.innerHeight * 0.5) / Math.max(1, window.innerHeight);
     const centerDistance = Math.sqrt(dx * dx + dy * dy);
@@ -466,11 +464,12 @@ window.initScene3D = function (canvas, opts = {}) {
   }
 
   function writeHoverFromRaycast() {
+    if (paused) return;
     if (sceneMode === 'work') {
       ndc.set(mouse.tx, mouse.ty);
       raycaster.setFromCamera(ndc, camera);
       const hits = raycaster.intersectObjects(subMeshes, false);
-      const projectHit = hits.find((item) => item.object.userData.project);
+      const projectHit = hits.find((item) => isFrontProjectSlot(item.object));
       const newSub = projectHit ? projectHit.object : null;
       const newFace = newSub ? newSub.userData.parentFace : null;
       if (newSub !== hoveredSub) {
@@ -576,12 +575,10 @@ window.initScene3D = function (canvas, opts = {}) {
   });
 
   function getProjectFrontQuat(index) {
-    const projectSlot = projectSlots[index];
-    const faceHolder = projectSlot?.faceHolder;
-    const slot = projectSlot?.mesh;
-    if (!faceHolder || !slot) return null;
+    const anchorData = getProjectAnchorData(index);
+    if (!anchorData) return null;
 
-    const localPoint = slot.userData.centroid.clone().add(faceHolder.position).normalize();
+    const localPoint = anchorData.anchor.clone().add(anchorData.faceHolder.position).normalize();
     return _frontQuat.setFromUnitVectors(localPoint, _frontTarget).clone();
   }
 
@@ -654,34 +651,31 @@ window.initScene3D = function (canvas, opts = {}) {
       };
     },
     getFaceScreenBasis(i) {
-      // For a geodesic-sphere face, build a stable in-plane basis around the
-      // spherified centroid and project to screen so labels sit on the surface.
-      const projectSlot = projectSlots[i];
-      const fm = projectSlot?.faceHolder || faceMeshes[i];
+      const anchorData = getProjectAnchorData(i);
+      const fm = anchorData?.faceHolder || faceMeshes[i];
       if (!fm) return null;
-      const slot = projectSlot?.mesh || fm.userData.projectSlot;
-      const a = slot ? slot.userData.a : fm.userData.a;
-      const b = slot ? slot.userData.b : fm.userData.b;
-      const centroid = slot ? slot.userData.centroid : fm.userData.centroid;
-      const localNormal = slot ? slot.userData.normal : fm.userData.normal;
+      const a = anchorData?.a || fm.userData.a;
+      const b = anchorData?.b || fm.userData.b;
+      const anchor = anchorData?.anchor || fm.userData.centroid;
+      const localNormal = anchorData?.normal || fm.userData.normal;
 
       // u: tangent across the face (along the a→b edge, projected to plane)
       const edge = b.clone().sub(a).normalize();
       const u = edge.clone().sub(localNormal.clone().multiplyScalar(edge.dot(localNormal))).normalize();
       const v = new THREE.Vector3().crossVectors(localNormal, u).normalize();
 
-      const SCALE = slot ? 0.22 : 0.55;
-      const O = projectLocalToScreen(fm, centroid);
-      const U = projectLocalToScreen(fm, centroid.clone().add(u.clone().multiplyScalar(SCALE)));
-      const V = projectLocalToScreen(fm, centroid.clone().add(v.clone().multiplyScalar(SCALE)));
-      const facing = getFaceFacing(fm, centroid, localNormal);
+      const SCALE = anchorData ? 0.36 : 0.55;
+      const O = projectLocalToScreen(fm, anchor);
+      const U = projectLocalToScreen(fm, anchor.clone().add(u.clone().multiplyScalar(SCALE)));
+      const V = projectLocalToScreen(fm, anchor.clone().add(v.clone().multiplyScalar(SCALE)));
+      const facing = getFaceFacing(fm, anchor, localNormal);
 
       return {
         ox: O.x, oy: O.y,
         ux: U.x - O.x, uy: U.y - O.y,
         vx: V.x - O.x, vy: V.y - O.y,
         facing,
-        visible: facing > 0.05,
+        visible: facing > 0.08,
       };
     },
     getHoveredFace() { return hoveredFace; },
@@ -741,12 +735,6 @@ window.initScene3D = function (canvas, opts = {}) {
     t += paused ? 0 : 0.012;
     bgMat.uniforms.uTime.value = t;
 
-    if (paused) {
-      renderer.render(scene, camera);
-      requestAnimationFrame(animate);
-      return;
-    }
-
     // Smooth pointer
     mouse.tx += (mouse.nx - mouse.tx) * 0.08;
     mouse.ty += (mouse.ny - mouse.ty) * 0.08;
@@ -796,10 +784,10 @@ window.initScene3D = function (canvas, opts = {}) {
         zoomAnchorQuat = faceGroup.quaternion.clone();
       }
       targetQuat = zoomAnchorQuat.clone().slerp(_zoomTargetQuat, portalT);
-    } else if (paused) {
-      targetQuat = faceGroup.quaternion.clone();
     } else if (sceneMode === 'work' && focusedProjectIndex != null) {
       targetQuat = getProjectFrontQuat(focusedProjectIndex) || faceGroup.quaternion.clone();
+    } else if (paused) {
+      targetQuat = faceGroup.quaternion.clone();
     } else if (sceneMode === 'work') {
       targetQuat = manualQuat.clone().multiply(getWorkAutoQuat());
     } else {
@@ -848,49 +836,37 @@ window.initScene3D = function (canvas, opts = {}) {
     writeHoverFromRaycast();
     updateActiveProjectIndex();
     const activeProjectSlotIndex = getActiveFaceIndex() ?? activeProjectIndex;
+    const activeAccent = activeProjectSlotIndex != null
+      ? new THREE.Color(FACE_PALETTE[activeProjectSlotIndex % FACE_PALETTE.length])
+      : null;
 
-    projectSlots.forEach((projectSlot, index) => {
-      if (!projectSlot) return;
-      const active = activeProjectSlotIndex === index;
-      const faceHolder = projectSlot.faceHolder;
-      const slot = projectSlot.mesh;
-      const facing = slot ? getFaceFacing(faceHolder, slot.userData.centroid, slot.userData.normal) : 0;
-
-      const marker = projectSlot.marker;
-      if (!marker) return;
-      const visible = sceneMode === 'work' && facing > 0.1;
-      const opacityTarget = visible ? (active ? 0.72 : 0.34) * easeVisible(Math.min(1, facing * 1.8)) : 0;
-      marker.material.opacity += (opacityTarget - marker.material.opacity) * 0.12;
-      const scaleTarget = active ? 0.3 : 0.24;
-      marker.scale.x += (scaleTarget - marker.scale.x) * 0.12;
-      marker.scale.y += (scaleTarget * 0.38 - marker.scale.y) * 0.12;
-    });
-
-    // Project tile tint — only one sub-triangle per project is interactive.
+    // Project faces are individual visible triangle meshes.
+    const projectMode = sceneMode === 'work';
     subMeshes.forEach((m) => {
       const isProjectSlot = !!m.userData.slot;
-      const slotActive = isProjectSlot && m.userData.projectIndex === activeProjectSlotIndex;
-      const subActive = m === hoveredSub;
-      const target = subActive ? 0.42 : slotActive ? 0.22 : isProjectSlot ? 0.12 : 0.08;
+      const visibleProjectSlot = projectMode && isProjectSlot;
+      const slotActive = visibleProjectSlot && m.userData.projectIndex === activeProjectSlotIndex;
+      const subActive = projectMode && m === hoveredSub;
+      const target = subActive ? 0.42 : slotActive ? 0.28 : visibleProjectSlot ? 0.12 : 0.08;
       m.material.emissiveIntensity += (target - m.material.emissiveIntensity) * 0.15;
       const colorTarget = brightenColor(
         m.userData.baseColor,
-        m.userData.accent,
-        slotActive ? 0.045 : isProjectSlot ? 0.012 : workProg * 0.006
+        activeAccent && slotActive ? activeAccent : m.userData.accent,
+        slotActive ? 0.08 : visibleProjectSlot ? 0.012 : workProg * 0.006
       );
       const emissiveTarget = brightenColor(
         m.userData.baseEmissive,
-        m.userData.accent,
-        slotActive ? 0.12 : isProjectSlot ? 0.04 : 0.02
+        activeAccent && slotActive ? activeAccent : m.userData.accent,
+        slotActive ? 0.18 : visibleProjectSlot ? 0.04 : 0.02
       );
       m.material.color.lerp(colorTarget, 0.08);
       m.material.emissive.lerp(emissiveTarget, 0.08);
-      const liftTarget = slotActive ? 0.014 : 0;
+      const liftTarget = slotActive ? 0.018 : 0;
       const normal = m.userData.normal || faceMeshes[m.userData.faceIndex]?.userData.normal;
       if (normal) {
         m.position.lerp(normal.clone().multiplyScalar(liftTarget), 0.14);
       }
-      const opacityTarget = softenOpacity((slotActive ? 0.78 : isProjectSlot ? 0.72 : 0.68) - eased * 0.16 + workProg * 0.015);
+      const opacityTarget = softenOpacity((slotActive ? 0.86 : visibleProjectSlot ? 0.72 : 0.68) - eased * 0.16 + workProg * 0.015);
       m.material.opacity += (opacityTarget - m.material.opacity) * 0.08;
     });
 
