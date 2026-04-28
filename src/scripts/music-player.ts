@@ -51,7 +51,7 @@ const getAudio = () => {
 
   audio = new Audio(TRACKS[activeIndex].src)
   audio.autoplay = true
-  audio.preload = 'metadata'
+  audio.preload = 'auto'
   audio.volume = volume
   audio.addEventListener('ended', () => {
     activeIndex = (activeIndex + 1) % TRACKS.length
@@ -162,6 +162,7 @@ const blurControl = (element: Element | null) => {
 export default function initMusicPlayer() {
   chooseInitialTrack()
   setState(state)
+  getAudio().load()
   if (mounted) return
   mounted = true
 
