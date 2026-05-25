@@ -1,0 +1,30 @@
+---
+title: claw control control surface
+description: UI responsibilities for supervising agent work.
+template: doc
+---
+
+The control surface should answer four questions fast:
+
+1. What is running?
+2. What changed?
+3. What needs approval?
+4. What failed?
+
+## Required views
+
+| View | Purpose |
+| --- | --- |
+| Run list | Scan active and recent work. |
+| Run detail | See messages, commands, files, todos, and status. |
+| Approval queue | Handle blocked actions. |
+| Mission board | Track larger goals across runs. |
+| Ops panel | Surface homelab or local-machine tasks when relevant. |
+
+## Design rule
+
+This should feel like a command center for ongoing work, not a generic chat app.
+
+## Open docs gap
+
+Add wireframe-level docs for the run detail and approval queue.

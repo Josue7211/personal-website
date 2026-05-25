@@ -1,0 +1,26 @@
+---
+title: claw control overview
+description: Control surface for supervising agent runs.
+template: doc
+---
+
+`claw control` is the operator surface for agent work. It should show what agents are doing, what they need, and where intervention is required.
+
+## Role in the stack
+
+`claw control` sits above the runtime pieces. It does not replace memory, secrets, or shell execution; it gives a human a single place to steer them.
+
+## Core surfaces
+
+| Surface | Purpose |
+| --- | --- |
+| Runs | Active and recent agent tasks. |
+| Messages | Status, questions, and decisions. |
+| Todos | Work items tied to a run. |
+| Missions | Larger goals spanning multiple runs. |
+| Homelab actions | Private ops tasks when agent work touches infrastructure. |
+
+## Related pages
+
+- [Control surface](/agent-stack/claw-control/control-surface/)
+- [Run state model](/agent-stack/claw-control/run-state-model/)

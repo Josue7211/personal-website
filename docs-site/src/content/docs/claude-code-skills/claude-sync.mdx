@@ -1,0 +1,26 @@
+---
+title: claude-sync
+description: Sync Claude Code config and project access across machines.
+template: doc
+---
+
+`claude-sync` keeps Claude Code setup consistent across machines by syncing config and making project access predictable.
+
+## What it solves
+
+Multi-machine development drifts fast. Config, skills, project paths, and local mounts can diverge until every session starts with setup repair.
+
+## Operating model
+
+- Sync Claude Code configuration through Syncthing.
+- Keep projects reachable through NAS or shared mounts.
+- Avoid depending on SSH for every local workflow.
+- Make machine-specific state explicit instead of hidden in dotfiles.
+
+## Boundaries
+
+Secrets should not be synced casually. Any secret material belongs behind a dedicated secret boundary such as AgentSecrets or machine-local environment config.
+
+## Next docs gap
+
+Add a setup guide with folder layout, Syncthing paths, ignore rules, and recovery steps after a bad sync.

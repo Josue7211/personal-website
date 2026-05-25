@@ -1,4 +1,3 @@
-// docs-site/astro.config.ts
 // Starlight-only Astro project. Deployed to docs.aparcedo.org.
 // Main cinematic site lives in the parent repo's astro.config.ts.
 import { defineConfig } from 'astro/config'
@@ -9,9 +8,9 @@ export default defineConfig({
   site: 'https://docs.aparcedo.org',
   integrations: [
     starlight({
-      title: 'Signals & Mind',
+      title: 'JOSUE / DOCS',
       description:
-        'A notebook of notes to my future self — signal processing, hardware, and the systems beneath the software I write.',
+        'Project docs for agent tooling, Claude Code workflows, and homelab systems.',
       logo: { src: './src/assets/docs-logo.svg', replacesTitle: false },
       customCss: ['./src/styles/starlight-theme.css'],
       social: [
@@ -23,52 +22,67 @@ export default defineConfig({
       tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 3 },
       sidebar: [
         {
-          label: 'Start here',
+          label: 'Overview',
           items: [
-            { label: 'Readme', link: '/' },
-            { label: 'Why this notebook exists', slug: 'why' },
+            { label: 'Overview', link: '/' },
+            { label: 'About these docs', slug: 'about' },
           ],
         },
         {
-          label: 'Signals',
+          label: 'Agent stack',
           items: [
-            { label: 'A slow intro to the FFT', slug: 'signals/fft' },
-            { label: 'Windowing, in plain English', slug: 'signals/windowing' },
-            { label: 'Why phase matters more than you think', slug: 'signals/phase' },
             {
-              label: 'Noise, thermal & otherwise',
-              slug: 'signals/noise',
-              badge: { text: 'draft', variant: 'caution' },
+              label: 'memd',
+              items: [
+                { label: 'Overview', slug: 'agent-stack/memd/overview' },
+                { label: 'Memory model', slug: 'agent-stack/memd/memory-model' },
+                { label: 'Runtime workflow', slug: 'agent-stack/memd/runtime-workflow' },
+              ],
+            },
+            {
+              label: 'AgentSecrets',
+              items: [
+                { label: 'Overview', slug: 'agent-stack/agentsecrets/overview' },
+                { label: 'Security model', slug: 'agent-stack/agentsecrets/security-model' },
+                { label: 'Request flow', slug: 'agent-stack/agentsecrets/request-flow' },
+              ],
+            },
+            {
+              label: 'AgentShell',
+              items: [
+                { label: 'Overview', slug: 'agent-stack/agentshell/overview' },
+                { label: 'Command lifecycle', slug: 'agent-stack/agentshell/command-lifecycle' },
+                { label: 'Permission model', slug: 'agent-stack/agentshell/permission-model' },
+              ],
+            },
+            {
+              label: 'claw control',
+              items: [
+                { label: 'Overview', slug: 'agent-stack/claw-control/overview' },
+                { label: 'Control surface', slug: 'agent-stack/claw-control/control-surface' },
+                { label: 'Run state model', slug: 'agent-stack/claw-control/run-state-model' },
+              ],
             },
           ],
         },
         {
-          label: 'Hardware',
+          label: 'Claude Code skills',
           items: [
-            { label: 'KiCad, my way', slug: 'hardware/kicad' },
-            { label: 'PicoSynth build log', slug: 'hardware/picosynth' },
-            { label: 'Rust on the iCE40', slug: 'hardware/fpga' },
-            { label: 'Soldering without tears', slug: 'hardware/solder' },
+            { label: 'security-sweep', slug: 'claude-code-skills/security-sweep' },
+            { label: 'claude-dream', slug: 'claude-code-skills/claude-dream' },
+            { label: 'claude-autoresearch', slug: 'claude-code-skills/claude-autoresearch' },
+            { label: 'claude-sync', slug: 'claude-code-skills/claude-sync' },
           ],
         },
         {
-          label: 'Systems',
+          label: 'Homelab',
           items: [
-            { label: 'Learning Zig by writing a kernel', slug: 'systems/zig' },
-            { label: 'A mental model for memory', slug: 'systems/memory' },
-            {
-              label: 'Async, synchronously explained',
-              slug: 'systems/async',
-              badge: { text: 'wip', variant: 'note' },
-            },
-          ],
-        },
-        {
-          label: 'Off-topic',
-          items: [
-            { label: 'Metering Portra 400', slug: 'off-topic/portra' },
-            { label: 'Books worth rereading', slug: 'off-topic/reading' },
-            { label: 'How I take notes', slug: 'off-topic/notes' },
+            { label: 'Topology', slug: 'homelab/topology' },
+            { label: 'Cloudflare tunnels', slug: 'homelab/cloudflare-tunnels' },
+            { label: 'homelab-cli', slug: 'homelab/homelab-cli' },
+            { label: 'mac-bridge', slug: 'homelab/mac-bridge' },
+            { label: 'Security model', slug: 'homelab/security-model' },
+            { label: 'How this site is deployed', slug: 'homelab/deployment' },
           ],
         },
       ],

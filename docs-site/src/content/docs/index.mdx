@@ -1,59 +1,33 @@
 ---
-title: Signals & Mind
-description: A notebook of notes to my future self — signal processing, hardware, and the systems that sit underneath the software I write.
+title: Project docs
+description: "Docs for the maintained systems: agent tooling, Claude Code workflows, and homelab operations."
 template: doc
 hero:
-  tagline: Incomplete on purpose.
+  tagline: Maintained systems only.
 ---
 
-import { Aside } from '@astrojs/starlight/components'
+These docs are for projects with real operating surface: tools I run, systems I maintain, and workflows that need instructions later.
 
-A notebook of notes to my future self. Mostly about signal processing, hardware, and the systems that sit underneath the software I write. Incomplete on purpose.
+## Published scope
 
-## What this is
+The docs are intentionally narrower than the project list on the main portfolio. A repo earns a docs page when there is something useful to explain beyond a one-line project card.
 
-I keep running into the same five or six ideas in different disguises — sampling, feedback, locality, entropy, the cost of abstraction — and I'd rather write them down once, clearly, than reconstruct them from memory every time. So here they are, in public, in varying states of polish.
+| Area | What belongs here |
+| --- | --- |
+| Agent stack | Multi-page docs for the main agent products: memory, secrets, shell/runtime, and claw control. |
+| Claude Code skills | Reusable skills and automation I run across coding sessions. |
+| Homelab | Network topology, tunnels, internal tools, security boundaries, and deployment notes. |
 
-Some pages are rehearsed. Some are half-formed. The tag `draft` means I wouldn't yet trust it in an interview; `wip` means there's a graph I haven't drawn.
+## Start here
 
-<Aside type="tip" title="A small promise">
-Nothing here is written to impress. If a sentence reads like marketing, that's a bug — please [let me know](mailto:josue@aparcedo.org).
-</Aside>
+- [memd](/agent-stack/memd/overview/) documents the memory layer that keeps agent sessions from losing project truth.
+- [claw control](/agent-stack/claw-control/overview/) documents the control surface for supervising agent work.
+- [security-sweep](/claude-code-skills/security-sweep/) documents the repeatable security review workflow.
+- [Homelab topology](/homelab/topology/) explains where public traffic, private services, and local machines meet.
+- [How this site is deployed](/homelab/deployment/) covers the static docs deploy path through the services VM.
 
-## How it's laid out
+## What stays out
 
-The sidebar is organized by topic, not chronology. Within a topic, pages try to move from gentle to gnarly. If a page assumes something, it will say so in the first paragraph — look for the *"this assumes"* note.
+Unfinished or thin projects stay off this docs site until there is a stable implementation, runbook, or case study worth maintaining.
 
-- **Signals** — transforms, filters, the parts of DSP that felt like magic until I slowed down.
-- **Hardware** — build logs with schematics and failure modes.
-- **Systems** — mental models for memory, concurrency, and runtimes.
-- **Off-topic** — film, books, and other careful obsessions.
-
-## How it's built
-
-The site runs on [Astro](https://astro.build) with [Starlight](https://starlight.astro.build) for these pages, and a small MDX pipeline so writing stays close to plain text. Search is `pagefind`, built at deploy time; every page is also plain HTML for anyone running with JS off.
-
-The stack here is a reaction to writing for years in heavier systems. I wanted something I could open, read in under a minute, and close — both the page and the codebase.
-
-```ts title="docs sidebar (excerpt)"
-// Sidebar lives in astro.config.ts — same shape as the design.
-{
-  label: 'Signals',
-  items: [
-    { label: 'A slow intro to the FFT', slug: 'signals/fft' },
-    { label: 'Windowing, in plain English', slug: 'signals/windowing' },
-  ],
-}
-```
-
-## Cadence
-
-I try to ship one finished page a month and keep two or three drafts in flight. If a draft sits for more than `90` days without movement, I delete it — the idea either comes back or it didn't matter.
-
-### Feedback
-
-The best way to reach me about something you read here is [email](mailto:josue@aparcedo.org). I read everything, reply within a week when I'm not in finals.
-
-<Aside type="note" title="Last edit">
-April 14, 2026 — fixed a wrong sign in the FFT page, added a section on windowing off-the-bin.
-</Aside>
+That is deliberate. The portfolio can still mention experiments; the docs should stay useful.

@@ -1,0 +1,43 @@
+---
+title: How this site is deployed
+description: Build and deploy path for docs.aparcedo.org.
+template: doc
+---
+
+`docs.aparcedo.org` is a static Starlight build deployed to the services VM.
+
+## Build path
+
+From the repo root:
+
+```bash
+npm run build:docs
+```
+
+The docs project lives in `docs-site/`, and the static output is written to `docs-site/dist/`.
+
+## Deploy path
+
+```bash
+npm run deploy:docs
+```
+
+The deploy script:
+
+1. Builds the docs site.
+2. Creates a timestamped release under `/var/www/docs-aparcedo/releases/` on `services-vm`.
+3. Rsyncs `docs-site/dist/` into that release.
+4. Swaps `/var/www/docs-aparcedo/current` to the new release.
+5. Runs the deploy health check.
+
+## Rollback
+
+Rollback is a symlink swap on the services VM:
+
+```bash
+ssh services-vm "ln -sfnT /var/www/docs-aparcedo/releases/<release> /var/www/docs-aparcedo/current"
+```
+
+## Next docs gap
+
+Add a release history table and a Cloudflare block troubleshooting note.

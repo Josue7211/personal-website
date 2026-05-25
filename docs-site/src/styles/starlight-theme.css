@@ -1,4 +1,4 @@
-/* Signals & Mind — Starlight theme override.
+/* JOSUE / DOCS Starlight theme override.
    Maps Starlight's --sl-* tokens onto the cinematic violet/serif design system
    so the docs feel like the same product as the main site. */
 
@@ -75,13 +75,13 @@ header.header {
 .sl-markdown-content h2 {
   font-family: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
   font-weight: 400;
-  letter-spacing: -0.018em;
+  letter-spacing: 0;
 }
 
 .sl-markdown-content h1 {
   font-size: clamp(2.6rem, 5vw, 4rem);
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   margin-block-end: 1rem;
 }
 

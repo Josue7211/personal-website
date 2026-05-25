@@ -8,12 +8,12 @@
 
 ## Live
 
-- file_edited: .memd/.last-wake
+- file_edited: .memd/agents/HARNESS_BRIDGES.md
 
 ## Durable Truth
 
 - id=e59c2616-8d5d-44d2-ba99-5ea9ef253943 | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=mai...
-- id=0bd4b700-5678-489a-a5e4-51495f31e6fd | stage=canonical | scope=project | kind=fact | status=active | project=personal-website | ns=mai...
+- id=78c5e90f-f19f-4038-bbe7-decc325ca1ba | stage=canonical | scope=project | kind=decision | status=active | project=personal-website | ns...
 ## Wake Budget
 
 - startup trimmed; use `memd lookup` or `memd resume` for deeper recall.

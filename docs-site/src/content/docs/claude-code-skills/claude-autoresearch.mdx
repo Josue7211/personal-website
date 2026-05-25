@@ -1,0 +1,26 @@
+---
+title: claude-autoresearch
+description: Autonomous research loop for Claude Code.
+template: doc
+---
+
+`claude-autoresearch` is an overnight research loop for agent work. It runs investigation passes, captures findings, and leaves reviewable context for the next morning.
+
+## What it solves
+
+Research often stalls because each pass needs a person to restart, summarize, and decide the next query. Automation can keep the loop moving while still leaving a review point.
+
+## Operating model
+
+- Start with a bounded research question.
+- Run repeated investigation passes.
+- Capture sources, findings, and uncertainty.
+- Stop with a compact next-step handoff.
+
+## Boundaries
+
+Autonomous research should not silently change production systems. It should produce evidence and recommendations unless a separate execution plan approves edits.
+
+## Next docs gap
+
+Document loop controls: time budget, stop conditions, artifact paths, and review checklist.

@@ -1,0 +1,26 @@
+---
+title: AgentShell overview
+description: Shell/runtime surface for command-oriented agent work.
+template: doc
+---
+
+`AgentShell` is the local runtime layer for agent work that touches the terminal. It should make command execution explicit, reviewable, and permission-scoped.
+
+## Role in the stack
+
+Where `memd` owns memory and `AgentSecrets` owns credentials, `AgentShell` owns local execution.
+
+## Core surfaces
+
+| Surface | Purpose |
+| --- | --- |
+| Command proposal | What the agent wants to run and why. |
+| Execution state | Pending, running, complete, failed, cancelled. |
+| Output capture | Stdout/stderr and summaries. |
+| Permission check | Whether this command is allowed in this task. |
+| Handoff record | What happened and what remains. |
+
+## Related pages
+
+- [Command lifecycle](/agent-stack/agentshell/command-lifecycle/)
+- [Permission model](/agent-stack/agentshell/permission-model/)

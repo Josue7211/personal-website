@@ -1,0 +1,26 @@
+---
+title: mac-bridge
+description: Private REST bridge for selected macOS services.
+template: doc
+---
+
+`mac-bridge` exposes selected macOS actions to private automation without making the Mac a public service.
+
+## What it solves
+
+Some useful data and actions live inside macOS apps: Reminders, Notes, Contacts, Find My, and Messages. Remote automation needs a controlled bridge instead of screen scraping or public exposure.
+
+## Operating model
+
+- Run on the Mac that owns the local app permissions.
+- Expose a small REST surface over a private network.
+- Keep routes narrow and task-specific.
+- Use Tailscale or equivalent private transport.
+
+## Boundaries
+
+Messages, contacts, and location-adjacent data are sensitive. Public internet access is out of scope unless the security model is redesigned.
+
+## Next docs gap
+
+Add route list, permission setup, auth expectations, and local restart instructions.

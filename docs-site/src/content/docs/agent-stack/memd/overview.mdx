@@ -1,0 +1,30 @@
+---
+title: memd overview
+description: Repo-scoped memory for long agent sessions.
+template: doc
+---
+
+`memd` is the memory substrate for agent-assisted work. It keeps durable project truth outside the chat transcript so long sessions can survive compaction, handoff, and later resume.
+
+## Role in the stack
+
+`memd` sits under every serious agent workflow. It owns startup context, durable corrections, project decisions, lookup, and handoff state.
+
+## Core surfaces
+
+| Surface | Purpose |
+| --- | --- |
+| Wake packet | Short startup context for the next agent. |
+| Memory view | Compact durable facts, preferences, and decisions. |
+| Event log | Chronological record of meaningful session events. |
+| Lookup | Query path before answering history or decision questions. |
+| Checkpoint | Save state before handoff, deploy, or long pause. |
+
+## Operating rule
+
+Transcript recall is weak truth. `memd` durable state is stronger truth.
+
+## Related pages
+
+- [Memory model](/agent-stack/memd/memory-model/)
+- [Runtime workflow](/agent-stack/memd/runtime-workflow/)

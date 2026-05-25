@@ -1,0 +1,26 @@
+---
+title: claude-dream
+description: Memory consolidation skill for Claude Code sessions.
+template: doc
+---
+
+`claude-dream` turns a messy session into durable memory: what changed, what mattered, and what the next agent should know.
+
+## What it solves
+
+Useful corrections often disappear after a long chat. A consolidation pass turns those corrections into compact state that can be loaded later.
+
+## Operating model
+
+- Summarize the current task and outcome.
+- Extract stable lessons, preferences, and decisions.
+- Keep transient noise out of durable memory.
+- Write handoff notes only when they help the next session.
+
+## Boundaries
+
+The skill should not memorize every detail. It should preserve decisions and patterns that are likely to matter again.
+
+## Next docs gap
+
+Add examples for a normal session capture, a correction capture, and a failed-run handoff.

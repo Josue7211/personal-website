@@ -1,0 +1,28 @@
+---
+title: memd runtime workflow
+description: How agents should use memd during normal repo work.
+template: doc
+---
+
+The runtime workflow is simple: wake, lookup, work, checkpoint only when state matters.
+
+## Session start
+
+1. Read `.memd/wake.md`.
+2. Use `.memd/config.json` as the source of truth for repo voice and memd settings.
+3. Run `memd lookup --output .memd --query "..."` before answering decisions, prior corrections, or project history.
+
+## During work
+
+- Write source changes normally.
+- Use lookup when the answer depends on prior project context.
+- Promote only stable corrections or decisions into memory.
+- Keep noisy turn-by-turn detail out of durable state.
+
+## Before handoff
+
+Capture only the state the next session needs: current task, edited files, verification, blockers, and decisions.
+
+## Open docs gap
+
+Add exact command examples for `remember`, `checkpoint`, and compaction spill.

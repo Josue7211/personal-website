@@ -1,0 +1,32 @@
+---
+title: AgentShell command lifecycle
+description: States for proposed and running commands.
+template: doc
+---
+
+Commands should move through explicit states so operators can understand what happened.
+
+## States
+
+| State | Meaning |
+| --- | --- |
+| Proposed | Agent has described the command and reason. |
+| Approved | Policy or human operator allowed it. |
+| Running | Process is active. |
+| Completed | Process exited successfully. |
+| Failed | Process exited with failure. |
+| Cancelled | Operator or policy stopped it. |
+
+## Captured fields
+
+- Command.
+- Working directory.
+- Environment notes, without secrets.
+- Start and end time.
+- Exit code.
+- Output summary.
+- Follow-up action.
+
+## Open docs gap
+
+Document how long output is retained and what gets summarized into memd.

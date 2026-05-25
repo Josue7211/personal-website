@@ -1,0 +1,26 @@
+---
+title: homelab-cli
+description: Shell command layer for operating self-hosted services.
+template: doc
+---
+
+`homelab-cli` is the terminal control layer for common self-hosted service tasks. It turns repeated dashboard work into commands.
+
+## What it solves
+
+Homelab services sprawl across dashboards, ports, containers, and log locations. A CLI makes common checks and fixes easier to repeat under pressure.
+
+## Operating model
+
+- One command surface for service checks and recovery.
+- Focused commands for media, DNS, containers, downloads, and status.
+- Output shaped for quick diagnosis, not pretty reporting.
+- Commands should fail loudly when a service is unreachable.
+
+## Boundaries
+
+Dangerous operations should be explicit. Restarting services, deleting data, or changing network state should not hide behind vague command names.
+
+## Next docs gap
+
+Add command inventory, example output, and service ownership map.

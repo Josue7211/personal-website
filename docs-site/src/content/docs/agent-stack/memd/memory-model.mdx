@@ -1,0 +1,34 @@
+---
+title: memd memory model
+description: How memd separates wake context, durable facts, events, and handoff state.
+template: doc
+---
+
+`memd` memory is split by how stable the information is and when an agent needs it.
+
+## Layers
+
+| Layer | File | Use |
+| --- | --- | --- |
+| Config | `.memd/config.json` | Repo/session settings, active voice mode, authority details. |
+| Wake | `.memd/wake.md` | Small startup packet read before relying on transcript memory. |
+| Memory | `.memd/mem.md` | Durable compact view of decisions, facts, preferences, and corrections. |
+| Events | `.memd/events.md` | Timeline of meaningful project/session changes. |
+
+## What belongs in memory
+
+- User corrections that should change future behavior.
+- Project decisions that should not be re-litigated.
+- Stable preferences for this repo.
+- Handoff notes that unblock the next session.
+
+## What stays out
+
+- Full command logs.
+- Temporary failed guesses.
+- Large pasted output.
+- Facts already obvious from source files.
+
+## Open docs gap
+
+Document redundancy keys, confidence, stage, and when a remembered item should supersede an older one.

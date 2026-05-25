@@ -1,0 +1,25 @@
+---
+title: Homelab topology
+description: Map of public routes, private machines, and service boundaries.
+template: doc
+---
+
+The homelab is split between public entry points, private Tailscale paths, and internal services. Docs should make those boundaries obvious.
+
+## Main zones
+
+| Zone | Purpose |
+| --- | --- |
+| Public DNS and Cloudflare | Receives public hostname traffic and applies edge policy. |
+| Tunnel host | Runs Cloudflare tunnel and forwards allowed hostnames inward. |
+| Services VM | Hosts static sites and internal web services. |
+| NAS and media services | Stores shared data and app state for self-hosted tools. |
+| Personal machines | Development endpoints, Mac services, and local automation. |
+
+## Rule of thumb
+
+Public hostnames should terminate into the narrowest internal service possible. Private automation should prefer Tailscale or LAN-only routes.
+
+## Next docs gap
+
+Add a diagram with hostnames, ports, and which machine owns each service.

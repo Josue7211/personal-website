@@ -1,0 +1,27 @@
+---
+title: Security model
+description: Trust boundaries for public docs, private automation, and secrets.
+template: doc
+---
+
+The homelab security model is based on keeping public routes narrow and private automation private.
+
+## Boundaries
+
+| Boundary | Rule |
+| --- | --- |
+| Public web | Static or hardened services only. |
+| Tailscale/private network | Personal automation and machine-to-machine tools. |
+| Secrets | Never published into docs, prompts, or shared config. |
+| Admin surfaces | Private by default, with explicit auth when exposed. |
+| Agent tooling | Capability-scoped access, logged where possible. |
+
+## Failure assumptions
+
+Public routes can be scanned. Local machines can drift. Agents can print too much context. Sync tools can copy files farther than intended.
+
+Design docs and runbooks should assume those failures are possible and keep blast radius small.
+
+## Next docs gap
+
+Add a concrete checklist for exposing a new hostname.

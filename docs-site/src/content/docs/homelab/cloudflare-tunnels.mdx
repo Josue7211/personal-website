@@ -1,0 +1,26 @@
+---
+title: Cloudflare tunnels
+description: Public hostname routing into the private homelab.
+template: doc
+---
+
+Cloudflare tunnels provide the public route for selected services without opening broad inbound ports on the home network.
+
+## Current docs route
+
+`docs.aparcedo.org` is served as a static site from the services VM. The deploy path builds locally, rsyncs static files to the VM, then swaps the active release symlink.
+
+## Operating model
+
+- Cloudflare owns the public hostname.
+- A tunnel forwards allowed traffic to an internal origin.
+- Nginx on the services VM serves the static files.
+- Deploys are atomic through `/var/www/docs-aparcedo/current`.
+
+## Boundaries
+
+Only public-safe services should be routed this way. Admin panels, dashboards, and personal automation should remain private unless they have explicit auth and hardening.
+
+## Next docs gap
+
+Document the exact ingress file, hostname map, and rollback command for each public service.

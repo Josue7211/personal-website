@@ -1,0 +1,30 @@
+---
+title: AgentSecrets security model
+description: Trust boundaries for agent credential access.
+template: doc
+---
+
+The security model is built around one rule: agents get capabilities, not a pile of raw credentials.
+
+## Boundaries
+
+| Boundary | Rule |
+| --- | --- |
+| Agent prompt | No raw secrets. |
+| Tool output | Mask unless full value is required. |
+| Storage | Keep secret material outside project source. |
+| Approval | High-risk secrets need explicit human approval. |
+| Audit | Reads and denied requests should be recorded. |
+
+## Failure assumptions
+
+- Agents can print too much.
+- Logs can be copied.
+- Shell history can persist.
+- A task can request a broader credential than it needs.
+
+The broker exists to reduce those failure modes, not pretend they cannot happen.
+
+## Open docs gap
+
+Define severity tiers for secret access and the policy for automatic denial.

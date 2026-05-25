@@ -1,0 +1,28 @@
+---
+title: AgentShell permission model
+description: Capability boundaries for local command execution.
+template: doc
+---
+
+The permission model should keep local execution task-scoped.
+
+## Permission levels
+
+| Level | Examples |
+| --- | --- |
+| Read | `ls`, `rg`, `sed`, `git diff`, file inspection. |
+| Build/test | Package scripts, test runners, type checks. |
+| Edit | Source file writes through approved editor paths. |
+| Network | Package install, deploy checks, API calls. |
+| Destructive | Deletes, resets, service restarts, force pushes. |
+
+## Rules
+
+- Destructive actions need explicit intent.
+- Secrets come from AgentSecrets, not raw env dumps.
+- Network operations should be tied to a task.
+- Generated summaries should not hide failed commands.
+
+## Open docs gap
+
+Define default policy for each command family.

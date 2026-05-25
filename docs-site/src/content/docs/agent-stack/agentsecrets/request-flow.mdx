@@ -1,0 +1,33 @@
+---
+title: AgentSecrets request flow
+description: How an agent asks for a secret-backed capability.
+template: doc
+---
+
+Secret access should be a narrow transaction.
+
+## Flow
+
+1. Agent requests a named capability.
+2. Broker checks policy for that capability.
+3. Broker asks for human approval when policy requires it.
+4. Broker returns a masked or full value depending on need.
+5. Broker writes an audit event.
+
+## Request shape
+
+Each request should include:
+
+- Capability name.
+- Reason for access.
+- Expected command or destination.
+- Whether a masked value is enough.
+- Session or task identifier.
+
+## Denial behavior
+
+Denied requests should fail closed and leave enough context to debug why access was blocked.
+
+## Open docs gap
+
+Add the concrete request schema and sample responses.

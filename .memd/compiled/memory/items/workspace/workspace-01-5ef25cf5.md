@@ -1,4 +1,4 @@
-# memd memory object: Workspace [tab=none]
+# memd memory item: Workspace [tab=none]
 
 ## Scope
 
@@ -14,15 +14,9 @@
 - intent: `current_task`
 - bundle: `.memd`
 
-
-## Workspace
-
+- lane=workspace | index=1
 - project=personal-website namespace=main workspace=none visibility=private items=15 active=15 contested=0 trust=0.66 cf=0.75
 
 ## Hive
 
-- queen=none active=0 stale=0 review=0 overlap=0
-
-## Items
-
-- [Workspace](items/workspace/workspace-01-5ef25cf5)
+- queen=none active=0 overlap=0 stale=0

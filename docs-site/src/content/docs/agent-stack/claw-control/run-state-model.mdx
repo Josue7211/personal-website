@@ -1,0 +1,31 @@
+---
+title: claw control run state model
+description: Minimal state shape for supervised agent runs.
+template: doc
+---
+
+Run state should be small enough to inspect and strict enough to drive UI.
+
+## Entities
+
+| Entity | Purpose |
+| --- | --- |
+| Run | One agent task with lifecycle state. |
+| Message | Human/agent communication tied to a run. |
+| Todo | Action item with ownership and status. |
+| Approval | Pending permission decision. |
+| Artifact | File, summary, log, or report produced by the run. |
+
+## Run states
+
+- Queued.
+- Active.
+- Waiting for approval.
+- Waiting for user input.
+- Completed.
+- Failed.
+- Cancelled.
+
+## Open docs gap
+
+Define the exact JSON shape and retention policy.

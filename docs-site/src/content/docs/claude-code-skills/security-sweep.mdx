@@ -1,0 +1,28 @@
+---
+title: security-sweep
+description: Repeatable security review workflow for Claude Code projects.
+template: doc
+---
+
+`security-sweep` is a structured red-team review workflow for Claude Code projects. It makes security review repeatable enough to run before shipping.
+
+## What it checks
+
+- Secrets and credential handling.
+- Authentication and authorization paths.
+- Dependency and supply-chain exposure.
+- Data handling, logging, and privacy leaks.
+- Deployment defaults and public attack surface.
+- Unsafe agent/tool permissions.
+
+## Operating model
+
+The workflow splits review into focused passes instead of asking one generic reviewer to catch everything. Each pass should leave findings with file paths, severity, impact, and a concrete fix.
+
+## Boundaries
+
+This is a review accelerator, not a guarantee. Human judgment is still required for exploitability, business impact, and whether a proposed mitigation matches the product.
+
+## Next docs gap
+
+Publish the tier structure, pass list, expected finding format, and a sample final report.

@@ -1,0 +1,26 @@
+---
+title: AgentSecrets overview
+description: Secret broker for agent workflows.
+template: doc
+---
+
+`AgentSecrets` is the credential boundary for agent workflows. Agents request named capabilities instead of dragging raw secrets into prompts, logs, and shell history.
+
+## Role in the stack
+
+`AgentSecrets` lets automation complete real work while keeping credential access explicit, auditable, and narrow.
+
+## Core surfaces
+
+| Surface | Purpose |
+| --- | --- |
+| Secret registry | Names and metadata for secrets agents may request. |
+| Broker API | Request path between tools and stored credentials. |
+| Approval gate | Human approval for sensitive access. |
+| Masked response | Return only the value shape needed for the task. |
+| Audit log | Record who asked for what, when, and why. |
+
+## Related pages
+
+- [Security model](/agent-stack/agentsecrets/security-model/)
+- [Request flow](/agent-stack/agentsecrets/request-flow/)
